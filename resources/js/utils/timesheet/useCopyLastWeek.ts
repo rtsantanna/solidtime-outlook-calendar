@@ -1,3 +1,4 @@
+import { trans, transChoice } from 'laravel-vue-i18n';
 import { ref, type Ref } from 'vue';
 import type { Dayjs } from 'dayjs';
 import axios from 'axios';
@@ -223,28 +224,35 @@ export function useCopyLastWeek(
             if (succeeded === attempted) {
                 addNotification(
                     'success',
-                    `Copied ${succeeded} ${succeeded === 1 ? 'entry' : 'entries'} from last week`
+                    transChoice(
+                        'Copied :count entry from last week|Copied :count entries from last week',
+                        succeeded,
+                        { count: String(succeeded) }
+                    )
                 );
             } else if (succeeded > 0) {
                 const skipped = overlapFailures + otherFailures;
                 const detail =
                     overlapFailures > 0 && otherFailures === 0
-                        ? `${overlapFailures} overlapping`
+                        ? trans(':count overlapping', { count: String(overlapFailures) })
                         : otherFailures > 0 && overlapFailures === 0
-                          ? `${otherFailures} failed`
-                          : `${skipped} skipped`;
+                          ? trans(':count failed', { count: String(otherFailures) })
+                          : trans(':count skipped', { count: String(skipped) });
                 addNotification(
                     'error',
-                    `Copied ${succeeded} of ${attempted} entries from last week`,
+                    trans('Copied :succeeded of :attempted entries from last week', {
+                        succeeded: String(succeeded),
+                        attempted: String(attempted),
+                    }),
                     `${detail}.`
                 );
             } else {
                 addNotification(
                     'error',
-                    'Failed to copy entries from last week',
+                    trans('Failed to copy entries from last week'),
                     overlapFailures > 0 && otherFailures === 0
-                        ? 'All entries would overlap with existing time entries.'
-                        : 'Please try again later.'
+                        ? trans('All entries would overlap with existing time entries.')
+                        : trans('Please try again later.')
                 );
             }
         } finally {

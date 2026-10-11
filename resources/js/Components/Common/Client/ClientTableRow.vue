@@ -58,17 +58,23 @@ const showEditModal = ref(false);
                 </div>
                 <div
                     class="whitespace-nowrap flex items-center px-3 py-4 text-sm text-text-primary">
-                    <span> {{ projectCount }} Projects </span>
+                    <span>
+                        {{
+                            $tChoice(':count Project|:count Projects', projectCount, {
+                                count: String(projectCount),
+                            })
+                        }}
+                    </span>
                 </div>
                 <div
                     class="whitespace-nowrap px-3 py-4 text-sm text-text-primary flex space-x-1.5 items-center">
                     <template v-if="client.is_archived">
                         <ArchiveBoxIcon class="w-4 text-icon-default"></ArchiveBoxIcon>
-                        <span>Archived</span>
+                        <span>{{ $t('Archived') }}</span>
                     </template>
                     <template v-else>
                         <CheckCircleIcon class="w-4 text-icon-default"></CheckCircleIcon>
-                        <span>Active</span>
+                        <span>{{ $t('Active') }}</span>
                     </template>
                 </div>
                 <div
@@ -87,11 +93,11 @@ const showEditModal = ref(false);
                 class="space-x-3"
                 @select="showEditModal = true">
                 <PencilSquareIcon class="w-4 h-4 text-icon-default" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </ContextMenuItem>
             <ContextMenuItem v-if="canUpdateClients()" class="space-x-3" @select="archiveClient()">
                 <ArchiveBoxIconSolid class="w-4 h-4 text-icon-default" />
-                <span>{{ client.is_archived ? 'Unarchive' : 'Archive' }}</span>
+                <span>{{ client.is_archived ? $t('Unarchive') : $t('Archive') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator v-if="canDeleteClients()" />
             <ContextMenuItem
@@ -99,7 +105,7 @@ const showEditModal = ref(false);
                 class="space-x-3 text-destructive"
                 @select="deleteClient()">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

@@ -16,6 +16,7 @@ import {
     type Interval,
 } from '@/utils/timesheet/breakPlacementMath';
 import { BREAK_GAP_TOLERANCE_MINUTES } from '@/packages/ui/src/utils/breakPlacement';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     request: BreakPlacementRequest | null;
@@ -122,8 +123,12 @@ function fmt(iso: string): string {
 const explanation = computed(() => {
     if (!props.request) return '';
     return mode.value === 'split'
-        ? "There's no free gap that fits this break, so the work entry will be split around it. The work moves to make room and keeps its full length."
-        : "There's no free gap that fits this break, so the surrounding entries will be shifted to make room.";
+        ? trans(
+              "There's no free gap that fits this break, so the work entry will be split around it. The work moves to make room and keeps its full length."
+          )
+        : trans(
+              "There's no free gap that fits this break, so the surrounding entries will be shifted to make room."
+          );
 });
 
 interface PlanLine {
@@ -143,7 +148,7 @@ const changeSummary = computed<PlanLine[]>(() => {
         const workLabel = props.entryLabel(req.workEntries[0]!.id);
         return [
             { times: range(plan.firstHalf), label: workLabel },
-            { times: range(plan.breakSlot), label: 'Break' },
+            { times: range(plan.breakSlot), label: trans('Break') },
             { times: range(plan.secondHalf), label: workLabel },
             ...plan.shifted.map((shift) => ({
                 times: moved(
@@ -156,7 +161,7 @@ const changeSummary = computed<PlanLine[]>(() => {
     }
     const plan = movePlan.value;
     if (!plan) return [];
-    if (plan.shifted.length === 0) return [{ times: 'No entries need to move.', label: '' }];
+    if (plan.shifted.length === 0) return [{ times: trans('No entries need to move.'), label: '' }];
     return plan.shifted.map((shift) => {
         const original =
             req.workEntries.find((e) => e.id === shift.id) ??
@@ -183,7 +188,7 @@ async function submit() {
         <template #title>
             <div class="flex items-center space-x-2">
                 <Coffee class="w-5 h-5 text-text-secondary" />
-                <span>Add break</span>
+                <span>{{ $t('Add break') }}</span>
             </div>
         </template>
 
@@ -201,7 +206,7 @@ async function submit() {
                     data-testid="break_placement_summary"
                     class="rounded-lg border border-card-border bg-secondary/40 px-3 py-2 text-sm text-text-secondary space-y-1">
                     <div class="text-xs uppercase tracking-wide text-text-tertiary">
-                        {{ mode === 'split' ? 'Result' : 'Entries that move' }}
+                        {{ mode === 'split' ? $t('Result') : $t('Entries that move') }}
                     </div>
                     <div
                         v-for="(line, index) in changeSummary"
@@ -217,9 +222,12 @@ async function submit() {
                     v-if="feasible && resultMisaligned"
                     data-testid="break_placement_misaligned_warning"
                     class="rounded-lg border border-yellow-500/30 bg-yellow-500/10 px-3 py-2 text-sm text-yellow-700 dark:text-yellow-400">
-                    At this time the break would sit more than
-                    {{ BREAK_GAP_TOLERANCE_MINUTES }} minutes away from your work entries and will
-                    be flagged as misaligned.
+                    {{
+                        $t(
+                            'At this time the break would sit more than :minutes minutes away from your work entries and will be flagged as misaligned.',
+                            { minutes: String(BREAK_GAP_TOLERANCE_MINUTES) }
+                        )
+                    }}
                 </div>
                 <!-- `request` guard (not just !feasible): when the request is cleared on save,
                      the dialog fades out with content still mounted — don't flash the error then -->
@@ -229,21 +237,25 @@ async function submit() {
                     class="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-600 dark:text-red-400">
                     {{
                         mode === 'split'
-                            ? "This break doesn't fit there. It has to sit inside the work, leaving at least a minute of work on each side, and the work around it has to stay inside the day."
-                            : "This break doesn't fit at that time without pushing an entry outside the day. Try a shorter break or a different time."
+                            ? $t(
+                                  "This break doesn't fit there. It has to sit inside the work, leaving at least a minute of work on each side, and the work around it has to stay inside the day."
+                              )
+                            : $t(
+                                  "This break doesn't fit at that time without pushing an entry outside the day. Try a shorter break or a different time."
+                              )
                     }}
                 </div>
             </div>
         </template>
 
         <template #footer>
-            <SecondaryButton @click="emit('cancel')">Cancel</SecondaryButton>
+            <SecondaryButton @click="emit('cancel')">{{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving || !feasible }"
                 :disabled="saving || !feasible"
                 @click="submit">
-                Add break
+                {{ $t('Add break') }}
             </PrimaryButton>
         </template>
     </DialogModal>

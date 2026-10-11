@@ -41,7 +41,7 @@ const page = usePage<{
 </script>
 
 <template>
-    <Head title="Register" />
+    <Head :title="$t('Register')" />
 
     <AuthenticationCard>
         <template #logo>
@@ -52,8 +52,8 @@ const page = usePage<{
             <Link
                 class="py-8 text-text-secondary text-sm font-medium opacity-90 hover:opacity-100 transition"
                 :href="route('login')">
-                Already have an account?
-                <span class="text-text-primary">Login here!</span>
+                {{ $t('Already have an account?') }}
+                <span class="text-text-primary">{{ $t('Login here!') }}</span>
             </Link>
         </template>
 
@@ -67,7 +67,7 @@ const page = usePage<{
 
         <form @submit.prevent="submit">
             <Field>
-                <FieldLabel for="name">Name</FieldLabel>
+                <FieldLabel for="name">{{ $t('Name') }}</FieldLabel>
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -80,7 +80,7 @@ const page = usePage<{
             </Field>
 
             <Field class="mt-4">
-                <FieldLabel for="email">Email</FieldLabel>
+                <FieldLabel for="email">{{ $t('Email') }}</FieldLabel>
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -92,7 +92,7 @@ const page = usePage<{
             </Field>
 
             <Field class="mt-4">
-                <FieldLabel for="password">Password</FieldLabel>
+                <FieldLabel for="password">{{ $t('Password') }}</FieldLabel>
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -104,7 +104,7 @@ const page = usePage<{
             </Field>
 
             <Field class="mt-4">
-                <FieldLabel for="password_confirmation">Confirm Password</FieldLabel>
+                <FieldLabel for="password_confirmation">{{ $t('Confirm Password') }}</FieldLabel>
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
@@ -123,19 +123,19 @@ const page = usePage<{
                 <Field orientation="horizontal">
                     <Checkbox id="terms" v-model:checked="form.terms" name="terms" />
                     <FieldLabel for="terms">
-                        I agree to the
+                        {{ $t('I agree to the') }}
                         <a
                             target="_blank"
                             :href="page.props.terms_url"
                             class="underline text-sm text-text-secondary hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >Terms of Service</a
+                            >{{ $t('Terms of Service') }}</a
                         >
-                        and
+                        {{ $t('and') }}
                         <a
                             target="_blank"
                             :href="page.props.privacy_policy_url"
                             class="underline text-sm text-text-secondary hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >Privacy Policy</a
+                            >{{ $t('Privacy Policy') }}</a
                         >
                     </FieldLabel>
                     <FieldError v-if="form.errors.terms">{{ form.errors.terms }}</FieldError>
@@ -149,7 +149,7 @@ const page = usePage<{
                         v-model:checked="form.newsletter_consent"
                         name="newsletter_consent" />
                     <FieldLabel for="newsletter_consent">
-                        I agree to receive emails about product related updates
+                        {{ $t('I agree to receive emails about product related updates') }}
                     </FieldLabel>
                     <FieldError v-if="form.errors.newsletter_consent">{{
                         form.errors.newsletter_consent
@@ -161,14 +161,14 @@ const page = usePage<{
                 <Link
                     :href="route('login')"
                     class="underline text-sm text-text-secondary hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Already registered?
+                    {{ $t('Already registered?') }}
                 </Link>
 
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
-                    Register
+                    {{ $t('Register') }}
                 </PrimaryButton>
             </div>
         </form>

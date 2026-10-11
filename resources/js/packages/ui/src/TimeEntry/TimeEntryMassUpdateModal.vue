@@ -158,7 +158,15 @@ const showBreakWarning = computed(
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Update {{ timeEntries.length }} time entries </span>
+                <span>
+                    {{
+                        $tChoice(
+                            'Update :count time entry|Update :count time entries',
+                            timeEntries.length,
+                            { count: String(timeEntries.length) }
+                        )
+                    }}
+                </span>
             </div>
         </template>
 
@@ -170,16 +178,17 @@ const showBreakWarning = computed(
                     class="flex items-start space-x-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm text-amber-600 dark:text-amber-400">
                     <ExclamationTriangleIcon class="w-4 h-4 mt-0.5 shrink-0" />
                     <span>
-                        {{ selectedBreaksCount }}
-                        {{ selectedBreaksCount === 1 ? 'break is' : 'breaks are' }} selected —
-                        breaks can not have a project or tags, or be billable, so
-                        {{ selectedBreaksCount === 1 ? 'this entry' : 'these entries' }} will be
-                        skipped entirely and none of the changes (including the description) will be
-                        applied to {{ selectedBreaksCount === 1 ? 'it' : 'them' }}.
+                        {{
+                            $tChoice(
+                                ':count break is selected — breaks can not have a project or tags, or be billable, so this entry will be skipped entirely and none of the changes (including the description) will be applied to it.|:count breaks are selected — breaks can not have a project or tags, or be billable, so these entries will be skipped entirely and none of the changes (including the description) will be applied to them.',
+                                selectedBreaksCount,
+                                { count: String(selectedBreaksCount) }
+                            )
+                        }}
                     </span>
                 </div>
                 <Field>
-                    <FieldLabel for="description">Description</FieldLabel>
+                    <FieldLabel for="description">{{ $t('Description') }}</FieldLabel>
                     <TextInput
                         id="description"
                         ref="descriptionInput"
@@ -189,7 +198,7 @@ const showBreakWarning = computed(
                         @keydown.enter="submit" />
                 </Field>
                 <Field>
-                    <FieldLabel for="project">Project</FieldLabel>
+                    <FieldLabel for="project">{{ $t('Project') }}</FieldLabel>
                     <div class="flex items-center gap-1 min-w-0">
                         <!-- the dropdown declares its own `class` prop, which goes to the
                              trigger button, so the growing has to happen on a wrapper -->
@@ -206,7 +215,7 @@ const showBreakWarning = computed(
                                 :currency="currency"
                                 :organization-billable-rate="organizationBillableRate"
                                 :can-create-project
-                                empty-placeholder="Select project..."
+                                :empty-placeholder="$t('Select project...')"
                                 :enable-estimated-time
                                 :projects="projects"
                                 :tasks="tasks"></TimeTrackerProjectTaskDropdown>
@@ -222,7 +231,7 @@ const showBreakWarning = computed(
                     </div>
                 </Field>
                 <Field>
-                    <FieldLabel>Tag</FieldLabel>
+                    <FieldLabel>{{ $t('Tag') }}</FieldLabel>
                     <div class="flex items-center space-x-5">
                         <!-- the dropdown root is `min-w-0`, so as a flex item it would shrink
                              below its trigger and let the button overflow into the checkbox -->
@@ -236,48 +245,56 @@ const showBreakWarning = computed(
                                     <Button variant="input" :disabled="removeAllTags">
                                         <TagIcon class="h-4 text-icon-default" />
                                         <span v-if="selectedTags.length > 0">
-                                            Set {{ selectedTags.length }} tags
+                                            {{
+                                                $tChoice(
+                                                    'Set :count tag|Set :count tags',
+                                                    selectedTags.length,
+                                                    { count: String(selectedTags.length) }
+                                                )
+                                            }}
                                         </span>
-                                        <span v-else>Select Tags...</span>
+                                        <span v-else>{{ $t('Select Tags...') }}</span>
                                     </Button>
                                 </template>
                             </TagDropdown>
                         </div>
                         <Field orientation="horizontal">
                             <Checkbox id="no_tags" v-model:checked="removeAllTags"></Checkbox>
-                            <FieldLabel for="no_tags">Remove all tags</FieldLabel>
+                            <FieldLabel for="no_tags">{{ $t('Remove all tags') }}</FieldLabel>
                         </Field>
                     </div>
                 </Field>
                 <Field>
-                    <FieldLabel>Billable</FieldLabel>
+                    <FieldLabel>{{ $t('Billable') }}</FieldLabel>
                     <Select v-model="timeEntryBillable">
                         <SelectTrigger>
                             <SelectValue>
-                                <span v-if="billable === undefined">Set billable status</span>
-                                <span v-else-if="billable === true">Billable</span>
-                                <span v-else>Non Billable</span>
+                                <span v-if="billable === undefined">{{
+                                    $t('Set billable status')
+                                }}</span>
+                                <span v-else-if="billable === true">{{ $t('Billable') }}</span>
+                                <span v-else>{{ $t('Non Billable') }}</span>
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="do-not-update">
-                                Keep current billable status
+                                {{ $t('Keep current billable status') }}
                             </SelectItem>
-                            <SelectItem value="billable">Billable</SelectItem>
-                            <SelectItem value="non-billable">Non Billable</SelectItem>
+                            <SelectItem value="billable">{{ $t('Billable') }}</SelectItem>
+                            <SelectItem value="non-billable">{{ $t('Non Billable') }}</SelectItem>
                         </SelectContent>
                     </Select>
                 </Field>
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Update Time Entries
+                {{ $t('Update Time Entries') }}
             </PrimaryButton>
         </template>
     </DialogModal>

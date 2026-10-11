@@ -25,7 +25,7 @@ defineEmits<{
             <DropdownMenuTrigger as-child>
                 <Button variant="ghost" size="sm" :disabled="busy">
                     <LoadingSpinner v-if="busy" class="h-3.5 w-3.5 m-0" />
-                    Copy last week
+                    {{ $t('Copy last week') }}
                     <ChevronDownIcon v-if="!busy" class="h-3.5 w-3.5 ml-1 text-icon-default" />
                 </Button>
             </DropdownMenuTrigger>
@@ -34,13 +34,13 @@ defineEmits<{
                     class="flex items-center space-x-3 cursor-pointer"
                     @click="$emit('copy-rows')">
                     <ListBulletIcon class="w-5 text-icon-default" />
-                    <span>Copy rows only</span>
+                    <span>{{ $t('Copy rows only') }}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                     class="flex items-center space-x-3 cursor-pointer"
                     @click="$emit('copy-with-time')">
                     <ClockIcon class="w-5 text-icon-default" />
-                    <span>Copy rows and time entries</span>
+                    <span>{{ $t('Copy rows and time entries') }}</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

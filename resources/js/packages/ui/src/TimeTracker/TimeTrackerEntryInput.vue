@@ -164,7 +164,7 @@ defineExpose({ submit, focusAfterStart });
     <input
         ref="currentTimeEntryDescriptionInput"
         v-model="tempDescription"
-        placeholder="What are you working on?"
+        :placeholder="$t('What are you working on?')"
         data-testid="time_entry_description"
         class="w-full rounded-l-lg py-4 sm:py-2.5 px-3.5 border-b border-b-card-background-separator @2xl:px-4 text-base text-text-primary bg-transparent border-none placeholder-text-secondary focus:ring-0 transition"
         type="text"
@@ -180,7 +180,7 @@ defineExpose({ submit, focusAfterStart });
             class="rounded-lg w-full border border-card-border overflow-hidden shadow-dropdown bg-card-background">
             <div
                 class="text-text-tertiary text-xs font-semibold border-b border-border-tertiary px-2 py-1.5">
-                Recently Tracked Time Entries
+                {{ $t('Recently Tracked Time Entries') }}
             </div>
             <div class="text-text-secondary py-1 px-1.5">
                 <TimeTrackerRecentlyTrackedEntry

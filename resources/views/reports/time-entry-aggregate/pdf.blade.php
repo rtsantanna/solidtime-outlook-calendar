@@ -7,7 +7,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Report</title>
+    <title>{{ __('Report') }}</title>
     <style>
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -136,7 +136,7 @@
 </head>
 <body>
 <div>
-    <p style="font-size: 32px; font-weight: 600; margin-bottom: 5px;">Report</p>
+    <p style="font-size: 32px; font-weight: 600; margin-bottom: 5px;">{{ __('Report') }}</p>
     <div style="font-size: 16px; font-weight: 600; color: #71717a;">
         <span>{{ $localization->formatDate($start->timezone($timezone)) }} - {{ $localization->formatDate($end->timezone($timezone)) }}</span><br><br>
     </div>
@@ -148,13 +148,13 @@
     <div
         style="background-color: #fafafa; padding: 5px 14px; border-bottom: 1px #d4d4d8 solid; display: flex; gap: 20px;">
         <div style="padding: 8px 12px; border-radius: 8px;">
-            <div style="color: #71717a; font-weight: 600;">Duration</div>
+            <div style="color: #71717a; font-weight: 600;">{{ __('Duration') }}</div>
             <div
                 style="font-size: 24px; font-weight: 500; margin-top: 2px;">{{ $localization->formatIntervalForReporting(CarbonInterval::seconds($aggregatedData['seconds'])) }} </div>
         </div>
         @if($showBillableRate)
         <div style="padding: 8px 12px; border-radius: 8px;">
-            <div style="color: #71717a; font-weight: 600;">Total cost</div>
+            <div style="color: #71717a; font-weight: 600;">{{ __('Total cost') }}</div>
             <div
                 style="font-size: 24px; font-weight: 500; margin-top: 2px;">{{ $localization->formatCurrency(Money::of(BigDecimal::ofUnscaledValue($aggregatedData['cost'], 2)->__toString(), $currency)) }} </div>
         </div>
@@ -177,9 +177,9 @@
                     <th>
                         {{ $group->description() }}
                     </th>
-                    <th>Duration</th>
+                    <th>{{ __('Duration') }}</th>
                     @if($showBillableRate)
-                    <th style="text-align: right;">Cost</th>
+                    <th style="text-align: right;">{{ __('Cost') }}</th>
                     @endif
                 </tr>
                 </thead>
@@ -192,9 +192,9 @@
                             </div>
                             <span style="padding-left: 8px;">
                                 @if($group->is(\App\Enums\TimeEntryAggregationType::Billable))
-                                    {{ $group1Entry['key'] === '1' ? 'Billable' : 'Non-billable' }}
+                                    {{ $group1Entry['key'] === '1' ? __('Billable') : __('Non-billable') }}
                                 @else
-                                    {{ $group1Entry['description'] ?? $localization->formatTimeGroupKey($group1Entry['key'], $group) ?? 'No '.Str::lower($group->description()) }}
+                                    {{ $group1Entry['description'] ?? $localization->formatTimeGroupKey($group1Entry['key'], $group) ?? __('No :group', ['group' => Str::lower($group->description())]) }}
                                 @endif
                             </span>
                         </td>
@@ -211,7 +211,7 @@
                 <tfoot>
                 <tr>
                     <td style="font-weight: 500;color: #18181b;">
-                        Total
+                        {{ __('Total') }}
                     </td>
                     <td style="font-weight: 500;color: #18181b;">
                         {{ $localization->formatIntervalForReporting(CarbonInterval::seconds($aggregatedData['seconds'])) }}
@@ -234,12 +234,12 @@
         <h2 class="no-break"
             style="padding-top: 16px; padding-bottom: 8px; font-size: 16px; font-weight: 600; padding-left: 6px; color: #3f3f46;">
             @if($group->is(\App\Enums\TimeEntryAggregationType::Billable))
-                {{ $group1Entry['key'] === '1' ? 'Billable' : 'Non-billable' }}
+                {{ $group1Entry['key'] === '1' ? __('Billable') : __('Non-billable') }}
             @else
                 <span style="color: #a1a1aa;">
                     {{ $group->description() }}:
                     </span>
-                {{ $group1Entry['description'] ?? $localization->formatTimeGroupKey($group1Entry['key'], $group) ?? 'No '.Str::lower($group->description()) }}
+                {{ $group1Entry['description'] ?? $localization->formatTimeGroupKey($group1Entry['key'], $group) ?? __('No :group', ['group' => Str::lower($group->description())]) }}
             @endif
         </h2>
 
@@ -251,14 +251,14 @@
                         {{ $subGroup->description() }}
                     </th>
                     <th>
-                        Duration
+                        {{ __('Duration') }}
                     </th>
                     <th>
-                        Duration (h)
+                        {{ __('Duration (h)') }}
                     </th>
                     @if($showBillableRate)
                     <th>
-                        Cost
+                        {{ __('Cost') }}
                     </th>
                     @endif
                 </tr>
@@ -276,7 +276,7 @@
                     <tr>
                         <td>
                             @if($subGroup->is(\App\Enums\TimeEntryAggregationType::Billable))
-                                {{ $group2Entry['key'] === '1' ? 'Billable' : 'Non-billable' }}
+                                {{ $group2Entry['key'] === '1' ? __('Billable') : __('Non-billable') }}
                             @else
                                 {{ $group2Entry['description'] ?? $localization->formatTimeGroupKey($group2Entry['key'], $subGroup) ?? '-' }}
                             @endif
@@ -328,7 +328,7 @@
                     }
                     return (object)[
                         'value' => $data['seconds'],
-                        'name' => $data['description'] ?? $localization->formatTimeGroupKey($data['key'], $group) ?? 'No '.Str::lower($group->description()),
+                        'name' => $data['description'] ?? $localization->formatTimeGroupKey($data['key'], $group) ?? __('No :group', ['group' => Str::lower($group->description())]),
                         'color' => $color,
                         'itemStyle' => (object) [
                             'color' => $color,

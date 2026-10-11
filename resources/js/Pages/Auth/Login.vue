@@ -35,7 +35,7 @@ const page = usePage<{
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head :title="$t('Log in')" />
 
     <AuthenticationCard>
         <template #logo>
@@ -46,7 +46,8 @@ const page = usePage<{
             <Link
                 class="py-8 text-text-secondary text-sm font-medium opacity-90 hover:opacity-100 transition"
                 :href="route('register')">
-                No account yet? <span class="text-text-primary">Register here!</span>
+                {{ $t('No account yet?') }}
+                <span class="text-text-primary">{{ $t('Register here!') }}</span>
             </Link>
         </template>
 
@@ -63,7 +64,7 @@ const page = usePage<{
 
         <form @submit.prevent="submit">
             <Field>
-                <FieldLabel for="email">Email</FieldLabel>
+                <FieldLabel for="email">{{ $t('Email') }}</FieldLabel>
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -76,7 +77,7 @@ const page = usePage<{
             </Field>
 
             <Field class="mt-4">
-                <FieldLabel for="password">Password</FieldLabel>
+                <FieldLabel for="password">{{ $t('Password') }}</FieldLabel>
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -92,14 +93,14 @@ const page = usePage<{
                     v-if="canResetPassword"
                     :href="route('password.request')"
                     class="underline text-sm text-text-secondary hover:text-text-primary rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Forgot your password?
+                    {{ $t('Forgot your password?') }}
                 </Link>
 
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
-                    Log in
+                    {{ $t('Log in') }}
                 </PrimaryButton>
             </div>
         </form>

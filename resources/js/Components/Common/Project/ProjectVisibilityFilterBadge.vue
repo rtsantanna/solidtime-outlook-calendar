@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { GlobeAltIcon } from '@heroicons/vue/16/solid';
 import { DropdownMenuItem } from '@/packages/ui/src';
 import BaseFilterBadge from './BaseFilterBadge.vue';
+import { trans } from 'laravel-vue-i18n';
 
 type VisibilityValue = 'public' | 'private' | 'all';
 
@@ -16,12 +17,12 @@ const emit = defineEmits<{
 }>();
 
 const visibilityOptions = [
-    { id: 'public' as const, name: 'Public' },
-    { id: 'private' as const, name: 'Private' },
+    { id: 'public' as const, name: trans('Public') },
+    { id: 'private' as const, name: trans('Private') },
 ];
 
 const label = computed(() => {
-    return visibilityOptions.find((opt) => opt.id === props.value)?.name ?? 'Visibility';
+    return visibilityOptions.find((opt) => opt.id === props.value)?.name ?? trans('Visibility');
 });
 
 function updateVisibility(visibility: VisibilityValue) {
@@ -33,7 +34,7 @@ function updateVisibility(visibility: VisibilityValue) {
     <BaseFilterBadge
         :icon="GlobeAltIcon"
         :label="label"
-        filter-name="Visibility"
+        :filter-name="$t('Visibility')"
         @remove="emit('remove')">
         <DropdownMenuItem
             v-for="option in visibilityOptions"

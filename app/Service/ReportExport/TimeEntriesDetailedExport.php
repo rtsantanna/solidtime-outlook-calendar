@@ -97,18 +97,18 @@ class TimeEntriesDetailedExport implements FromQuery, ShouldAutoSize, WithColumn
     public function headings(): array
     {
         return [
-            'Description',
-            'Task',
-            'Project',
-            'Client',
-            'User',
-            'Start',
-            'End',
-            'Duration',
-            'Duration (decimal)',
-            'Billable',
-            'Break',
-            'Tags',
+            __('Description'),
+            __('Task'),
+            __('Project'),
+            __('Client'),
+            __('User'),
+            __('Start'),
+            __('End'),
+            __('Duration'),
+            __('Duration (decimal)'),
+            __('Billable'),
+            __('Break'),
+            __('Tags'),
         ];
     }
 
@@ -131,8 +131,8 @@ class TimeEntriesDetailedExport implements FromQuery, ShouldAutoSize, WithColumn
                 $model->end !== null ? Date::dateTimeToExcel($model->end->timezone($this->timezone)) : null,
                 $duration !== null ? $this->localizationService->formatInterval($duration) : null,
                 $duration?->totalHours,
-                $model->billable ? 'Yes' : 'No',
-                $model->type === TimeEntryType::Break ? 'Yes' : 'No',
+                $model->billable ? __('Yes') : __('No'),
+                $model->type === TimeEntryType::Break ? __('Yes') : __('No'),
                 $model->tagsRelation->pluck('name')->implode(', '),
             ];
         } elseif ($this->exportFormat === ExportFormat::ODS) {
@@ -146,8 +146,8 @@ class TimeEntriesDetailedExport implements FromQuery, ShouldAutoSize, WithColumn
                 $model->end?->timezone($this->timezone)?->format('Y-m-d H:i:s'),
                 $duration !== null ? $this->localizationService->formatInterval($duration) : null,
                 $duration?->totalHours,
-                $model->billable ? 'Yes' : 'No',
-                $model->type === TimeEntryType::Break ? 'Yes' : 'No',
+                $model->billable ? __('Yes') : __('No'),
+                $model->type === TimeEntryType::Break ? __('Yes') : __('No'),
                 $model->tagsRelation->pluck('name')->implode(', '),
             ];
         } else {

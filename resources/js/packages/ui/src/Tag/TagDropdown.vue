@@ -2,6 +2,7 @@
 import { PlusCircleIcon } from '@heroicons/vue/20/solid';
 import Dropdown from '@/packages/ui/src/Input/Dropdown.vue';
 import { computed, ref, watch } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 import TagCreateModal from '@/packages/ui/src/Tag/TagCreateModal.vue';
 import Checkbox from '@/packages/ui/src/Input/Checkbox.vue';
 import type { Tag } from '@/packages/api/src';
@@ -16,7 +17,7 @@ import {
 } from 'radix-vue';
 
 const NONE_ID = 'none';
-const NO_TAG_LABEL = 'No Tag';
+const noTagLabel = computed(() => trans('No Tag'));
 
 const props = withDefaults(
     defineProps<{
@@ -65,7 +66,7 @@ const showNoTag = computed(() => {
     if (!props.showNoTagOption) return false;
     const search = searchValue.value.toLowerCase().trim();
     if (!search) return true;
-    return NO_TAG_LABEL.toLowerCase().includes(search);
+    return noTagLabel.value.toLowerCase().includes(search);
 });
 
 function toggleTag(id: string) {
@@ -117,7 +118,7 @@ const showCreateTagModal = ref(false);
                     <ComboboxInput
                         data-testid="tag_dropdown_search"
                         class="w-full rounded-md border border-input-border bg-input-background px-3 py-1.5 text-sm text-text-primary placeholder:text-text-tertiary focus:outline-none"
-                        placeholder="Search for a Tag..." />
+                        :placeholder="$t('Search for a Tag...')" />
                 </ComboboxAnchor>
                 <slot name="content-before-list"></slot>
                 <ComboboxContent
@@ -136,7 +137,7 @@ const showCreateTagModal = ref(false);
                                 aria-hidden="true"
                                 :tabindex="-1"
                                 class="pointer-events-none" />
-                            <span class="truncate">{{ NO_TAG_LABEL }}</span>
+                            <span class="truncate">{{ noTagLabel }}</span>
                         </ComboboxItem>
                         <ComboboxItem
                             v-for="tag in filteredTags"
@@ -164,7 +165,7 @@ const showCreateTagModal = ref(false);
                             showCreateTagModal = true;
                         ">
                         <PlusCircleIcon class="w-4 h-4 flex-shrink-0 text-icon-default" />
-                        <span>Create new Tag</span>
+                        <span>{{ $t('Create new Tag') }}</span>
                     </Button>
                 </div>
             </ComboboxRoot>

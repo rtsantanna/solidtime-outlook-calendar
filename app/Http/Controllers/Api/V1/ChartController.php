@@ -161,7 +161,7 @@ class ChartController extends Controller
 
         $showBillableRate = $this->member($organization)->role !== Role::Employee->value || $organization->employees_can_see_billable_rates;
         if (! $showBillableRate) {
-            throw new AuthorizationException('You do not have permission to view billable rates.');
+            throw new AuthorizationException(__('You do not have permission to view billable rates.'));
         }
 
         $totalWeeklyBillableAmount = $dashboardService->totalWeeklyBillableAmount($user, $organization);

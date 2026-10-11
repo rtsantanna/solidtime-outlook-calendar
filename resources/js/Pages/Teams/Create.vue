@@ -4,10 +4,10 @@ import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
 </script>
 
 <template>
-    <AppLayout title="Create Organization">
+    <AppLayout :title="$t('Create Organization')">
         <template #header>
             <h2 class="font-semibold text-xl text-text-primary leading-tight">
-                Create Organization
+                {{ $t('Create Organization') }}
             </h2>
         </template>
 

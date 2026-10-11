@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import DialogModal from '@/packages/ui/src/DialogModal.vue';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -105,16 +106,21 @@ const displayedRate = computed({
 });
 
 const roleDescriptionTexts = {
-    'owner':
-        'The owner has full access of the organization. The owner is the only role that can: delete the organization, transfer the ownership to another user and access to the billing settings',
-    'admin':
-        'The admin has full access to the organization, except for the stuff that only the owner can do.',
-    'manager':
-        'The manager has full access to projects, clients, tags, time entries, and reports, but can not manage the organization or the users.',
-    'employee':
-        'An employee is a user that is only using the application to track time, but has no administrative rights.',
-    'placeholder':
-        'Placeholder users can not do anything in the organization. They are not billed and can be used to remove users from the organization without deleting their time entries.',
+    'owner': trans(
+        'The owner has full access of the organization. The owner is the only role that can: delete the organization, transfer the ownership to another user and access to the billing settings'
+    ),
+    'admin': trans(
+        'The admin has full access to the organization, except for the stuff that only the owner can do.'
+    ),
+    'manager': trans(
+        'The manager has full access to projects, clients, tags, time entries, and reports, but can not manage the organization or the users.'
+    ),
+    'employee': trans(
+        'An employee is a user that is only using the application to track time, but has no administrative rights.'
+    ),
+    'placeholder': trans(
+        'Placeholder users can not do anything in the organization. They are not billed and can be used to remove users from the organization without deleting their time entries.'
+    ),
 };
 
 const roleDescription = computed(() => {
@@ -139,7 +145,7 @@ const roleDescription = computed(() => {
     <DialogModal closeable :show="show" @close="show = false" @submit="saveWithChecks()">
         <template #title>
             <div class="flex space-x-2">
-                <span> Update Member </span>
+                <span> {{ $t('Update Member') }} </span>
             </div>
         </template>
 
@@ -147,7 +153,7 @@ const roleDescription = computed(() => {
             <div class="pb-5 pt-2 divide-y divide-border-secondary">
                 <div class="pb-5">
                     <Field>
-                        <FieldLabel for="role">Role</FieldLabel>
+                        <FieldLabel for="role">{{ $t('Role') }}</FieldLabel>
                         <MemberRoleSelect v-model="memberBody.role" name="role"></MemberRoleSelect>
                         <FieldDescription v-if="roleDescription">{{
                             roleDescription
@@ -156,17 +162,21 @@ const roleDescription = computed(() => {
                 </div>
                 <div class="pt-5">
                     <Field>
-                        <FieldLabel :icon="BillableIcon" for="billableRateType"
-                            >Billable Rate</FieldLabel
-                        >
+                        <FieldLabel :icon="BillableIcon" for="billableRateType">{{
+                            $t('Billable Rate')
+                        }}</FieldLabel>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <Select v-model="billableRateSelect">
                                 <SelectTrigger id="billableRateType">
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="default-rate">Default Rate</SelectItem>
-                                    <SelectItem value="custom-rate">Custom Rate</SelectItem>
+                                    <SelectItem value="default-rate">{{
+                                        $t('Default Rate')
+                                    }}</SelectItem>
+                                    <SelectItem value="custom-rate">{{
+                                        $t('Custom Rate')
+                                    }}</SelectItem>
                                 </SelectContent>
                             </Select>
                             <TooltipProvider v-if="billableRateSelect === 'default-rate'">
@@ -180,9 +190,9 @@ const roleDescription = computed(() => {
                                                 name="memberBillableRate" />
                                         </div>
                                     </TooltipTrigger>
-                                    <TooltipContent
-                                        >Uses the default rate of the organization</TooltipContent
-                                    >
+                                    <TooltipContent>{{
+                                        $t('Uses the default rate of the organization')
+                                    }}</TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
                             <BillableRateInput
@@ -198,14 +208,14 @@ const roleDescription = computed(() => {
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="saveWithChecks()">
-                Update Member
+                {{ $t('Update Member') }}
             </PrimaryButton>
         </template>
     </DialogModal>

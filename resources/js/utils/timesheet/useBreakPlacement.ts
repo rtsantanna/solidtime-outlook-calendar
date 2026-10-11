@@ -1,4 +1,5 @@
 import { ref, type Ref } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { api, type CreateTimeEntryBody, type TimeEntry } from '@/packages/api/src';
 import { getUserTimezone } from '@/packages/ui/src/utils/settings';
@@ -389,10 +390,10 @@ export function useBreakPlacement(deps: BreakPlacementDeps) {
         onSuccess: ({ entriesAdjusted }, { req }) => {
             notifications.addNotification(
                 'success',
-                req.replaceBreakId ? 'Break updated' : 'Break added',
+                req.replaceBreakId ? trans('Break updated') : trans('Break added'),
                 entriesAdjusted
-                    ? 'Your entries were adjusted to make room for the break.'
-                    : 'The break was added at the selected time.'
+                    ? trans('Your entries were adjusted to make room for the break.')
+                    : trans('The break was added at the selected time.')
             );
             if (breakPlacementRequest.value === req) breakPlacementRequest.value = null;
         },
@@ -402,21 +403,23 @@ export function useBreakPlacement(deps: BreakPlacementDeps) {
             if (error instanceof BreakPlacementSagaError && error.rollbackErrors.length > 0) {
                 notifications.addNotification(
                     'error',
-                    'Break placement needs attention',
-                    'Some entries could not be restored. The timesheet has been refreshed.'
+                    trans('Break placement needs attention'),
+                    trans('Some entries could not be restored. The timesheet has been refreshed.')
                 );
                 if (breakPlacementRequest.value === req) breakPlacementRequest.value = null;
             } else if (operationError instanceof NoFreeWindowError) {
                 notifications.addNotification(
                     'error',
-                    "This day can't fit the break",
-                    'Try a shorter break or a different time.'
+                    trans("This day can't fit the break"),
+                    trans('Try a shorter break or a different time.')
                 );
             } else {
                 notifications.addNotification(
                     'error',
-                    req.replaceBreakId ? 'Failed to update break' : 'Failed to add break',
-                    'Please try again later.'
+                    req.replaceBreakId
+                        ? trans('Failed to update break')
+                        : trans('Failed to add break'),
+                    trans('Please try again later.')
                 );
             }
         },

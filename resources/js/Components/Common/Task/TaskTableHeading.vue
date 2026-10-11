@@ -21,17 +21,17 @@ defineEmits<{
             column="name"
             v-bind="props"
             @sort="$emit('sort', $event)">
-            Task Name
+            {{ $t('Task Name') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell column="spent_time" v-bind="props" @sort="$emit('sort', $event)">
-            Total Time
+            {{ $t('Total Time') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell column="progress" v-bind="props" @sort="$emit('sort', $event)">
-            Progress
+            {{ $t('Progress') }}
         </SortableTableHeaderCell>
-        <div class="px-3 py-1.5 text-left text-text-tertiary">Status</div>
+        <div class="px-3 py-1.5 text-left text-text-tertiary">{{ $t('Status') }}</div>
         <div class="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8 3xl:pr-12">
-            <span class="sr-only">Edit</span>
+            <span class="sr-only">{{ $t('Edit') }}</span>
         </div>
     </TableHeading>
 </template>

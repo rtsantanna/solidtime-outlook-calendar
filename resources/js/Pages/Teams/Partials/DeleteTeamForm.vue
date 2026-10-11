@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 import ActionSection from '@/Components/ActionSection.vue';
@@ -40,7 +41,8 @@ const deleteTeam = async () => {
             const response = error.response as
                 { status?: number; data?: { errors?: { password?: string[] } } } | undefined;
             if (response?.status === 422) {
-                passwordError.value = response.data?.errors?.password?.[0] ?? 'Invalid password.';
+                passwordError.value =
+                    response.data?.errors?.password?.[0] ?? trans('Invalid password.');
             }
         }
         processing.value = false;
@@ -57,29 +59,35 @@ const closeModal = () => {
 
 <template>
     <ActionSection>
-        <template #title> Delete Organization </template>
+        <template #title> {{ $t('Delete Organization') }} </template>
 
-        <template #description> Permanently delete this organization. </template>
+        <template #description> {{ $t('Permanently delete this organization.') }} </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-text-secondary">
-                Once a organization is deleted, all of its resources and data will be permanently
-                deleted. Before deleting this organization, please download any data or information
-                regarding this organization that you wish to retain.
+                {{
+                    $t(
+                        'Once a organization is deleted, all of its resources and data will be permanently deleted. Before deleting this organization, please download any data or information regarding this organization that you wish to retain.'
+                    )
+                }}
             </div>
 
             <div class="mt-5">
-                <DangerButton @click="confirmTeamDeletion"> Delete Organization </DangerButton>
+                <DangerButton @click="confirmTeamDeletion">
+                    {{ $t('Delete Organization') }}
+                </DangerButton>
             </div>
 
             <!-- Delete Organization Confirmation Modal -->
             <DialogModal :show="confirmingTeamDeletion" @close="closeModal">
-                <template #title> Delete Organization </template>
+                <template #title> {{ $t('Delete Organization') }} </template>
 
                 <template #content>
-                    Are you sure you want to delete this organization? Once a organization is
-                    deleted, all of its resources and data will be permanently deleted. Please enter
-                    your password to confirm you would like to permanently delete this organization.
+                    {{
+                        $t(
+                            'Are you sure you want to delete this organization? Once a organization is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete this organization.'
+                        )
+                    }}
 
                     <Field class="mt-4">
                         <TextInput
@@ -87,7 +95,7 @@ const closeModal = () => {
                             v-model="password"
                             type="password"
                             class="block w-3/4"
-                            placeholder="Password"
+                            :placeholder="$t('Password')"
                             autocomplete="current-password"
                             @keyup.enter="deleteTeam" />
 
@@ -96,14 +104,14 @@ const closeModal = () => {
                 </template>
 
                 <template #footer>
-                    <SecondaryButton @click="closeModal"> Cancel </SecondaryButton>
+                    <SecondaryButton @click="closeModal"> {{ $t('Cancel') }} </SecondaryButton>
 
                     <DangerButton
                         class="ms-3"
                         :class="{ 'opacity-25': processing }"
                         :disabled="processing"
                         @click="deleteTeam">
-                        Delete Organization
+                        {{ $t('Delete Organization') }}
                     </DangerButton>
                 </template>
             </DialogModal>

@@ -36,18 +36,21 @@ const shownClients = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="Clients" data-testid="clients_view">
+    <AppLayout :title="$t('Clients')" data-testid="clients_view">
         <MainContainer
             class="py-5 border-b border-default-background-separator flex justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-6">
-                <PageTitle :icon="UserCircleIcon" title="Clients"> </PageTitle>
+                <PageTitle :icon="UserCircleIcon" :title="$t('Clients')"> </PageTitle>
                 <TabBar v-model="activeTab">
-                    <TabBarItem value="active">Active</TabBarItem>
-                    <TabBarItem value="archived"> Archived </TabBarItem>
+                    <TabBarItem value="active">{{ $t('Active') }}</TabBarItem>
+                    <TabBarItem value="archived"> {{ $t('Archived') }} </TabBarItem>
                 </TabBar>
             </div>
-            <SecondaryButton v-if="canCreateClients()" :icon="PlusIcon" @click="createClient = true"
-                >Create Client</SecondaryButton
+            <SecondaryButton
+                v-if="canCreateClients()"
+                :icon="PlusIcon"
+                @click="createClient = true"
+                >{{ $t('Create Client') }}</SecondaryButton
             >
             <ClientCreateModal v-model:show="createClient"></ClientCreateModal>
         </MainContainer>

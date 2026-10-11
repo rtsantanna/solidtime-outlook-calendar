@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Field, FieldLabel } from '../field';
 import { Settings } from '@lucide/vue';
 import { ref, watch } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 import type { CalendarSettings } from './calendarSettings';
 
 export type { CalendarSettings };
@@ -68,20 +69,20 @@ function onSlotChange(value: string) {
 }
 
 const snapOptions = [
-    { value: '1', label: '1 min' },
-    { value: '5', label: '5 min' },
-    { value: '10', label: '10 min' },
-    { value: '15', label: '15 min' },
-    { value: '30', label: '30 min' },
-    { value: '60', label: '1 hour' },
+    { value: '1', label: trans(':count min', { count: '1' }) },
+    { value: '5', label: trans(':count min', { count: '5' }) },
+    { value: '10', label: trans(':count min', { count: '10' }) },
+    { value: '15', label: trans(':count min', { count: '15' }) },
+    { value: '30', label: trans(':count min', { count: '30' }) },
+    { value: '60', label: trans('1 hour') },
 ];
 
 const slotOptions = [
-    { value: '5', label: '5 min' },
-    { value: '10', label: '10 min' },
-    { value: '15', label: '15 min' },
-    { value: '30', label: '30 min' },
-    { value: '60', label: '1 hour' },
+    { value: '5', label: trans(':count min', { count: '5' }) },
+    { value: '10', label: trans(':count min', { count: '10' }) },
+    { value: '15', label: trans(':count min', { count: '15' }) },
+    { value: '30', label: trans(':count min', { count: '30' }) },
+    { value: '60', label: trans('1 hour') },
 ];
 
 // Generate hour options 0-24
@@ -89,35 +90,39 @@ const hourOptions = Array.from({ length: 25 }, (_, i) => ({
     value: String(i),
     label:
         i === 0
-            ? '12:00 AM'
+            ? trans('12:00 AM')
             : i === 12
-              ? '12:00 PM'
+              ? trans('12:00 PM')
               : i === 24
-                ? '12:00 AM (next)'
+                ? trans('12:00 AM (next)')
                 : i < 12
-                  ? `${i}:00 AM`
-                  : `${i - 12}:00 PM`,
+                  ? trans(':hour:00 AM', { hour: String(i) })
+                  : trans(':hour:00 PM', { hour: String(i - 12), full_hour: String(i) }),
 }));
 </script>
 
 <template>
     <Popover>
         <PopoverTrigger as-child>
-            <Button variant="outline" size="sm" aria-label="Calendar settings" class="h-8 w-8 p-0">
+            <Button
+                variant="outline"
+                size="sm"
+                :aria-label="$t('Calendar settings')"
+                class="h-8 w-8 p-0">
                 <Settings class="h-4 w-4 text-muted-foreground" />
             </Button>
         </PopoverTrigger>
         <PopoverContent align="end" class="w-72 p-4">
             <div class="space-y-4">
-                <div class="text-sm font-semibold">Calendar Settings</div>
+                <div class="text-sm font-semibold">{{ $t('Calendar Settings') }}</div>
 
                 <Field>
-                    <FieldLabel for="calendar-snap">Snap Interval</FieldLabel>
+                    <FieldLabel for="calendar-snap">{{ $t('Snap Interval') }}</FieldLabel>
                     <Select
                         :model-value="snapMinutes"
                         @update:model-value="(v) => onSnapChange(v as string)">
                         <SelectTrigger id="calendar-snap" size="sm" class="w-full">
-                            <SelectValue placeholder="Snap interval" />
+                            <SelectValue :placeholder="$t('Snap interval')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
@@ -131,12 +136,12 @@ const hourOptions = Array.from({ length: 25 }, (_, i) => ({
                 </Field>
 
                 <Field>
-                    <FieldLabel for="calendar-start-hour">Start Time</FieldLabel>
+                    <FieldLabel for="calendar-start-hour">{{ $t('Start Time') }}</FieldLabel>
                     <Select
                         :model-value="startHour"
                         @update:model-value="(v) => onStartHourChange(v as string)">
                         <SelectTrigger id="calendar-start-hour" size="sm" class="w-full">
-                            <SelectValue placeholder="Start time" />
+                            <SelectValue :placeholder="$t('Start time')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
@@ -150,12 +155,12 @@ const hourOptions = Array.from({ length: 25 }, (_, i) => ({
                 </Field>
 
                 <Field>
-                    <FieldLabel for="calendar-end-hour">End Time</FieldLabel>
+                    <FieldLabel for="calendar-end-hour">{{ $t('End Time') }}</FieldLabel>
                     <Select
                         :model-value="endHour"
                         @update:model-value="(v) => onEndHourChange(v as string)">
                         <SelectTrigger id="calendar-end-hour" size="sm" class="w-full">
-                            <SelectValue placeholder="End time" />
+                            <SelectValue :placeholder="$t('End time')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
@@ -169,12 +174,12 @@ const hourOptions = Array.from({ length: 25 }, (_, i) => ({
                 </Field>
 
                 <Field>
-                    <FieldLabel for="calendar-scale">Grid Scale</FieldLabel>
+                    <FieldLabel for="calendar-scale">{{ $t('Grid Scale') }}</FieldLabel>
                     <Select
                         :model-value="slotMinutes"
                         @update:model-value="(v) => onSlotChange(v as string)">
                         <SelectTrigger id="calendar-scale" size="sm" class="w-full">
-                            <SelectValue placeholder="Grid scale" />
+                            <SelectValue :placeholder="$t('Grid scale')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem

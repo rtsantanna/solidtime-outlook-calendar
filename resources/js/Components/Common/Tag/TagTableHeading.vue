@@ -21,10 +21,10 @@ defineEmits<{
             column="name"
             v-bind="props"
             @sort="$emit('sort', $event)">
-            Name
+            {{ $t('Name') }}
         </SortableTableHeaderCell>
         <div class="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8 3xl:pr-12">
-            <span class="sr-only">Edit</span>
+            <span class="sr-only">{{ $t('Edit') }}</span>
         </div>
     </TableHeading>
 </template>

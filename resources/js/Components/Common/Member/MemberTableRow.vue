@@ -13,6 +13,7 @@ import TableRow from '@/Components/TableRow.vue';
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import { getCurrentOrganizationId } from '@/utils/useUser';
 import { useNotificationsStore } from '@/utils/notification';
+import { trans } from 'laravel-vue-i18n';
 import {
     canInvitePlaceholderMembers,
     canUpdateMembers,
@@ -62,8 +63,8 @@ async function invitePlaceholder(id: string) {
                         member: id,
                     },
                 }),
-            'Member invited successfully',
-            'Error inviting member'
+            trans('Member invited successfully'),
+            trans('Error inviting member')
         );
     }
 }
@@ -87,7 +88,7 @@ const userHasValidMailAddress = computed(() => {
                     {{ member.email }}
                 </div>
                 <div class="whitespace-nowrap px-3 py-4 text-sm text-text-primary">
-                    {{ capitalizeFirstLetter(member.role) }}
+                    {{ capitalizeFirstLetter($t(member.role)) }}
                 </div>
                 <div class="whitespace-nowrap px-3 py-4 text-sm text-text-primary">
                     <span v-if="member.billable_rate">
@@ -107,11 +108,11 @@ const userHasValidMailAddress = computed(() => {
                     class="whitespace-nowrap px-3 py-4 text-sm text-text-primary flex space-x-1.5 items-center">
                     <template v-if="member.is_placeholder === false">
                         <CheckCircleIcon class="w-4 text-icon-default"></CheckCircleIcon>
-                        <span>Active</span>
+                        <span>{{ $t('Active') }}</span>
                     </template>
                     <template v-else>
                         <UserCircleIcon class="w-4 text-icon-default"></UserCircleIcon>
-                        <span>Inactive</span>
+                        <span>{{ $t('Inactive') }}</span>
                     </template>
                 </div>
                 <div
@@ -124,7 +125,7 @@ const userHasValidMailAddress = computed(() => {
                         "
                         size="small"
                         @click="invitePlaceholder(member.id)"
-                        >Invite
+                        >{{ $t('Invite') }}
                     </SecondaryButton>
                     <MemberMoreOptionsDropdown
                         :member="member"
@@ -155,21 +156,21 @@ const userHasValidMailAddress = computed(() => {
                 class="space-x-3"
                 @select="showEditMemberModal = true">
                 <PencilSquareIcon class="w-4 h-4 text-icon-default" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </ContextMenuItem>
             <ContextMenuItem
                 v-if="member.role === 'placeholder' && canMergeMembers()"
                 class="space-x-3"
                 @select="showMergeMemberModal = true">
                 <ArrowDownOnSquareStackIcon class="w-4 h-4 text-icon-default" />
-                <span>Merge</span>
+                <span>{{ $t('Merge') }}</span>
             </ContextMenuItem>
             <ContextMenuItem
                 v-if="member.role !== 'placeholder' && canMakeMembersPlaceholders()"
                 class="space-x-3"
                 @select="showMakeMemberPlaceholderModal = true">
                 <UserCircleIconSolid class="w-4 h-4 text-icon-default" />
-                <span>Deactivate</span>
+                <span>{{ $t('Deactivate') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator v-if="canDeleteMembers()" />
             <ContextMenuItem
@@ -177,7 +178,7 @@ const userHasValidMailAddress = computed(() => {
                 class="space-x-3 text-destructive"
                 @select="showDeleteMemberModal = true">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

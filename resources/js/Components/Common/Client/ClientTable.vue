@@ -104,13 +104,15 @@ const paginatedClients = computed(() => {
                     @sort="handleSort"></ClientTableHeading>
                 <div v-if="sortedClients.length === 0" class="col-span-3 py-24 text-center">
                     <UserCircleIcon class="w-8 text-icon-default inline pb-2"></UserCircleIcon>
-                    <h3 class="text-text-primary font-semibold">No clients found</h3>
-                    <p v-if="canCreateClients()" class="pb-5">Create your first client now!</p>
+                    <h3 class="text-text-primary font-semibold">{{ $t('No clients found') }}</h3>
+                    <p v-if="canCreateClients()" class="pb-5">
+                        {{ $t('Create your first client now!') }}
+                    </p>
                     <SecondaryButton
                         v-if="canCreateClients()"
                         :icon="PlusIcon as Component"
                         @click="createClient = true"
-                        >Create your First Client
+                        >{{ $t('Create your First Client') }}
                     </SecondaryButton>
                 </div>
                 <template v-for="client in paginatedClients" :key="client.id">

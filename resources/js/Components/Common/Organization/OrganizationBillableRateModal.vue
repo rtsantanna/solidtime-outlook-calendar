@@ -23,10 +23,10 @@ defineEmits<{
     <BillableRateModal
         v-model:show="show"
         v-model:saving="saving"
-        title="Update Organization Billable Rate"
+        :title="$t('Update Organization Billable Rate')"
         @submit="$emit('submit')">
         <p class="py-0.5 text-center">
-            The organization billable rate will be updated to
+            {{ $t('The organization billable rate will be updated to') }}
             <strong>{{
                 newBillableRate
                     ? formatCents(
@@ -36,13 +36,16 @@ defineEmits<{
                           organization?.currency_symbol,
                           organization?.number_format
                       )
-                    : ' none.'
+                    : $t('none.')
             }}</strong
             >.
         </p>
         <p class="py-0.5 text-center font-semibold">
-            Do you want to update all existing time entries, where the organization billable rate
-            applies as well?
+            {{
+                $t(
+                    'Do you want to update all existing time entries, where the organization billable rate applies as well?'
+                )
+            }}
         </p>
     </BillableRateModal>
 </template>

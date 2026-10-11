@@ -28,7 +28,7 @@ const { data: latestTeamActivity, isLoading } = useQuery({
 </script>
 
 <template>
-    <DashboardCard title="Team Activity" :icon="UserGroupIcon">
+    <DashboardCard :title="$t('Team Activity')" :icon="UserGroupIcon">
         <div v-if="isLoading" class="flex justify-center items-center h-40">
             <LoadingSpinner />
         </div>
@@ -41,17 +41,19 @@ const { data: latestTeamActivity, isLoading } = useQuery({
                 :description="activity.description"
                 :working="activity.status"></TeamActivityCardEntry>
         </div>
-        <div v-else class="text-center text-gray-500 py-8">No team activity found</div>
+        <div v-else class="text-center text-gray-500 py-8">{{ $t('No team activity found') }}</div>
         <div
             v-if="latestTeamActivity && latestTeamActivity.length <= 1"
             :class="latestTeamActivity?.length === 1 ? 'pb-5' : 'py-5'"
             class="text-center flex flex-1 justify-center items-center">
             <div>
                 <UserGroupIcon class="w-8 text-icon-default inline pb-2"></UserGroupIcon>
-                <h3 class="text-text-primary font-medium text-sm">Invite your co-workers</h3>
-                <p class="pb-5 text-sm">You can invite your entire team.</p>
+                <h3 class="text-text-primary font-medium text-sm">
+                    {{ $t('Invite your co-workers') }}
+                </h3>
+                <p class="pb-5 text-sm">{{ $t('You can invite your entire team.') }}</p>
                 <SecondaryButton @click="router.visit(route('members'))"
-                    >Go to Members
+                    >{{ $t('Go to Members') }}
                 </SecondaryButton>
             </div>
         </div>

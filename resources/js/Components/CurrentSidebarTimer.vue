@@ -38,12 +38,12 @@ const isRunningInDifferentOrganization = computed(() => {
                 class="w-full h-[calc(100%+10px)] absolute bg-default-background opacity-75 backdrop-blur-sm"></div>
             <div class="flex space-x-3 items-center w-full z-20 justify-center">
                 <span class="text-xs text-center text-text-primary">
-                    The Timer is running in a different organization.
+                    {{ $t('The Timer is running in a different organization.') }}
                 </span>
             </div>
         </div>
         <div>
-            <div class="text-text-secondary font-medium text-xs">Current Timer</div>
+            <div class="text-text-secondary font-medium text-xs">{{ $t('Current Timer') }}</div>
             <div class="text-text-primary font-medium text-base">
                 {{ currentTime }}
             </div>

@@ -46,7 +46,7 @@ class HarvestProjectsImporter extends DefaultImporter
                 }
                 if ($record['Project'] !== '') {
                     if (! isset($record['Budget']) || ! is_string($record['Budget'])) {
-                        throw new ImportException('The value for "Budget" is invalid');
+                        throw new ImportException(__('The value for "Budget" is invalid'));
                     }
                     $estimatedTimeField = Str::replace(',', '.', $record['Budget']);
                     $estimatedTime = $estimatedTimeField !== '' && is_numeric($estimatedTimeField) ? (int) (((float) $estimatedTimeField) * 60 * 60) : null;
@@ -54,7 +54,7 @@ class HarvestProjectsImporter extends DefaultImporter
                         $estimatedTime = null;
                     }
                     if (! isset($record['Billable Hours']) || ! is_string($record['Billable Hours'])) {
-                        throw new ImportException('The value for "Billable Hours" is invalid');
+                        throw new ImportException(__('The value for "Billable Hours" is invalid'));
                     }
                     $billableHoursField = Str::replace(',', '.', $record['Billable Hours']);
                     $billableHours = $billableHoursField !== '' && is_numeric($billableHoursField) ? (int) ((float) $billableHoursField) : null;
@@ -72,10 +72,10 @@ class HarvestProjectsImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -88,7 +88,7 @@ class HarvestProjectsImporter extends DefaultImporter
     {
         foreach (self::REQUIRED_FIELDS as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
     }

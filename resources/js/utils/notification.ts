@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { router } from '@inertiajs/vue3';
 import { fetchToken } from '@/utils/session';
+import { trans } from 'laravel-vue-i18n';
 
 export type NotificationType = 'success' | 'error';
 
@@ -60,17 +61,17 @@ export const useNotificationsStore = defineStore('notifications', () => {
                     } else if (error?.response?.data?.key === 'overlapping_time_entry') {
                         addNotification(
                             'error',
-                            'Overlapping time entries are not allowed',
+                            trans('Overlapping time entries are not allowed'),
                             error.response?.data?.message ??
-                                'This change would overlap with an existing time entry.'
+                                trans('This change would overlap with an existing time entry.')
                         );
                     } else {
                         addNotification(
                             'error',
-                            errorMessage ?? 'Request Error',
+                            errorMessage ?? trans('Request Error'),
                             error.response?.data?.errorMessage ??
                                 error?.response?.data?.message ??
-                                'An request error occurred. Please try again later.'
+                                trans('An request error occurred. Please try again later.')
                         );
                     }
                 } else if (error?.response?.status === 422) {
@@ -91,7 +92,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
                         router.get('/login');
                     }
                 } else {
-                    addNotification('error', 'The action failed. Please try again later.');
+                    addNotification('error', trans('The action failed. Please try again later.'));
                 }
             }
             throw new Error('Failed to handle API request');

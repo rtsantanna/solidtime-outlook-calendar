@@ -189,7 +189,7 @@ abstract class DefaultImporter implements ImporterContract
     protected function checkTaskNameLength(string $taskName): void
     {
         if (strlen($taskName) > self::TASK_NAME_MAX_LENGTH) {
-            throw new ImportException('Task name ("'.$taskName.'") is too long, maximum length is '.self::TASK_NAME_MAX_LENGTH.' characters');
+            throw new ImportException(__('Task name (":name") is too long, maximum length is :max characters', ['name' => $taskName, 'max' => self::TASK_NAME_MAX_LENGTH]));
         }
     }
 

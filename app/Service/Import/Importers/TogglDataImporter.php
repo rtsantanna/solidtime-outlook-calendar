@@ -30,48 +30,48 @@ class TogglDataImporter extends DefaultImporter
             $temporaryDirectory = TemporaryDirectory::make();
             app(ZipImportHelper::class)->extract($temporaryDirectoryZip->path('import.zip'), $temporaryDirectory->path());
             if (! file_exists($temporaryDirectory->path('clients.json'))) {
-                throw new ImportException('File "clients.json" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'clients.json']));
             }
             $clientsFileContent = file_get_contents($temporaryDirectory->path('clients.json'));
             if ($clientsFileContent === false) {
-                throw new ImportException('File "clients.json" can not be opened');
+                throw new ImportException(__('File ":file" can not be opened', ['file' => 'clients.json']));
             }
             $clients = json_decode($clientsFileContent);
             if ($clients === null) {
-                throw new ImportException('File "clients.json" is empty');
+                throw new ImportException(__('File ":file" is empty', ['file' => 'clients.json']));
             }
             if (! file_exists($temporaryDirectory->path('projects.json'))) {
-                throw new ImportException('File "projects.json" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'projects.json']));
             }
             $projectsFileContent = file_get_contents($temporaryDirectory->path('projects.json'));
             if ($projectsFileContent === false) {
-                throw new ImportException('File "projects.json" can not be opened');
+                throw new ImportException(__('File ":file" can not be opened', ['file' => 'projects.json']));
             }
             $projects = json_decode($projectsFileContent);
             if ($projects === null) {
-                throw new ImportException('File "projects.json" is empty');
+                throw new ImportException(__('File ":file" is empty', ['file' => 'projects.json']));
             }
             if (! file_exists($temporaryDirectory->path('tags.json'))) {
-                throw new ImportException('File "tags.json" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'tags.json']));
             }
             $tagsFileContent = file_get_contents($temporaryDirectory->path('tags.json'));
             if ($tagsFileContent === false) {
-                throw new ImportException('File "tags.json" can not be opened');
+                throw new ImportException(__('File ":file" can not be opened', ['file' => 'tags.json']));
             }
             $tags = json_decode($tagsFileContent);
             if ($tags === null) {
-                throw new ImportException('File "tags.json" is empty');
+                throw new ImportException(__('File ":file" is empty', ['file' => 'tags.json']));
             }
             if (! file_exists($temporaryDirectory->path('workspace_users.json'))) {
-                throw new ImportException('File "workspace_users.json" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'workspace_users.json']));
             }
             $workspaceUsersFileContent = file_get_contents($temporaryDirectory->path('workspace_users.json'));
             if ($workspaceUsersFileContent === false) {
-                throw new ImportException('File "workspace_users.json" can not be opened');
+                throw new ImportException(__('File ":file" can not be opened', ['file' => 'workspace_users.json']));
             }
             $workspaceUsers = json_decode($workspaceUsersFileContent);
             if ($workspaceUsers === null) {
-                throw new ImportException('File "workspace_users.json" is empty');
+                throw new ImportException(__('File ":file" is empty', ['file' => 'workspace_users.json']));
             }
             foreach ($clients as $client) {
                 $this->clientImportHelper->getKey([
@@ -126,7 +126,7 @@ class TogglDataImporter extends DefaultImporter
                 }
 
                 if (! $this->colorService->isValid($project->color)) {
-                    throw new ImportException('Invalid color');
+                    throw new ImportException(__('Invalid color'));
                 }
 
                 $projectId = $this->projectImportHelper->getKey([
@@ -141,15 +141,15 @@ class TogglDataImporter extends DefaultImporter
                 ], (string) $project->id);
 
                 if (! file_exists($temporaryDirectory->path('projects_users/'.$projectExternalId.'.json'))) {
-                    throw new ImportException('File "projects_users/'.$projectExternalId.'.json" missing in ZIP');
+                    throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'projects_users/'.$projectExternalId.'.json']));
                 }
                 $projectMembersFileContent = file_get_contents($temporaryDirectory->path('projects_users/'.$projectExternalId.'.json'));
                 if ($projectMembersFileContent === false) {
-                    throw new ImportException('File "projects_users/'.$projectExternalId.'.json" can not be opened');
+                    throw new ImportException(__('File ":file" can not be opened', ['file' => 'projects_users/'.$projectExternalId.'.json']));
                 }
                 $projectMembers = json_decode($projectMembersFileContent);
                 if ($projectMembers === null) {
-                    throw new ImportException('File "projects_users/'.$projectExternalId.'.json" is empty');
+                    throw new ImportException(__('File ":file" is empty', ['file' => 'projects_users/'.$projectExternalId.'.json']));
                 }
                 foreach ($projectMembers as $projectMember) {
                     $userId = $this->userImportHelper->getKeyByExternalIdentifier((string) $projectMember->user_id);
@@ -177,11 +177,11 @@ class TogglDataImporter extends DefaultImporter
                 }
                 $tasksFileContent = file_get_contents($temporaryDirectory->path('tasks/'.$projectIdExternal.'.json'));
                 if ($tasksFileContent === false) {
-                    throw new ImportException('File "tasks/'.$projectIdExternal.'.json" can not be opened');
+                    throw new ImportException(__('File ":file" can not be opened', ['file' => 'tasks/'.$projectIdExternal.'.json']));
                 }
                 $tasks = json_decode($tasksFileContent);
                 if ($tasks === null) {
-                    throw new ImportException('File "tasks/'.$projectIdExternal.'.json" is empty');
+                    throw new ImportException(__('File ":file" is empty', ['file' => 'tasks/'.$projectIdExternal.'.json']));
                 }
                 foreach ($tasks as $task) {
                     $projectId = $this->projectImportHelper->getKeyByExternalIdentifier((string) $projectIdExternal);
@@ -205,7 +205,7 @@ class TogglDataImporter extends DefaultImporter
             throw $exception;
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         } finally {
             $temporaryDirectory?->delete();
             $temporaryDirectoryZip?->delete();
@@ -226,11 +226,11 @@ class TogglDataImporter extends DefaultImporter
     private function guardExternalIdentifier(mixed $id): string
     {
         if (! is_string($id) && ! is_int($id)) {
-            throw new ImportException('Invalid identifier in import data');
+            throw new ImportException(__('Invalid identifier in import data'));
         }
         $id = (string) $id;
         if (preg_match('/^[A-Za-z0-9_-]+$/', $id) !== 1) {
-            throw new ImportException('Invalid identifier in import data');
+            throw new ImportException(__('Invalid identifier in import data'));
         }
 
         return $id;

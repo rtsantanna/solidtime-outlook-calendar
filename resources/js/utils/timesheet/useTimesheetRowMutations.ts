@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import type { Ref } from 'vue';
 import type { Project, UpdateMultipleTimeEntriesChangeset } from '@/packages/api/src';
 import {
@@ -144,8 +145,10 @@ export function useTimesheetRowMutations(
             removeSlot(row.key);
             notifications.addNotification(
                 'success',
-                'Merged into matching row',
-                'Another row with the same project, task, billable status and tags already exists.'
+                trans('Merged into matching row'),
+                trans(
+                    'Another row with the same project, task, billable status and tags already exists.'
+                )
             );
             return;
         }

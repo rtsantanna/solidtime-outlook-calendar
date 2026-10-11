@@ -31,7 +31,7 @@ const emit = defineEmits<{
         <DropdownMenuTrigger as-child>
             <button
                 class="focus-visible:outline-none focus-visible:bg-card-background rounded-full focus-visible:ring-2 focus-visible:ring-ring hover:bg-card-background hover:opacity-100 opacity-20 transition-opacity text-text-secondary"
-                aria-label="Time entry actions">
+                :aria-label="$t('Time entry actions')">
                 <svg
                     class="h-8 w-8 p-1 rounded-full"
                     viewBox="0 0 24 24"
@@ -51,14 +51,14 @@ const emit = defineEmits<{
                 class="flex items-center space-x-3 cursor-pointer"
                 @click="emit('manualEntry')">
                 <PlusIcon class="w-5" />
-                <span>Manual time entry</span>
+                <span>{{ $t('Manual time entry') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="props.breaksEnabled && !props.isOnBreak"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click="emit('startBreak')">
                 <Coffee class="w-5" />
-                <span>Start Break</span>
+                <span>{{ $t('Start Break') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 class="flex items-center space-x-3 cursor-pointer"
@@ -66,8 +66,8 @@ const emit = defineEmits<{
                 <ClockIcon class="w-5" />
                 <span>{{
                     props.timeTrackerMode === 'simple'
-                        ? 'Switch to project mode'
-                        : 'Switch to simple mode'
+                        ? $t('Switch to project mode')
+                        : $t('Switch to simple mode')
                 }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -75,7 +75,7 @@ const emit = defineEmits<{
                 class="flex items-center space-x-3 cursor-pointer text-destructive focus:text-destructive"
                 @click="emit('discard')">
                 <XMarkIcon class="w-5" />
-                <span>Discard</span>
+                <span>{{ $t('Discard') }}</span>
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { api } from '@/packages/api/src';
 import type { CreateClientBody, Client, UpdateClientBody } from '@/packages/api/src';
@@ -19,8 +20,8 @@ export const useClientsStore = defineStore('clients', () => {
                             organization: organization,
                         },
                     }),
-                'Client created successfully',
-                'Failed to create client'
+                trans('Client created successfully'),
+                trans('Failed to create client')
             );
             queryClient.invalidateQueries({ queryKey: ['clients'] });
             return response?.data;
@@ -38,8 +39,8 @@ export const useClientsStore = defineStore('clients', () => {
                             client: clientId,
                         },
                     }),
-                'Client updated successfully',
-                'Failed to update client'
+                trans('Client updated successfully'),
+                trans('Failed to update client')
             );
             queryClient.invalidateQueries({ queryKey: ['clients'] });
         }
@@ -56,8 +57,8 @@ export const useClientsStore = defineStore('clients', () => {
                             client: clientId,
                         },
                     }),
-                'Client deleted successfully',
-                'Failed to delete client'
+                trans('Client deleted successfully'),
+                trans('Failed to delete client')
             );
             queryClient.invalidateQueries({ queryKey: ['clients'] });
         }

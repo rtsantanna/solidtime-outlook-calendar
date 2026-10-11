@@ -25,17 +25,17 @@ async function createTag(tag: string) {
 </script>
 
 <template>
-    <AppLayout title="Tags" data-testid="tags_view">
+    <AppLayout :title="$t('Tags')" data-testid="tags_view">
         <MainContainer
             class="py-5 border-b border-default-background-separator flex justify-between items-center">
             <div class="flex items-center space-x-6">
-                <PageTitle :icon="TagIcon" title="Tags"></PageTitle>
+                <PageTitle :icon="TagIcon" :title="$t('Tags')"></PageTitle>
             </div>
             <SecondaryButton
                 v-if="canCreateTags()"
                 :icon="PlusIcon"
                 @click="showCreateTagModal = true"
-                >Create Tag
+                >{{ $t('Create Tag') }}
             </SecondaryButton>
             <TagCreateModal
                 v-model:show="showCreateTagModal"

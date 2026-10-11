@@ -66,10 +66,10 @@ const showTaskEditModal = ref(false);
             class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary flex space-x-1 items-center font-medium">
             <template v-if="task.is_done">
                 <CheckCircleIcon class="w-5"></CheckCircleIcon>
-                <span>Done</span>
+                <span>{{ $t('Done') }}</span>
             </template>
             <template v-else>
-                <span>Active</span>
+                <span>{{ $t('Active') }}</span>
             </template>
         </div>
         <div

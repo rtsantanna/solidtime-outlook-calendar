@@ -216,7 +216,11 @@ const emit = defineEmits<{
                         <div
                             v-if="getActivityBoxActivities(abox).length > 5"
                             class="mt-1 text-[11px] opacity-70 italic">
-                            ...and {{ getActivityBoxActivities(abox).length - 5 }} more
+                            {{
+                                $t('...and :count more', {
+                                    count: String(getActivityBoxActivities(abox).length - 5),
+                                })
+                            }}
                         </div>
                     </div>
                 </TooltipContent>

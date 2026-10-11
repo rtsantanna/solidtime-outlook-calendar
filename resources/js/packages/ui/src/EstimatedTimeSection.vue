@@ -9,13 +9,13 @@ const emit = defineEmits(['submit']);
 
 <template>
     <Field>
-        <FieldLabel for="time_estimated" :icon="ClockIcon">Time Estimated</FieldLabel>
+        <FieldLabel for="time_estimated" :icon="ClockIcon">{{ $t('Time Estimated') }}</FieldLabel>
         <EstimatedTimeInput
             id="time_estimated"
             v-model="model"
             @submit="emit('submit')"></EstimatedTimeInput>
         <FieldDescription>
-            You can type natural language like
+            {{ $t('You can type natural language like') }}
             <span class="font-semibold">2h 30m</span>
         </FieldDescription>
     </Field>

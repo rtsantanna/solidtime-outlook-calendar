@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import TextInput from '@/packages/ui/src/Input/TextInput.vue';
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import DialogModal from '@/packages/ui/src/DialogModal.vue';
@@ -42,8 +43,8 @@ async function submit() {
     if (addTeamMemberForm.role === null || addTeamMemberForm.email === '') {
         errors.value.email = z.string().email().safeParse(addTeamMemberForm.email).success
             ? ''
-            : 'Please enter a valid email address';
-        errors.value.role = addTeamMemberForm.role === null ? 'Please select a role' : '';
+            : trans('Please enter a valid email address');
+        errors.value.role = addTeamMemberForm.role === null ? trans('Please select a role') : '';
         return;
     }
 
@@ -62,8 +63,8 @@ async function submit() {
                         },
                     }
                 ),
-            'Member invited',
-            'Failed to invite member',
+            trans('Member invited'),
+            trans('Failed to invite member'),
             () => {
                 addTeamMemberForm.reset();
                 emit('close');
@@ -81,7 +82,7 @@ useFocus(clientNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Invite Member </span>
+                <span> {{ $t('Invite Member') }} </span>
             </div>
         </template>
 
@@ -92,10 +93,14 @@ useFocus(clientNameInput, { initialValue: true });
                     <UserGroupIcon class="w-12"></UserGroupIcon>
                 </div>
                 <div class="max-w-sm text-center mx-auto py-4 text-base">
-                    <p class="py-1">The Free plan is <strong>limited to one member</strong></p>
                     <p class="py-1">
-                        To add new team members to your organization you,
-                        <strong>please upgrade to a paid plan</strong>.
+                        {{ $t('The Free plan is') }}
+                        <strong>{{ $t('limited to one member') }}</strong>
+                    </p>
+                    <p class="py-1">
+                        {{ $t('To add new team members to your organization you,') }}
+                        <strong>{{ $t('please upgrade to a paid plan') }}</strong
+                        >.
                     </p>
 
                     <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
@@ -104,21 +109,21 @@ useFocus(clientNameInput, { initialValue: true });
                             type="button"
                             class="mt-6">
                             <CreditCardIcon class="w-5 h-5 me-2" />
-                            Go to Billing
+                            {{ $t('Go to Billing') }}
                         </PrimaryButton>
                     </Link>
                 </div>
             </div>
             <div v-else class="space-y-4">
                 <Field class="col-span-6 sm:col-span-4 flex-1">
-                    <FieldLabel for="email">Email</FieldLabel>
+                    <FieldLabel for="email">{{ $t('Email') }}</FieldLabel>
                     <TextInput
                         id="email"
                         ref="memberEmailInput"
                         v-model="addTeamMemberForm.email"
                         name="email"
                         type="text"
-                        placeholder="Member Email"
+                        :placeholder="$t('Member Email')"
                         class="block w-full"
                         required
                         autocomplete="memberName"
@@ -127,7 +132,7 @@ useFocus(clientNameInput, { initialValue: true });
                 </Field>
 
                 <Field v-if="availableRoles.length > 0">
-                    <FieldLabel for="roles">Role</FieldLabel>
+                    <FieldLabel for="roles">{{ $t('Role') }}</FieldLabel>
                     <FieldError v-if="errors.role">{{ errors.role }}</FieldError>
 
                     <div
@@ -185,14 +190,14 @@ useFocus(clientNameInput, { initialValue: true });
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 v-if="isAllowedToPerformPremiumAction()"
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Invite Member
+                {{ $t('Invite Member') }}
             </PrimaryButton>
         </template>
     </DialogModal>

@@ -21,6 +21,7 @@ import { getOrganizationCurrencyString } from '@/utils/money';
 import { isAllowedToPerformPremiumAction } from '@/utils/billing';
 import { useOrganizationQuery } from '@/utils/useOrganizationQuery';
 import { getCurrentOrganizationId } from '@/utils/useUser';
+import { trans } from 'laravel-vue-i18n';
 import {
     useSortableTable,
     type SortableColumnDef,
@@ -131,21 +132,21 @@ const paginatedProjects = computed(() => {
 const emptyState = computed(() => {
     if (props.isFiltered) {
         return {
-            title: 'No matching projects',
-            description: 'Try a different search term or adjust your filters.',
+            title: trans('No matching projects'),
+            description: trans('Try a different search term or adjust your filters.'),
             showCreateButton: false,
         };
     }
     if (!canCreateProjects()) {
         return {
-            title: 'You are not a member of any projects',
-            description: 'Ask your manager to add you to a project as a team member.',
+            title: trans('You are not a member of any projects'),
+            description: trans('Ask your manager to add you to a project as a team member.'),
             showCreateButton: false,
         };
     }
     return {
-        title: 'No projects found',
-        description: 'Create your first project now!',
+        title: trans('No projects found'),
+        description: trans('Create your first project now!'),
         showCreateButton: true,
     };
 });
@@ -200,7 +201,7 @@ const gridTemplate = computed(() => {
                         v-if="emptyState.showCreateButton"
                         :icon="PlusIcon"
                         @click="showCreateProjectModal = true"
-                        >Create your First Project
+                        >{{ $t('Create your First Project') }}
                     </SecondaryButton>
                 </div>
                 <template v-for="project in paginatedProjects" :key="project.id">

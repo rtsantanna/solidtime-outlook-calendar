@@ -129,7 +129,7 @@ const billableProxy = computed({
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Create manual time entry </span>
+                <span> {{ $t('Create manual time entry') }} </span>
             </div>
         </template>
 
@@ -140,8 +140,8 @@ const billableProxy = computed({
                         id="description"
                         ref="description"
                         v-model="timeEntry.description"
-                        aria-label="Description"
-                        placeholder="What did you work on?"
+                        :aria-label="$t('Description')"
+                        :placeholder="$t('What did you work on?')"
                         type="text"
                         class="mt-1 block w-full"
                         @keydown.enter="submit" />
@@ -175,8 +175,12 @@ const billableProxy = computed({
                                 <TagIcon class="h-4 text-icon-default" />
                                 <span>{{
                                     timeEntry.tags.length === 0
-                                        ? 'Tags'
-                                        : `${timeEntry.tags.length} Tag${timeEntry.tags.length > 1 ? 's' : ''}`
+                                        ? $t('Tags')
+                                        : $tChoice(
+                                              ':count Tag|:count Tags',
+                                              timeEntry.tags.length,
+                                              { count: String(timeEntry.tags.length) }
+                                          )
                                 }}</span>
                             </Button>
                         </template>
@@ -185,12 +189,14 @@ const billableProxy = computed({
                         <SelectTrigger :show-chevron="false">
                             <SelectValue class="flex items-center gap-2">
                                 <BillableIcon class="h-4 text-icon-default" />
-                                <span>{{ timeEntry.billable ? 'Billable' : 'Non-Billable' }}</span>
+                                <span>{{
+                                    timeEntry.billable ? $t('Billable') : $t('Non-Billable')
+                                }}</span>
                             </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="true">Billable</SelectItem>
-                            <SelectItem value="false">Non Billable</SelectItem>
+                            <SelectItem value="true">{{ $t('Billable') }}</SelectItem>
+                            <SelectItem value="false">{{ $t('Non Billable') }}</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
@@ -202,14 +208,16 @@ const billableProxy = computed({
                 class="pt-4"></TimeRangeFields>
         </template>
         <template #footer>
-            <SecondaryButton tabindex="2" @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton tabindex="2" @click="show = false">
+                {{ $t('Cancel') }}</SecondaryButton
+            >
             <PrimaryButton
                 tabindex="2"
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Create Time Entry
+                {{ $t('Create Time Entry') }}
             </PrimaryButton>
         </template>
     </DialogModal>

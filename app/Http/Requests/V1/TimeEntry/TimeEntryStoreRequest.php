@@ -96,7 +96,7 @@ class TimeEntryStoreRequest extends BaseFormRequest
                 Rule::enum(TimeEntryType::class),
                 function (string $attribute, mixed $value, \Closure $fail): void {
                     if ($value === TimeEntryType::Break->value && ! $this->organization->breaks_enabled) {
-                        $fail('Breaks are disabled for this organization.');
+                        $fail(__('Breaks are disabled for this organization.'));
                     }
                 },
             ],

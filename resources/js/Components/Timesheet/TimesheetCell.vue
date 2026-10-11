@@ -11,6 +11,7 @@ import {
 } from '@/packages/ui/src/tooltip';
 import type { TimesheetCell } from '@/utils/useTimesheetGrid';
 import type { CellSaveStatus } from '@/utils/timesheet/useTimesheetCellMutations';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     cell?: TimesheetCell;
@@ -37,8 +38,8 @@ const isSaving = computed(() => props.saveStatus === 'saving');
 const isReadonly = computed(() => props.hasRunningEntry || props.readonly === true);
 const readonlyTooltip = computed(() =>
     props.hasRunningEntry
-        ? 'Stop the running time entry to edit the timesheet'
-        : 'Breaks are disabled for this organization'
+        ? trans('Stop the running time entry to edit the timesheet')
+        : trans('Breaks are disabled for this organization')
 );
 
 // Swap the border color (don't layer) to avoid same-specificity fights.
@@ -95,7 +96,7 @@ const inputClass = computed(() => {
                 <span
                     v-if="saveStatus === 'saving' || saveStatus === 'saved'"
                     class="pointer-events-none absolute left-full top-1/2 ml-1.5 flex -translate-y-1/2 items-center"
-                    :aria-label="saveStatus === 'saving' ? 'Saving' : 'Saved'">
+                    :aria-label="saveStatus === 'saving' ? $t('Saving') : $t('Saved')">
                     <LoadingSpinner
                         v-if="saveStatus === 'saving'"
                         class="h-3 w-3 m-0 text-text-tertiary" />

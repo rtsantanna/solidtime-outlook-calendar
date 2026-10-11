@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { ref, computed } from 'vue';
 import { router } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
@@ -71,14 +72,14 @@ const showProjectSelector = ref(false);
 const showTaskSelector = ref(false);
 const showTagsSelector = ref(false);
 
-// Group display order and headings
-const GROUP_CONFIG: { id: CommandGroupType; heading: string }[] = [
-    { id: 'timer', heading: 'Timer' },
-    { id: 'active-timer', heading: 'Active Timer' },
-    { id: 'navigation', heading: 'Navigation' },
-    { id: 'create', heading: 'Create' },
-    { id: 'organization', heading: 'Organization' },
-    { id: 'theme', heading: 'Theme' },
+// Group display order and headings (function so the headings are translated at call time)
+const getGroupConfig = (): { id: CommandGroupType; heading: string }[] => [
+    { id: 'timer', heading: trans('Timer') },
+    { id: 'active-timer', heading: trans('Active Timer') },
+    { id: 'navigation', heading: trans('Navigation') },
+    { id: 'create', heading: trans('Create') },
+    { id: 'organization', heading: trans('Organization') },
+    { id: 'theme', heading: trans('Theme') },
 ];
 
 // Entity badge classes
@@ -341,7 +342,7 @@ export function useCommandPalette() {
         ];
 
         const grouped: Record<string, Command[]> = {};
-        for (const config of GROUP_CONFIG) {
+        for (const config of getGroupConfig()) {
             grouped[config.id] = [];
         }
 
@@ -359,7 +360,7 @@ export function useCommandPalette() {
 
     // Map internal commands to UI-friendly CommandPaletteGroup[]
     const groups = computed<CommandPaletteGroup[]>(() =>
-        GROUP_CONFIG.map((config) => ({
+        getGroupConfig().map((config) => ({
             id: config.id,
             heading: config.heading,
             commands: (commandsByGroup.value[config.id] ?? []).map((cmd) => ({

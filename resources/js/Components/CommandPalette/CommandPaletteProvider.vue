@@ -202,7 +202,7 @@ const firstProjectId = computed(() => projects.value[0]?.id ?? '');
 
     <!-- Project Selector Dialog for Active Timer -->
     <DialogModal :show="showProjectSelector" closeable @close="showProjectSelector = false">
-        <template #title>Set Project</template>
+        <template #title>{{ $t('Set Project') }}</template>
         <template #content>
             <TimeTrackerProjectTaskDropdown
                 v-model:project="currentTimeEntry.project_id"
@@ -220,14 +220,18 @@ const firstProjectId = computed(() => projects.value[0]?.id ?? '');
                 class="w-full" />
         </template>
         <template #footer>
-            <SecondaryButton @click="showProjectSelector = false"> Cancel </SecondaryButton>
-            <SecondaryButton class="ms-3" @click="handleProjectTaskSelect"> Save </SecondaryButton>
+            <SecondaryButton @click="showProjectSelector = false">
+                {{ $t('Cancel') }}
+            </SecondaryButton>
+            <SecondaryButton class="ms-3" @click="handleProjectTaskSelect">
+                {{ $t('Save') }}
+            </SecondaryButton>
         </template>
     </DialogModal>
 
     <!-- Task Selector Dialog for Active Timer -->
     <DialogModal :show="showTaskSelector" closeable @close="showTaskSelector = false">
-        <template #title>Set Task</template>
+        <template #title>{{ $t('Set Task') }}</template>
         <template #content>
             <TimeTrackerProjectTaskDropdown
                 v-model:project="currentTimeEntry.project_id"
@@ -245,14 +249,18 @@ const firstProjectId = computed(() => projects.value[0]?.id ?? '');
                 class="w-full" />
         </template>
         <template #footer>
-            <SecondaryButton @click="showTaskSelector = false"> Cancel </SecondaryButton>
-            <SecondaryButton class="ms-3" @click="handleProjectTaskSelect"> Save </SecondaryButton>
+            <SecondaryButton @click="showTaskSelector = false">
+                {{ $t('Cancel') }}
+            </SecondaryButton>
+            <SecondaryButton class="ms-3" @click="handleProjectTaskSelect">
+                {{ $t('Save') }}
+            </SecondaryButton>
         </template>
     </DialogModal>
 
     <!-- Tags Selector Dialog for Active Timer -->
     <DialogModal :show="showTagsSelector" closeable @close="showTagsSelector = false">
-        <template #title>Set Tags</template>
+        <template #title>{{ $t('Set Tags') }}</template>
         <template #content>
             <TagDropdown v-model="currentTimeEntry.tags" :tags="tags" :create-tag="createTag">
                 <template #trigger>
@@ -261,16 +269,28 @@ const firstProjectId = computed(() => projects.value[0]?.id ?? '');
                         <span
                             v-if="currentTimeEntry.tags.length === 0"
                             class="text-muted-foreground">
-                            Click to select tags...
+                            {{ $t('Click to select tags...') }}
                         </span>
-                        <span v-else> {{ currentTimeEntry.tags.length }} tag(s) selected </span>
+                        <span v-else>
+                            {{
+                                $tChoice(
+                                    ':count tag selected|:count tags selected',
+                                    currentTimeEntry.tags.length,
+                                    { count: String(currentTimeEntry.tags.length) }
+                                )
+                            }}
+                        </span>
                     </div>
                 </template>
             </TagDropdown>
         </template>
         <template #footer>
-            <SecondaryButton @click="showTagsSelector = false"> Cancel </SecondaryButton>
-            <SecondaryButton class="ms-3" @click="handleTagsSelect"> Save </SecondaryButton>
+            <SecondaryButton @click="showTagsSelector = false">
+                {{ $t('Cancel') }}
+            </SecondaryButton>
+            <SecondaryButton class="ms-3" @click="handleTagsSelect">
+                {{ $t('Save') }}
+            </SecondaryButton>
         </template>
     </DialogModal>
 </template>

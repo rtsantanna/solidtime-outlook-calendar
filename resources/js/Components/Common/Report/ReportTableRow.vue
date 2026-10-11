@@ -12,6 +12,7 @@ import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { getCurrentOrganizationId } from '@/utils/useUser';
 import { useNotificationsStore } from '@/utils/notification';
 import { formatDateLocalized } from '@/packages/ui/src/utils/time';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     report: Report;
@@ -54,8 +55,8 @@ const deleteReportMutation = useMutation({
 async function deleteReport() {
     await handleApiRequestNotifications(
         () => deleteReportMutation.mutateAsync(props.report.id),
-        'Success',
-        'Error'
+        trans('Success'),
+        trans('Error')
     );
 }
 </script>
@@ -81,19 +82,19 @@ async function deleteReport() {
             class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary flex items-center gap-1.5">
             <GlobeAltIcon v-if="report.is_public" class="w-4 h-4 shrink-0 text-text-tertiary" />
             <LockClosedIcon v-else class="w-4 h-4 shrink-0 text-text-tertiary" />
-            <span>{{ report.is_public ? 'Public' : 'Private' }}</span>
+            <span>{{ report.is_public ? $t('Public') : $t('Private') }}</span>
         </div>
         <div class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary">
             <span v-if="report.public_until">
                 {{ formatDateLocalized(report.public_until, dateFormat) }}
             </span>
-            <span v-else>Never</span>
+            <span v-else>{{ $t('Never') }}</span>
         </div>
         <div class="whitespace-nowrap px-3 flex items-center text-sm text-text-secondary">
             <div v-if="report.shareable_link" class="space-x-2 flex items-center">
                 <SecondaryButton v-if="isSupported" @click="copy(report.shareable_link)">
-                    <span v-if="!copied">Copy URL</span>
-                    <span v-else>Copied!</span>
+                    <span v-if="!copied">{{ $t('Copy URL') }}</span>
+                    <span v-else>{{ $t('Copied!') }}</span>
                 </SecondaryButton>
                 <button
                     class="outline-0 focus-visible:ring-2 w-6 h-6 flex items-center justify-center rounded focus-visible:ring-ring"

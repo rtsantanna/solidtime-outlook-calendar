@@ -14,7 +14,7 @@ const show = defineModel('show', { default: false });
     <DialogModal closeable :show="show" @close="show = false">
         <template #title>
             <div class="flex space-x-2">
-                <span> Upgrade Plan </span>
+                <span> {{ $t('Upgrade Plan') }} </span>
             </div>
         </template>
 
@@ -29,21 +29,21 @@ const show = defineModel('show', { default: false });
                         <slot></slot>
                     </p>
                     <p class="py-1 text-sm">
-                        If you want to use this feature,
-                        <strong class="font-semibold text-text-primary"
-                            >please upgrade to a paid plan</strong
-                        >
-                        or
-                        <strong class="font-semibold text-text-primary"
-                            >request a free trial</strong
-                        >
-                        via
+                        {{ $t('If you want to use this feature,') }}
+                        <strong class="font-semibold text-text-primary">{{
+                            $t('please upgrade to a paid plan')
+                        }}</strong>
+                        {{ $t('or') }}
+                        <strong class="font-semibold text-text-primary">{{
+                            $t('request a free trial')
+                        }}</strong>
+                        {{ $t('via') }}
                         <a
                             class="text-accent-200/80 transition text-accent-300"
                             href="mailto:hello@solidtime.io"
                             >hello@solidtime.io</a
                         >
-                        to try out this feature.
+                        {{ $t('to try out this feature.') }}
                     </p>
 
                     <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
@@ -52,14 +52,14 @@ const show = defineModel('show', { default: false });
                             type="button"
                             class="mt-6"
                             :icon="CreditCardIcon">
-                            Go to Billing
+                            {{ $t('Go to Billing') }}
                         </PrimaryButton>
                     </Link>
                 </div>
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false">Close</SecondaryButton>
+            <SecondaryButton @click="show = false">{{ $t('Close') }}</SecondaryButton>
         </template>
     </DialogModal>
 </template>

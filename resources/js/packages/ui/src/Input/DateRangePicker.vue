@@ -4,6 +4,7 @@ import Button from '../Buttons/Button.vue';
 import { RangeCalendar } from '../range-calendar';
 import { CalendarDate } from '@internationalized/date';
 import { CalendarIcon } from '@lucide/vue';
+import { trans } from 'laravel-vue-i18n';
 import { computed, ref, inject, type ComputedRef, watch } from 'vue';
 import { twMerge } from 'tailwind-merge';
 import DateRangeNavigator from './DateRangeNavigator.vue';
@@ -144,7 +145,7 @@ function setLastYear() {
 const organization = inject<ComputedRef<Organization>>('organization');
 
 const displayLabel = computed(() => {
-    if (!startDay.value) return 'Pick a date';
+    if (!startDay.value) return trans('Pick a date');
     if (!endDay.value) {
         return getDateRangeLabel(startDay.value, startDay.value, {
             dateFormat: organization?.value?.date_format,
@@ -213,77 +214,77 @@ watch(open, (value) => {
                                 size="sm"
                                 class="justify-start"
                                 @click="setToday"
-                                >Today</Button
+                                >{{ $t('Today') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setThisWeek"
-                                >This Week</Button
+                                >{{ $t('This Week') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLastWeek"
-                                >Last Week</Button
+                                >{{ $t('Last Week') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLast14Days"
-                                >Last 14 Days</Button
+                                >{{ $t('Last 14 Days') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setThisMonth"
-                                >This Month</Button
+                                >{{ $t('This Month') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLastMonth"
-                                >Last Month</Button
+                                >{{ $t('Last Month') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLast30Days"
-                                >Last 30 Days</Button
+                                >{{ $t('Last 30 Days') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLast90Days"
-                                >Last 90 Days</Button
+                                >{{ $t('Last 90 Days') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLast12Months"
-                                >Last 12 Months</Button
+                                >{{ $t('Last 12 Months') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setThisYear"
-                                >This Year</Button
+                                >{{ $t('This Year') }}</Button
                             >
                             <Button
                                 variant="ghost"
                                 size="sm"
                                 class="justify-start"
                                 @click="setLastYear"
-                                >Last Year</Button
+                                >{{ $t('Last Year') }}</Button
                             >
                         </div>
                         <div class="pl-2">

@@ -175,10 +175,10 @@ const page = usePage<{
 
 <template>
     <FormSection @submitted="save">
-        <template #title>Profile Information</template>
+        <template #title>{{ $t('Profile Information') }}</template>
 
         <template #description>
-            Update your account's profile information and email address.
+            {{ $t("Update your account's profile information and email address.") }}
         </template>
 
         <template #form>
@@ -193,7 +193,7 @@ const page = usePage<{
                     :disabled="!isUserLoaded"
                     @change="readSelectedPhoto" />
 
-                <FieldLabel for="photo">Photo</FieldLabel>
+                <FieldLabel for="photo">{{ $t('Photo') }}</FieldLabel>
 
                 <div v-show="!photoPreview" class="mt-2">
                     <img
@@ -214,7 +214,7 @@ const page = usePage<{
                     type="button"
                     :disabled="!isUserLoaded"
                     @click.prevent="selectNewPhoto">
-                    Select A New Photo
+                    {{ $t('Select A New Photo') }}
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -223,7 +223,7 @@ const page = usePage<{
                     class="mt-2"
                     :disabled="!isUserLoaded || updateUser.isPending.value"
                     @click.prevent="removePhoto">
-                    Remove Photo
+                    {{ $t('Remove Photo') }}
                 </SecondaryButton>
 
                 <FieldError v-if="fieldErrors.photo" class="mt-2">
@@ -233,7 +233,7 @@ const page = usePage<{
 
             <!-- Name -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="name">Name</FieldLabel>
+                <FieldLabel for="name">{{ $t('Name') }}</FieldLabel>
                 <TextInput
                     id="name"
                     v-model="name"
@@ -247,7 +247,7 @@ const page = usePage<{
 
             <!-- Email -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="email">Email</FieldLabel>
+                <FieldLabel for="email">{{ $t('Email') }}</FieldLabel>
                 <TextInput
                     id="email"
                     v-model="email"
@@ -260,9 +260,9 @@ const page = usePage<{
 
                 <div v-if="pendingEmail" class="mt-2 text-sm">
                     <p class="text-text-primary">
-                        A verification link was sent to
+                        {{ $t('A verification link was sent to') }}
                         <span class="font-medium">{{ pendingEmail }}</span
-                        >. Click the link in the email to confirm the change.
+                        >. {{ $t('Click the link in the email to confirm the change.') }}
                     </p>
                     <div class="mt-2 -ms-3 flex flex-wrap items-center gap-x-1 gap-y-1">
                         <Button
@@ -272,10 +272,10 @@ const page = usePage<{
                             type="button"
                             :disabled="!isUserLoaded || resendVerification.isPending.value"
                             @click="clickResend">
-                            Resend verification email
+                            {{ $t('Resend verification email') }}
                         </Button>
                         <p v-else class="ms-3 font-medium text-green-400">
-                            Verification email sent.
+                            {{ $t('Verification email sent.') }}
                         </p>
                         <Button
                             variant="ghost"
@@ -283,7 +283,7 @@ const page = usePage<{
                             type="button"
                             :disabled="!isUserLoaded || resetPendingEmail.isPending.value"
                             @click="clickCancelEmailChange">
-                            Cancel email change
+                            {{ $t('Cancel email change') }}
                         </Button>
                     </div>
                 </div>
@@ -291,7 +291,7 @@ const page = usePage<{
 
             <!-- Timezone -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="timezone">Timezone</FieldLabel>
+                <FieldLabel for="timezone">{{ $t('Timezone') }}</FieldLabel>
                 <select
                     id="timezone"
                     v-model="timezone"
@@ -299,7 +299,7 @@ const page = usePage<{
                     required
                     :disabled="!isUserLoaded"
                     class="block w-full border-input-border bg-input-background text-text-primary focus:border-input-border-active rounded-md shadow-sm">
-                    <option value="" disabled>Select a Timezone</option>
+                    <option value="" disabled>{{ $t('Select a Timezone') }}</option>
                     <option
                         v-for="(timezoneTranslated, timezoneValue) in page.props.timezones"
                         :key="timezoneValue"
@@ -312,7 +312,7 @@ const page = usePage<{
 
             <!-- Week start -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="week_start">Start of the week</FieldLabel>
+                <FieldLabel for="week_start">{{ $t('Start of the week') }}</FieldLabel>
                 <select
                     id="week_start"
                     v-model="weekStart"
@@ -320,7 +320,7 @@ const page = usePage<{
                     required
                     :disabled="!isUserLoaded"
                     class="block w-full border-input-border bg-input-background text-text-primary focus:border-input-border-active rounded-md shadow-sm">
-                    <option value="" disabled>Select a week day</option>
+                    <option value="" disabled>{{ $t('Select a week day') }}</option>
                     <option
                         v-for="(weekdayTranslated, weekdayValue) in page.props.weekdays"
                         :key="weekdayValue"
@@ -333,10 +333,10 @@ const page = usePage<{
         </template>
 
         <template #actions>
-            <ActionMessage :on="recentlySaved" class="me-3"> Saved. </ActionMessage>
+            <ActionMessage :on="recentlySaved" class="me-3"> {{ $t('Saved.') }} </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': isSaveDisabled }" :disabled="isSaveDisabled">
-                Save
+                {{ $t('Save') }}
             </PrimaryButton>
         </template>
     </FormSection>

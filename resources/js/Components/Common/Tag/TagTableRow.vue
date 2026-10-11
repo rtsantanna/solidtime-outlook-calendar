@@ -53,7 +53,7 @@ function deleteTag() {
                 class="space-x-3"
                 @select="showTagEditModal = true">
                 <PencilSquareIcon class="w-4 h-4 text-icon-default" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator v-if="canDeleteTags()" />
             <ContextMenuItem
@@ -61,7 +61,7 @@ function deleteTag() {
                 class="space-x-3 text-destructive"
                 @select="deleteTag()">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

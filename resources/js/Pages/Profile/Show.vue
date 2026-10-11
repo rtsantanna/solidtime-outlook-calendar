@@ -18,9 +18,11 @@ defineProps<{
 </script>
 
 <template>
-    <AppLayout title="Profile">
+    <AppLayout :title="$t('Profile')">
         <template #header>
-            <h2 class="font-semibold text-xl text-text-primary leading-tight">Profile</h2>
+            <h2 class="font-semibold text-xl text-text-primary leading-tight">
+                {{ $t('Profile') }}
+            </h2>
         </template>
 
         <div>

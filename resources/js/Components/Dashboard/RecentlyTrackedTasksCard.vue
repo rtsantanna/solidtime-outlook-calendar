@@ -73,7 +73,7 @@ window.addEventListener('dashboard:refresh', () => {
 </script>
 
 <template>
-    <DashboardCard title="Recent Time Entries" :icon="CheckCircleIcon">
+    <DashboardCard :title="$t('Recent Time Entries')" :icon="CheckCircleIcon">
         <div v-if="isLoading" class="flex justify-center items-center h-40">
             <LoadingSpinner />
         </div>
@@ -89,8 +89,10 @@ window.addEventListener('dashboard:refresh', () => {
         <div v-else class="text-center flex flex-1 justify-center items-center py-5">
             <div>
                 <PlusCircleIcon class="w-8 text-icon-default inline pb-2"></PlusCircleIcon>
-                <h3 class="text-text-primary font-semibold text-sm">No recent time entries</h3>
-                <p class="text-sm">Start tracking your time!</p>
+                <h3 class="text-text-primary font-semibold text-sm">
+                    {{ $t('No recent time entries') }}
+                </h3>
+                <p class="text-sm">{{ $t('Start tracking your time!') }}</p>
             </div>
         </div>
     </DashboardCard>

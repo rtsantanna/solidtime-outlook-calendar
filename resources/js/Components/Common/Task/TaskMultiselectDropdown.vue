@@ -20,11 +20,11 @@ const emit = defineEmits<{
 
 <template>
     <MultiselectDropdown
-        search-placeholder="Search for a Task..."
+        :search-placeholder="$t('Search for a Task...')"
         :items="tasks"
         :get-key-from-item="getKeyFromItem"
         :get-name-for-item="getNameForItem"
-        no-item-label="No Task"
+        :no-item-label="$t('No Task')"
         @submit="emit('submit')">
         <template #trigger>
             <slot name="trigger"></slot>

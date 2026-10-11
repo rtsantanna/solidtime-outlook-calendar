@@ -14,7 +14,7 @@
     <DialogModal :show="showActionBlockedModal">
         <template #title>
             <div class="flex space-x-2">
-                <span> Action blocked </span>
+                <span> {{ $t('Action blocked') }} </span>
             </div>
         </template>
 
@@ -25,24 +25,28 @@
             </div>
             <div class="max-w-sm text-center mx-auto py-4 text-base">
                 <p class="py-1">
-                    Your organization is currently
-                    <strong class="font-semibold">blocked from performing this action</strong>
+                    {{ $t('Your organization is currently') }}
+                    <strong class="font-semibold">{{
+                        $t('blocked from performing this action')
+                    }}</strong>
                 </p>
                 <p class="py-1">
-                    To unblock your organization, please
-                    <strong class="font-semibold"> upgrade to a premium plan</strong>
-                    or remove all users except the owner.
+                    {{ $t('To unblock your organization, please') }}
+                    <strong class="font-semibold"> {{ $t('upgrade to a premium plan') }}</strong>
+                    {{ $t('or remove all users except the owner.') }}
                 </p>
 
                 <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
                     <PrimaryButton :icon="CreditCardIcon" type="button" class="mt-6">
-                        Go to Billing
+                        {{ $t('Go to Billing') }}
                     </PrimaryButton>
                 </Link>
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="showActionBlockedModal = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="showActionBlockedModal = false">
+                {{ $t('Cancel') }}</SecondaryButton
+            >
         </template>
     </DialogModal>
 </template>

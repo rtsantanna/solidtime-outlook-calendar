@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { ref, type Ref } from 'vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { api, type CreateTimeEntryBody, type TimeEntry } from '@/packages/api/src';
@@ -147,8 +148,10 @@ export function useTimesheetCellMutations(
                 removeSlot(row.key);
                 notifications.addNotification(
                     'success',
-                    'Merged into matching row',
-                    'Another row with the same project, task, billable status and tags already exists.'
+                    trans('Merged into matching row'),
+                    trans(
+                        'Another row with the same project, task, billable status and tags already exists.'
+                    )
                 );
             }
             markSaved(statusKey);
@@ -162,15 +165,18 @@ export function useTimesheetCellMutations(
                 );
                 notifications.addNotification(
                     'error',
-                    "This day can't fit any more work",
-                    `Couldn't fit ${friendlyDuration} on ${err.date} without overlapping existing entries.`
+                    trans("This day can't fit any more work"),
+                    trans("Couldn't fit :duration on :date without overlapping existing entries.", {
+                        duration: friendlyDuration,
+                        date: err.date,
+                    })
                 );
                 return;
             }
             notifications.addNotification(
                 'error',
-                'Failed to update timesheet',
-                'Please try again later.'
+                trans('Failed to update timesheet'),
+                trans('Please try again later.')
             );
         } finally {
             queryClient.invalidateQueries({ queryKey: ['timeEntries'] });

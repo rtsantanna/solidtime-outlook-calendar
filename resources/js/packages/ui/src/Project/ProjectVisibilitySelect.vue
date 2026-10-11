@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { computed } from 'vue';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '..';
 import { Field, FieldDescription, FieldLabel } from '../field';
@@ -15,21 +16,21 @@ const visibility = computed({
 
 const description = computed(() =>
     isPublic.value
-        ? 'This project is visible to all members of the organization.'
-        : 'This project is only visible to its project members.'
+        ? trans('This project is visible to all members of the organization.')
+        : trans('This project is only visible to its project members.')
 );
 </script>
 
 <template>
     <Field>
-        <FieldLabel :icon="GlobeAltIcon" for="visibility">Visibility</FieldLabel>
+        <FieldLabel :icon="GlobeAltIcon" for="visibility">{{ $t('Visibility') }}</FieldLabel>
         <Select v-model="visibility">
             <SelectTrigger id="visibility">
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="private">Private</SelectItem>
-                <SelectItem value="public">Public</SelectItem>
+                <SelectItem value="private">{{ $t('Private') }}</SelectItem>
+                <SelectItem value="public">{{ $t('Public') }}</SelectItem>
             </SelectContent>
         </Select>
         <FieldDescription>{{ description }}</FieldDescription>

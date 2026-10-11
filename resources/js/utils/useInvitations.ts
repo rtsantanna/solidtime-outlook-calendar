@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { api } from '@/packages/api/src';
 import { computed, ref } from 'vue';
@@ -25,7 +26,7 @@ export const useInvitationsStore = defineStore('invitations', () => {
             const data = await handleApiRequestNotifications(
                 () => fetchAllInvitations(organization),
                 undefined,
-                'Failed to fetch invitations'
+                trans('Failed to fetch invitations')
             );
             if (data) {
                 invitationsData.value = data;
@@ -43,8 +44,8 @@ export const useInvitationsStore = defineStore('invitations', () => {
                             organization: organization,
                         },
                     }),
-                'User successfully invited',
-                'Failed to invite user'
+                trans('User successfully invited'),
+                trans('Failed to invite user')
             );
             await fetchInvitations();
         }

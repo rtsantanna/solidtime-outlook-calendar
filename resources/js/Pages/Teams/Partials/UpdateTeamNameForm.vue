@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { Link, router } from '@inertiajs/vue3';
 import { reactive, ref } from 'vue';
 import axios from 'axios';
@@ -48,7 +49,7 @@ const updateTeamName = async () => {
                 },
             }
         );
-        notifications.addNotification('success', 'Organization updated successfully');
+        notifications.addNotification('success', trans('Organization updated successfully'));
         recentlySuccessful.value = true;
         if (recentlySuccessfulTimeout) {
             clearTimeout(recentlySuccessfulTimeout);
@@ -63,11 +64,11 @@ const updateTeamName = async () => {
         } else if (axios.isAxiosError(error)) {
             notifications.addNotification(
                 'error',
-                'Failed to update organization',
-                error.response?.data?.message ?? 'Please try again later.'
+                trans('Failed to update organization'),
+                error.response?.data?.message ?? trans('Please try again later.')
             );
         } else {
-            notifications.addNotification('error', 'Failed to update organization');
+            notifications.addNotification('error', trans('Failed to update organization'));
         }
     } finally {
         processing.value = false;
@@ -77,15 +78,17 @@ const updateTeamName = async () => {
 
 <template>
     <FormSection @submitted="updateTeamName">
-        <template #title> Organization Name</template>
+        <template #title> {{ $t('Organization Name') }}</template>
 
-        <template #description> The organization's name and owner information. </template>
+        <template #description>
+            {{ $t("The organization's name and owner information.") }}
+        </template>
 
         <template #form>
             <!-- Organization Owner Information -->
             <div class="col-span-6 flex items-center justify-between">
                 <div class="">
-                    <FieldLabel>Organization Owner</FieldLabel>
+                    <FieldLabel>{{ $t('Organization Owner') }}</FieldLabel>
 
                     <div class="flex items-center mt-2">
                         <img
@@ -103,7 +106,7 @@ const updateTeamName = async () => {
                 <div>
                     <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
                         <PrimaryButton :icon="CreditCardIcon" type="button">
-                            Go to Billing
+                            {{ $t('Go to Billing') }}
                         </PrimaryButton>
                     </Link>
                 </div>
@@ -111,7 +114,7 @@ const updateTeamName = async () => {
 
             <!-- Organization Name -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="name">Organization Name</FieldLabel>
+                <FieldLabel for="name">{{ $t('Organization Name') }}</FieldLabel>
 
                 <TextInput
                     id="name"
@@ -125,14 +128,14 @@ const updateTeamName = async () => {
 
             <!-- Currency -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="currency">Currency</FieldLabel>
+                <FieldLabel for="currency">{{ $t('Currency') }}</FieldLabel>
                 <select
                     id="currency"
                     v-model="form.currency"
                     name="currency"
                     :disabled="!permissions.canUpdateTeam"
                     class="block w-full border-input-border bg-input-background text-text-primary focus:border-input-border-active rounded-md shadow-sm">
-                    <option value="" disabled>Select a currency</option>
+                    <option value="" disabled>{{ $t('Select a currency') }}</option>
                     <option
                         v-for="(currencyTranslated, currencyKey) in $page.props.currencies"
                         :key="currencyKey"
@@ -145,10 +148,12 @@ const updateTeamName = async () => {
         </template>
 
         <template v-if="permissions.canUpdateTeam" #actions>
-            <ActionMessage :on="recentlySuccessful" class="me-3"> Saved. </ActionMessage>
+            <ActionMessage :on="recentlySuccessful" class="me-3">
+                {{ $t('Saved.') }}
+            </ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': processing }" :disabled="processing">
-                Save
+                {{ $t('Save') }}
             </PrimaryButton>
         </template>
     </FormSection>

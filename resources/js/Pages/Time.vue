@@ -111,7 +111,7 @@ function goToCalendarDay(date: string) {
 </script>
 
 <template>
-    <AppLayout title="Dashboard" data-testid="time_view">
+    <AppLayout :title="$t('Dashboard')" data-testid="time_view">
         <MainContainer class="pt-5 lg:pt-8 pb-4 lg:pb-6">
             <TimeTracker></TimeTracker>
         </MainContainer>
@@ -166,20 +166,20 @@ function goToCalendarDay(date: string) {
         </div>
         <div v-else-if="timeEntries.length === 0" class="text-center pt-12">
             <ClockIcon class="w-8 text-icon-default inline pb-2"></ClockIcon>
-            <h3 class="text-text-primary font-semibold">No time entries found</h3>
-            <p class="pb-5">Create your first time entry now!</p>
+            <h3 class="text-text-primary font-semibold">{{ $t('No time entries found') }}</h3>
+            <p class="pb-5">{{ $t('Create your first time entry now!') }}</p>
         </div>
         <div ref="loadMoreContainer">
             <div
                 v-if="isFetchingNextPage"
                 class="flex justify-center items-center py-5 text-sm text-text-primary font-medium">
                 <LoadingSpinner></LoadingSpinner>
-                <span> Loading more time entries... </span>
+                <span> {{ $t('Loading more time entries...') }} </span>
             </div>
             <div
                 v-else-if="!hasNextPage && timeEntries.length > 0"
                 class="flex justify-center items-center py-5 text-sm text-text-tertiary">
-                All time entries are loaded!
+                {{ $t('All time entries are loaded!') }}
             </div>
         </div>
     </AppLayout>

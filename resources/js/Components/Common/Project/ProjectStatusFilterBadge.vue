@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { CircleStackIcon } from '@heroicons/vue/16/solid';
 import { DropdownMenuItem } from '@/packages/ui/src';
 import BaseFilterBadge from './BaseFilterBadge.vue';
+import { trans } from 'laravel-vue-i18n';
 
 type StatusValue = 'active' | 'archived' | 'all';
 
@@ -16,12 +17,12 @@ const emit = defineEmits<{
 }>();
 
 const statusOptions = [
-    { id: 'active' as const, name: 'Active' },
-    { id: 'archived' as const, name: 'Archived' },
+    { id: 'active' as const, name: trans('Active') },
+    { id: 'archived' as const, name: trans('Archived') },
 ];
 
 const label = computed(() => {
-    return statusOptions.find((opt) => opt.id === props.value)?.name ?? 'Status';
+    return statusOptions.find((opt) => opt.id === props.value)?.name ?? trans('Status');
 });
 
 function updateStatus(status: StatusValue) {
@@ -33,7 +34,7 @@ function updateStatus(status: StatusValue) {
     <BaseFilterBadge
         :icon="CircleStackIcon"
         :label="label"
-        filter-name="Status"
+        :filter-name="$t('Status')"
         @remove="emit('remove')">
         <DropdownMenuItem
             v-for="option in statusOptions"

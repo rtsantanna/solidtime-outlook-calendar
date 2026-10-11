@@ -16,6 +16,7 @@ import {
 import { Button } from '@/packages/ui/src';
 import type { Client } from '@/packages/api/src';
 import { NO_CLIENT_ID } from './constants';
+import { trans } from 'laravel-vue-i18n';
 
 export interface ProjectFilters {
     status: 'active' | 'archived' | 'all';
@@ -33,13 +34,13 @@ const emit = defineEmits<{
 }>();
 
 const statusOptions = [
-    { id: 'active' as const, name: 'Active' },
-    { id: 'archived' as const, name: 'Archived' },
+    { id: 'active' as const, name: trans('Active') },
+    { id: 'archived' as const, name: trans('Archived') },
 ];
 
 const visibilityOptions = [
-    { id: 'public' as const, name: 'Public' },
-    { id: 'private' as const, name: 'Private' },
+    { id: 'public' as const, name: trans('Public') },
+    { id: 'private' as const, name: trans('Private') },
 ];
 
 const open = ref(false);
@@ -91,7 +92,7 @@ function toggleNoClient() {
                 variant="ghost"
                 size="icon"
                 class="-ml-1.5 h-7 w-7 flex-shrink-0"
-                aria-label="Filter projects">
+                :aria-label="$t('Filter projects')">
                 <ListFilterIcon class="h-4 w-4 text-icon-default" />
             </Button>
         </DropdownMenuTrigger>
@@ -100,7 +101,7 @@ function toggleNoClient() {
             <DropdownMenuSub>
                 <DropdownMenuSubTrigger class="gap-2">
                     <CheckCircleIcon class="h-4 w-4 text-icon-default" />
-                    <span>Status</span>
+                    <span>{{ $t('Status') }}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                     <DropdownMenuItem
@@ -119,7 +120,7 @@ function toggleNoClient() {
             <DropdownMenuSub>
                 <DropdownMenuSubTrigger class="gap-2">
                     <GlobeAltIcon class="h-4 w-4 text-icon-default" />
-                    <span>Visibility</span>
+                    <span>{{ $t('Visibility') }}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
                     <DropdownMenuItem
@@ -138,13 +139,13 @@ function toggleNoClient() {
             <DropdownMenuSub v-if="clients.length > 0">
                 <DropdownMenuSubTrigger class="gap-2">
                     <UserGroupIcon class="h-4 w-4 text-icon-default" />
-                    <span>Client</span>
+                    <span>{{ $t('Client') }}</span>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuSubContent class="max-h-[300px] overflow-y-auto">
                     <DropdownMenuCheckboxItem
                         :model-value="filters.clientIds.includes(NO_CLIENT_ID)"
                         @select.prevent="toggleNoClient">
-                        No client
+                        {{ $t('No client') }}
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuCheckboxItem

@@ -86,7 +86,7 @@ function hasRunningEntry(dayIndex: number): boolean {
                 v-if="row.type === 'break'"
                 class="flex flex-1 items-center gap-1.5 min-w-0 px-2 py-1 text-sm text-text-secondary">
                 <Coffee class="w-4 h-4" />
-                <span>Break</span>
+                <span>{{ $t('Break') }}</span>
             </div>
             <div v-else class="flex-1 min-w-0">
                 <TimeTrackerProjectTaskDropdown
@@ -150,7 +150,7 @@ function hasRunningEntry(dayIndex: number): boolean {
                 v-if="!(row.type === 'break' && breaksEnabled)"
                 variant="ghost"
                 size="icon"
-                aria-label="Remove row"
+                :aria-label="$t('Remove row')"
                 class="h-6 w-6 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
                 @click="emit('removeRow', row.key)">
                 <XMarkIcon class="h-3.5 w-3.5 text-icon-default" />

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { computed, ref, watch } from 'vue';
 import axios from 'axios';
 import { router, usePage } from '@inertiajs/vue3';
@@ -35,7 +36,7 @@ const createTeam = async () => {
     try {
         const organization = await organizationStore.createOrganization(name.value);
         if (organization) {
-            notifications.addNotification('success', 'Organization created successfully');
+            notifications.addNotification('success', trans('Organization created successfully'));
             // The backend already switched the current organization to the new one.
             // Flush Inertia's prefetch cache and do a full reload so the new
             // organization context is picked up everywhere.
@@ -47,16 +48,16 @@ const createTeam = async () => {
         if (isApiValidationError(error)) {
             notifications.addNotification(
                 'error',
-                getApiValidationMessage(error, 'Failed to create organization')
+                getApiValidationMessage(error, trans('Failed to create organization'))
             );
         } else if (axios.isAxiosError(error)) {
             notifications.addNotification(
                 'error',
-                'Failed to create organization',
-                error.response?.data?.message ?? 'Please try again later.'
+                trans('Failed to create organization'),
+                error.response?.data?.message ?? trans('Please try again later.')
             );
         } else {
-            notifications.addNotification('error', 'Failed to create organization');
+            notifications.addNotification('error', trans('Failed to create organization'));
         }
     } finally {
         processing.value = false;
@@ -72,15 +73,15 @@ const page = usePage<{
 
 <template>
     <FormSection @submitted="createTeam">
-        <template #title> Organization Details</template>
+        <template #title> {{ $t('Organization Details') }}</template>
 
         <template #description>
-            Create a new organization to collaborate with others on projects.
+            {{ $t('Create a new organization to collaborate with others on projects.') }}
         </template>
 
         <template #form>
             <div class="col-span-6">
-                <FieldLabel>Organization Owner</FieldLabel>
+                <FieldLabel>{{ $t('Organization Owner') }}</FieldLabel>
 
                 <div class="flex items-center mt-2">
                     <img
@@ -100,7 +101,7 @@ const page = usePage<{
             </div>
 
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="name">Organization Name</FieldLabel>
+                <FieldLabel for="name">{{ $t('Organization Name') }}</FieldLabel>
                 <TextInput
                     id="name"
                     v-model="name"
@@ -114,7 +115,7 @@ const page = usePage<{
 
         <template #actions>
             <PrimaryButton :class="{ 'opacity-25': processing }" :disabled="processing">
-                Create
+                {{ $t('Create') }}
             </PrimaryButton>
         </template>
     </FormSection>

@@ -34,7 +34,7 @@ class ImportService
                 $lock->release();
             }
         } else {
-            throw new ImportException('Import is already in progress');
+            throw new ImportException(__('Import is already in progress'));
         }
 
         return $importer->getReport();

@@ -1,4 +1,5 @@
 import type { Component } from 'vue';
+import { trans } from 'laravel-vue-i18n';
 import {
     HomeIcon,
     ClockIcon,
@@ -73,7 +74,7 @@ export function createNavigationCommands(
     return [
         {
             id: 'nav-dashboard',
-            label: 'Go to Dashboard',
+            label: trans('Go to Dashboard'),
             icon: HomeIcon,
             keywords: ['home', 'overview', 'dashboard'],
             group: 'navigation',
@@ -82,7 +83,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-time',
-            label: 'Go to Time',
+            label: trans('Go to Time'),
             icon: ClockIcon,
             keywords: ['time', 'tracking', 'entries', 'timesheet'],
             group: 'navigation',
@@ -91,7 +92,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-calendar',
-            label: 'Go to Calendar',
+            label: trans('Go to Calendar'),
             icon: CalendarIcon,
             keywords: ['calendar', 'week', 'schedule'],
             group: 'navigation',
@@ -100,7 +101,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-reporting',
-            label: 'Go to Reporting Overview',
+            label: trans('Go to Reporting Overview'),
             icon: ChartBarIcon,
             keywords: ['reports', 'analytics', 'overview', 'statistics'],
             group: 'navigation',
@@ -109,7 +110,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-reporting-detailed',
-            label: 'Go to Reporting Detailed',
+            label: trans('Go to Reporting Detailed'),
             icon: ChartBarIcon,
             keywords: ['detailed', 'reports', 'breakdown'],
             group: 'navigation',
@@ -118,7 +119,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-reporting-shared',
-            label: 'Go to Shared Reports',
+            label: trans('Go to Shared Reports'),
             icon: ChartBarIcon,
             keywords: ['shared', 'public', 'reports'],
             group: 'navigation',
@@ -128,7 +129,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-projects',
-            label: 'Go to Projects',
+            label: trans('Go to Projects'),
             icon: FolderIcon,
             keywords: ['projects', 'work'],
             group: 'navigation',
@@ -138,7 +139,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-clients',
-            label: 'Go to Clients',
+            label: trans('Go to Clients'),
             icon: UserCircleIcon,
             keywords: ['clients', 'customers'],
             group: 'navigation',
@@ -148,7 +149,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-members',
-            label: 'Go to Members',
+            label: trans('Go to Members'),
             icon: UserGroupIcon,
             keywords: ['members', 'team', 'users', 'employees'],
             group: 'navigation',
@@ -158,7 +159,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-tags',
-            label: 'Go to Tags',
+            label: trans('Go to Tags'),
             icon: TagIcon,
             keywords: ['tags', 'labels', 'categories'],
             group: 'navigation',
@@ -168,7 +169,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-invoices',
-            label: 'Go to Invoices',
+            label: trans('Go to Invoices'),
             icon: DocumentTextIcon,
             keywords: ['invoices', 'billing', 'payments'],
             group: 'navigation',
@@ -179,7 +180,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-billing',
-            label: 'Go to Billing',
+            label: trans('Go to Billing'),
             icon: CreditCardIcon,
             keywords: ['billing', 'subscription', 'plan'],
             group: 'navigation',
@@ -190,7 +191,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-import',
-            label: 'Go to Import / Export',
+            label: trans('Go to Import / Export'),
             icon: ArrowsRightLeftIcon,
             keywords: ['import', 'export', 'data', 'backup'],
             group: 'navigation',
@@ -200,7 +201,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-settings',
-            label: 'Go to Settings',
+            label: trans('Go to Settings'),
             icon: Cog6ToothIcon,
             keywords: ['settings', 'organization', 'configuration'],
             group: 'navigation',
@@ -210,7 +211,7 @@ export function createNavigationCommands(
         },
         {
             id: 'nav-profile',
-            label: 'Go to Profile',
+            label: trans('Go to Profile'),
             icon: UserIcon,
             keywords: ['profile', 'account', 'user', 'personal'],
             group: 'navigation',
@@ -235,7 +236,7 @@ export function createTimerCommands(
     return [
         {
             id: 'timer-start',
-            label: 'Start Timer',
+            label: trans('Start Timer'),
             icon: PlayIcon,
             keywords: ['start', 'begin', 'track', 'timer'],
             group: 'timer',
@@ -245,7 +246,7 @@ export function createTimerCommands(
         },
         {
             id: 'timer-stop',
-            label: 'Stop Timer',
+            label: trans('Stop Timer'),
             icon: StopIcon,
             keywords: ['stop', 'end', 'finish', 'timer'],
             group: 'timer',
@@ -255,7 +256,7 @@ export function createTimerCommands(
         },
         {
             id: 'timer-create',
-            label: 'Create Time Entry',
+            label: trans('Create Time Entry'),
             icon: PlusIcon,
             keywords: ['create', 'manual', 'log', 'time', 'entry', 'new'],
             group: 'timer',
@@ -264,7 +265,7 @@ export function createTimerCommands(
         },
         {
             id: 'timer-continue',
-            label: 'Continue Last Time Entry',
+            label: trans('Continue Last Time Entry'),
             icon: ArrowPathIcon,
             keywords: ['continue', 'repeat', 'restart', 'last', 'previous'],
             group: 'timer',
@@ -291,7 +292,7 @@ export function createActiveTimerCommands(
 
     const addMinutesCommands: Command[] = minuteOptions.map((minutes) => ({
         id: `timer-add-${minutes}`,
-        label: `Add ${minutes} minutes to timer`,
+        label: trans('Add :minutes minutes to timer', { minutes: String(minutes) }),
         icon: ClockIcon,
         keywords: [`+${minutes}`, `add ${minutes}`, minutes === 60 ? 'add hour' : ''],
         group: 'active-timer' as CommandGroup,
@@ -303,7 +304,7 @@ export function createActiveTimerCommands(
     return [
         {
             id: 'timer-set-project',
-            label: 'Set Project',
+            label: trans('Set Project'),
             icon: FolderIcon,
             keywords: ['project', 'change project', 'select project'],
             group: 'active-timer',
@@ -313,7 +314,7 @@ export function createActiveTimerCommands(
         },
         {
             id: 'timer-set-task',
-            label: 'Set Task',
+            label: trans('Set Task'),
             icon: ClipboardDocumentListIcon,
             keywords: ['task', 'change task', 'select task'],
             group: 'active-timer',
@@ -323,7 +324,7 @@ export function createActiveTimerCommands(
         },
         {
             id: 'timer-set-tags',
-            label: 'Set Tags',
+            label: trans('Set Tags'),
             icon: TagIcon,
             keywords: ['tags', 'add tags', 'labels'],
             group: 'active-timer',
@@ -333,7 +334,7 @@ export function createActiveTimerCommands(
         },
         {
             id: 'timer-toggle-billable',
-            label: 'Toggle Billable',
+            label: trans('Toggle Billable'),
             icon: BillableIcon,
             keywords: ['billable', 'non-billable', 'money'],
             group: 'active-timer',
@@ -351,7 +352,7 @@ export function createThemeCommands(
     return [
         {
             id: 'theme-light',
-            label: 'Switch to Light Theme',
+            label: trans('Switch to Light Theme'),
             icon: SunIcon,
             keywords: ['light', 'bright', 'day', 'theme'],
             group: 'theme',
@@ -360,7 +361,7 @@ export function createThemeCommands(
         },
         {
             id: 'theme-dark',
-            label: 'Switch to Dark Theme',
+            label: trans('Switch to Dark Theme'),
             icon: MoonIcon,
             keywords: ['dark', 'night', 'theme'],
             group: 'theme',
@@ -369,7 +370,7 @@ export function createThemeCommands(
         },
         {
             id: 'theme-system',
-            label: 'Switch to System Theme',
+            label: trans('Switch to System Theme'),
             icon: ComputerDesktopIcon,
             keywords: ['system', 'auto', 'default', 'theme'],
             group: 'theme',
@@ -398,7 +399,7 @@ export function createCreateCommands(
     return [
         {
             id: 'create-project',
-            label: 'Create Project',
+            label: trans('Create Project'),
             icon: FolderIcon,
             keywords: ['new project', 'add project', 'create'],
             group: 'create',
@@ -408,7 +409,7 @@ export function createCreateCommands(
         },
         {
             id: 'create-client',
-            label: 'Create Client',
+            label: trans('Create Client'),
             icon: UserCircleIcon,
             keywords: ['new client', 'add client', 'create'],
             group: 'create',
@@ -418,7 +419,7 @@ export function createCreateCommands(
         },
         {
             id: 'create-task',
-            label: 'Create Task',
+            label: trans('Create Task'),
             icon: ClipboardDocumentListIcon,
             keywords: ['new task', 'add task', 'create'],
             group: 'create',
@@ -428,7 +429,7 @@ export function createCreateCommands(
         },
         {
             id: 'create-tag',
-            label: 'Create Tag',
+            label: trans('Create Tag'),
             icon: TagIcon,
             keywords: ['new tag', 'add tag', 'create'],
             group: 'create',
@@ -438,7 +439,7 @@ export function createCreateCommands(
         },
         {
             id: 'create-invite',
-            label: 'Invite Member',
+            label: trans('Invite Member'),
             icon: UserGroupIcon,
             keywords: ['invite', 'add member', 'team'],
             group: 'create',
@@ -460,7 +461,7 @@ export function createOrganizationCommands(
         .filter((org) => org.id !== currentOrgId)
         .map((org) => ({
             id: `org-switch-${org.id}`,
-            label: `Switch to ${org.name}`,
+            label: trans('Switch to :name', { name: org.name }),
             icon: BuildingOfficeIcon,
             keywords: ['switch', 'organization', 'workspace', org.name.toLowerCase()],
             group: 'organization' as CommandGroup,

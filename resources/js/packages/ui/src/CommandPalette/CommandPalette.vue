@@ -80,13 +80,13 @@ watch(open, (isOpen) => {
                     <CommandRoot
                         v-model:search-term="searchTerm"
                         class="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5">
-                        <CommandInput :placeholder="placeholder" />
+                        <CommandInput :placeholder="$t(placeholder)" />
                         <CommandList>
                             <!-- Empty state -->
                             <div
                                 v-if="searchTerm.length > 0 && !hasEntityResults && !hasAnyGroups"
                                 class="py-6 text-center text-sm text-muted-foreground">
-                                No results found.
+                                {{ $t('No results found.') }}
                             </div>
 
                             <!-- Command Groups -->
@@ -114,7 +114,7 @@ watch(open, (isOpen) => {
                             <!-- Entity Search Results -->
                             <template v-if="hasEntityResults">
                                 <CommandSeparator v-if="hasAnyGroups" />
-                                <CommandGroup heading="Search Results">
+                                <CommandGroup :heading="$t('Search Results')">
                                     <CommandItem
                                         v-for="cmd in entityResults"
                                         :key="cmd.id"

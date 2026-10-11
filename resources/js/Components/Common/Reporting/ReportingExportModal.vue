@@ -23,13 +23,15 @@ function downloadCurrentExport() {
         <div class="text-center text-text-primary py-6">
             <div class="flex items-center font-semibold text-lg justify-center space-x-2 pb-2">
                 <CheckCircleIcon class="text-text-tertiary w-6"></CheckCircleIcon>
-                <span> Export Successful! </span>
+                <span>{{ $t('Export Successful!') }}</span>
             </div>
             <div class="text-center text-sm max-w-64 mx-auto">
-                <p class="pb-5">Your export is ready, you can download it with the button below.</p>
-                <PrimaryButton :icon="ArrowDownTrayIcon" @click="downloadCurrentExport"
-                    >Download</PrimaryButton
-                >
+                <p class="pb-5">
+                    {{ $t('Your export is ready, you can download it with the button below.') }}
+                </p>
+                <PrimaryButton :icon="ArrowDownTrayIcon" @click="downloadCurrentExport">{{
+                    $t('Download')
+                }}</PrimaryButton>
             </div>
         </div>
     </Modal>

@@ -31,7 +31,7 @@ watch(start, (value, oldValue) => {
 <template>
     <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
         <Field class="col-span-2 sm:col-span-3">
-            <FieldLabel>Duration</FieldLabel>
+            <FieldLabel>{{ $t('Duration') }}</FieldLabel>
             <div class="space-y-2 flex flex-col">
                 <DurationHumanInput
                     v-model:start="start"
@@ -41,14 +41,14 @@ watch(start, (value, oldValue) => {
                     <InformationCircleIcon
                         class="w-4 shrink-0 text-text-quaternary"></InformationCircleIcon>
                     <span class="text-text-secondary text-xs">
-                        You can type natural language like
+                        {{ $t('You can type natural language like') }}
                         <span class="font-semibold"> 2h 30m</span>
                     </span>
                 </div>
             </div>
         </Field>
         <Field>
-            <FieldLabel>Start</FieldLabel>
+            <FieldLabel>{{ $t('Start') }}</FieldLabel>
             <div class="flex flex-col gap-2">
                 <TimePickerSimple v-model="start" class="w-full"></TimePickerSimple>
                 <DatePicker
@@ -59,7 +59,7 @@ watch(start, (value, oldValue) => {
             </div>
         </Field>
         <Field>
-            <FieldLabel>End</FieldLabel>
+            <FieldLabel>{{ $t('End') }}</FieldLabel>
             <div class="flex flex-col gap-2">
                 <TimePickerSimple v-model="end" class="w-full"></TimePickerSimple>
                 <DatePicker

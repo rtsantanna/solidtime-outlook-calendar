@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { trans } from 'laravel-vue-i18n';
 import { getCurrentOrganizationId } from '@/utils/useUser';
 import { api } from '@/packages/api/src';
 import type { CreateTaskBody, UpdateTaskBody } from '@/packages/api/src';
@@ -20,8 +21,8 @@ export const useTasksStore = defineStore('tasks', () => {
                             organization: organizationId,
                         },
                     }),
-                'Task updated successfully',
-                'Failed to update task'
+                trans('Task updated successfully'),
+                trans('Failed to update task')
             );
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
         }
@@ -37,8 +38,8 @@ export const useTasksStore = defineStore('tasks', () => {
                             organization: organizationId,
                         },
                     }),
-                'Task created successfully',
-                'Failed to create task'
+                trans('Task created successfully'),
+                trans('Failed to create task')
             );
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
         }
@@ -55,8 +56,8 @@ export const useTasksStore = defineStore('tasks', () => {
                             task: taskId,
                         },
                     }),
-                'Task deleted successfully',
-                'Failed to delete task'
+                trans('Task deleted successfully'),
+                trans('Failed to delete task')
             );
             queryClient.invalidateQueries({ queryKey: ['tasks'] });
         }

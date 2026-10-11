@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import type { Tag, UpdateTagBody } from '@/packages/api/src';
 import { getCurrentOrganizationId } from '@/utils/useUser';
@@ -20,8 +21,8 @@ export const useTagsStore = defineStore('tags', () => {
                             tag: tagId,
                         },
                     }),
-                'Tag deleted successfully',
-                'Failed to delete tag'
+                trans('Tag deleted successfully'),
+                trans('Failed to delete tag')
             );
             queryClient.invalidateQueries({ queryKey: ['tags'] });
         }
@@ -42,8 +43,8 @@ export const useTagsStore = defineStore('tags', () => {
                             },
                         }
                     ),
-                'Tag created successfully',
-                'Failed to create tag'
+                trans('Tag created successfully'),
+                trans('Failed to create tag')
             );
             if (response?.data) {
                 queryClient.invalidateQueries({ queryKey: ['tags'] });
@@ -66,8 +67,8 @@ export const useTagsStore = defineStore('tags', () => {
                                 tag: tagId,
                             },
                         }),
-                    'Tag updated successfully',
-                    'Failed to update tag'
+                    trans('Tag updated successfully'),
+                    trans('Failed to update tag')
                 );
             }
         },

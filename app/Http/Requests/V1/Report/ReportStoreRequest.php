@@ -90,7 +90,7 @@ class ReportStoreRequest extends BaseFormRequest
                         return;
                     }
                     if (! Str::isUuid($value)) {
-                        $fail('The '.$attribute.' must be a valid UUID.');
+                        $fail(__('The :attribute must be a valid UUID.', ['attribute' => $attribute]));
                     }
                 },
             ],
@@ -106,7 +106,7 @@ class ReportStoreRequest extends BaseFormRequest
                         return;
                     }
                     if (! Str::isUuid($value)) {
-                        $fail('The '.$attribute.' must be a valid UUID.');
+                        $fail(__('The :attribute must be a valid UUID.', ['attribute' => $attribute]));
                     }
                 },
             ],
@@ -122,7 +122,7 @@ class ReportStoreRequest extends BaseFormRequest
                         return;
                     }
                     if (! Str::isUuid($value)) {
-                        $fail('The '.$attribute.' must be a valid UUID.');
+                        $fail(__('The :attribute must be a valid UUID.', ['attribute' => $attribute]));
                     }
                 },
             ],
@@ -142,7 +142,7 @@ class ReportStoreRequest extends BaseFormRequest
                         return;
                     }
                     if (! Str::isUuid($value)) {
-                        $fail('The '.$attribute.' must be a valid UUID.');
+                        $fail(__('The :attribute must be a valid UUID.', ['attribute' => $attribute]));
                     }
                 },
             ],

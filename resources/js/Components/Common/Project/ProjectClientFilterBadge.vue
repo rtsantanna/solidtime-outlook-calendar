@@ -5,6 +5,7 @@ import { DropdownMenuCheckboxItem, DropdownMenuSeparator } from '@/packages/ui/s
 import BaseFilterBadge from './BaseFilterBadge.vue';
 import type { Client } from '@/packages/api/src';
 import { NO_CLIENT_ID } from './constants';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     value: string[];
@@ -21,13 +22,13 @@ const hasNoClient = computed(() => props.value.includes(NO_CLIENT_ID));
 const label = computed(() => {
     const count = props.value.length;
 
-    if (count === 0) return 'None';
+    if (count === 0) return trans('None');
     if (count === 1) {
-        if (hasNoClient.value) return 'No client';
+        if (hasNoClient.value) return trans('No client');
         const client = props.clients.find((c) => c.id === props.value[0]);
-        return client?.name ?? 'Client';
+        return client?.name ?? trans('Client');
     }
-    return `${count} selected`;
+    return trans(':count selected', { count: String(count) });
 });
 
 function toggleClient(clientId: string) {
@@ -51,10 +52,10 @@ function toggleNoClient() {
     <BaseFilterBadge
         :icon="UserGroupIcon"
         :label="label"
-        filter-name="Client"
+        :filter-name="$t('Client')"
         @remove="emit('remove')">
         <DropdownMenuCheckboxItem :model-value="hasNoClient" @select.prevent="toggleNoClient">
-            No client
+            {{ $t('No client') }}
         </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem

@@ -19,18 +19,20 @@ defineEmits<{
         <!-- Left: Week navigation -->
         <DateRangeNavigator
             :label="rangeLabel"
-            :secondary-label="`W${weekNumber}`"
+            :secondary-label="$t('W:week', { week: String(weekNumber) })"
             previous-test-id="timesheet_prev_week"
             trigger-test-id="timesheet_week_display"
             next-test-id="timesheet_next_week"
-            trigger-aria-label="Return to current week"
+            :trigger-aria-label="$t('Return to current week')"
             @previous="$emit('previous')"
             @next="$emit('next')"
             @select="$emit('current')" />
 
         <!-- Right: Week total -->
         <div class="flex items-center gap-2.5">
-            <span class="text-xs text-text-tertiary uppercase tracking-wider">Week Total</span>
+            <span class="text-xs text-text-tertiary uppercase tracking-wider">{{
+                $t('Week Total')
+            }}</span>
             <span
                 data-testid="timesheet_grand_total"
                 class="text-sm font-semibold text-text-primary">

@@ -24,7 +24,7 @@ const props = defineProps<{
         <DropdownMenuTrigger as-child>
             <button
                 class="focus-visible:outline-none focus-visible:bg-card-background rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:opacity-100 hover:bg-card-background group-hover:opacity-100 opacity-20 transition-opacity text-text-secondary"
-                :aria-label="'Actions for Task ' + props.task.name">
+                :aria-label="$t('Actions for Task :name', { name: props.task.name })">
                 <svg
                     class="h-8 w-8 p-1 rounded-full"
                     viewBox="0 0 24 24"
@@ -42,30 +42,30 @@ const props = defineProps<{
         <DropdownMenuContent class="min-w-[150px]" align="end">
             <DropdownMenuItem
                 v-if="canUpdateTasks()"
-                :aria-label="'Edit Task ' + props.task.name"
+                :aria-label="$t('Edit Task :name', { name: props.task.name })"
                 data-testid="task_edit"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click="emit('edit')">
                 <PencilSquareIcon class="w-5 text-icon-active" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="canUpdateTasks()"
-                :aria-label="'Mark Task ' + props.task.name + ' as done'"
+                :aria-label="$t('Mark Task :name as done', { name: props.task.name })"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click="emit('done')">
                 <CheckCircleIcon class="w-5 text-icon-active" />
-                <span v-if="props.task.is_done">Mark as active</span>
-                <span v-else>Mark as done</span>
+                <span v-if="props.task.is_done">{{ $t('Mark as active') }}</span>
+                <span v-else>{{ $t('Mark as done') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="canDeleteTasks()"
-                :aria-label="'Delete Task ' + props.task.name"
+                :aria-label="$t('Delete Task :name', { name: props.task.name })"
                 data-testid="task_delete"
                 class="flex items-center space-x-3 cursor-pointer text-destructive focus:text-destructive"
                 @click="emit('delete')">
                 <TrashIcon class="w-5" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

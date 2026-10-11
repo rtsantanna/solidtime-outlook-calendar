@@ -66,9 +66,11 @@ function flashSaved() {
 
 <template>
     <FormSection @submitted="save">
-        <template #title>Notifications</template>
+        <template #title>{{ $t('Notifications') }}</template>
 
-        <template #description>Choose which email notifications you want to receive.</template>
+        <template #description>{{
+            $t('Choose which email notifications you want to receive.')
+        }}</template>
 
         <template #form>
             <div class="col-span-6 sm:col-span-4">
@@ -79,10 +81,14 @@ function flashSaved() {
                         :disabled="!isUserLoaded" />
                     <FieldContent>
                         <FieldLabel for="send_time_entry_still_running_email">
-                            Still-running time entry reminders
+                            {{ $t('Still-running time entry reminders') }}
                         </FieldLabel>
                         <FieldDescription>
-                            Email me when a time entry has been running for more than 8 hours.
+                            {{
+                                $t(
+                                    'Email me when a time entry has been running for more than 8 hours.'
+                                )
+                            }}
                         </FieldDescription>
                     </FieldContent>
                 </Field>
@@ -93,10 +99,10 @@ function flashSaved() {
         </template>
 
         <template #actions>
-            <ActionMessage :on="recentlySaved" class="me-3">Saved.</ActionMessage>
+            <ActionMessage :on="recentlySaved" class="me-3">{{ $t('Saved.') }}</ActionMessage>
 
             <PrimaryButton :class="{ 'opacity-25': isSaveDisabled }" :disabled="isSaveDisabled">
-                Save
+                {{ $t('Save') }}
             </PrimaryButton>
         </template>
     </FormSection>

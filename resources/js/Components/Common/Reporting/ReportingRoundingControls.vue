@@ -17,6 +17,7 @@ import { twMerge } from 'tailwind-merge';
 import { isAllowedToPerformPremiumAction } from '@/utils/billing';
 import { Link } from '@inertiajs/vue3';
 import { CreditCardIcon } from '@heroicons/vue/20/solid';
+import { trans } from 'laravel-vue-i18n';
 // TimeEntryRoundingType definition
 const TimeEntryRoundingType = {
     Up: 'up' as const,
@@ -58,13 +59,13 @@ function updateMinutes(value: number) {
 
 // Predefined intervals
 const predefinedIntervals = [
-    { value: '5', label: '5 minutes' },
-    { value: '6', label: '6 minutes' },
-    { value: '10', label: '10 minutes' },
-    { value: '15', label: '15 minutes' },
-    { value: '30', label: '30 minutes' },
-    { value: '60', label: '1 hour' },
-    { value: 'custom', label: 'Custom' },
+    { value: '5', label: trans('5 minutes') },
+    { value: '6', label: trans('6 minutes') },
+    { value: '10', label: trans('10 minutes') },
+    { value: '15', label: trans('15 minutes') },
+    { value: '30', label: trans('30 minutes') },
+    { value: '60', label: trans('1 hour') },
+    { value: 'custom', label: trans('Custom') },
 ];
 
 const showCustomInput = ref(false);
@@ -146,26 +147,26 @@ const iconClass = computed(() => {
         <PopoverTrigger as-child>
             <Button variant="outline" size="sm" :class="twMerge(activeClass)">
                 <ArrowsUpDownIcon :class="iconClass" />
-                Rounding {{ enabled ? 'on' : 'off' }}
+                {{ enabled ? $t('Rounding on') : $t('Rounding off') }}
             </Button>
         </PopoverTrigger>
         <PopoverContent class="w-72 p-4">
             <div v-if="!isAllowedToPerformPremiumAction()" class="flex flex-col space-y-2">
-                <span class="font-semibold text-xs">Premium</span>
-                <span class="text-xs text-text-secondary flex-1"
-                    >Rounding is a premium feature. Upgrade to unlock this feature.</span
-                >
+                <span class="font-semibold text-xs">{{ $t('Premium') }}</span>
+                <span class="text-xs text-text-secondary flex-1">{{
+                    $t('Rounding is a premium feature. Upgrade to unlock this feature.')
+                }}</span>
                 <Link href="/billing">
                     <Button size="sm" variant="outline" class="items-center space-x-1">
                         <CreditCardIcon class="w-3.5 h-3.5 text-text-tertiary mr-1" />
-                        Go to Billing
+                        {{ $t('Go to Billing') }}
                     </Button>
                 </Link>
             </div>
             <div v-else class="space-y-4">
                 <div>
                     <Field orientation="horizontal" class="justify-between">
-                        <FieldLabel for="enable-rounding">Enable Rounding</FieldLabel>
+                        <FieldLabel for="enable-rounding">{{ $t('Enable Rounding') }}</FieldLabel>
                         <Switch
                             id="enable-rounding"
                             :model-value="enabled"
@@ -174,13 +175,16 @@ const iconClass = computed(() => {
                     </Field>
                     <div
                         class="mb-3 pb-2 pt-1 text-xs text-muted-foreground border-b border-border-secondary text-text-tertiary">
-                        Rounding is applied to each individual time entry, not to the accumulated
-                        total.
+                        {{
+                            $t(
+                                'Rounding is applied to each individual time entry, not to the accumulated total.'
+                            )
+                        }}
                     </div>
                 </div>
 
                 <Field>
-                    <FieldLabel for="rounding-type">Rounding Type</FieldLabel>
+                    <FieldLabel for="rounding-type">{{ $t('Rounding Type') }}</FieldLabel>
                     <Select
                         :model-value="type"
                         :disabled="!enabled"
@@ -190,17 +194,17 @@ const iconClass = computed(() => {
                             size="sm"
                             class="w-full"
                             :disabled="!enabled">
-                            <SelectValue placeholder="Select rounding type" />
+                            <SelectValue :placeholder="$t('Select rounding type')" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="up">Round Up</SelectItem>
-                            <SelectItem value="down">Round Down</SelectItem>
-                            <SelectItem value="nearest">Round Nearest</SelectItem>
+                            <SelectItem value="up">{{ $t('Round Up') }}</SelectItem>
+                            <SelectItem value="down">{{ $t('Round Down') }}</SelectItem>
+                            <SelectItem value="nearest">{{ $t('Round Nearest') }}</SelectItem>
                         </SelectContent>
                     </Select>
                 </Field>
                 <Field>
-                    <FieldLabel for="minutes-interval">Minutes Interval</FieldLabel>
+                    <FieldLabel for="minutes-interval">{{ $t('Minutes Interval') }}</FieldLabel>
                     <Select
                         :model-value="selectedInterval"
                         :disabled="!enabled"
@@ -210,7 +214,7 @@ const iconClass = computed(() => {
                             size="sm"
                             class="w-full"
                             :disabled="!enabled">
-                            <SelectValue placeholder="Select interval" />
+                            <SelectValue :placeholder="$t('Select interval')" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem
@@ -234,7 +238,7 @@ const iconClass = computed(() => {
                             <NumberFieldContent>
                                 <NumberFieldDecrement :disabled="!enabled" />
                                 <NumberFieldInput
-                                    placeholder="Enter custom minutes"
+                                    :placeholder="$t('Enter custom minutes')"
                                     :disabled="!enabled" />
                                 <NumberFieldIncrement :disabled="!enabled" />
                             </NumberFieldContent>

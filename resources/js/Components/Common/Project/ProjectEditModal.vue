@@ -23,6 +23,7 @@ import ProjectVisibilitySelect from '@/packages/ui/src/Project/ProjectVisibility
 import { isAllowedToPerformPremiumAction } from '@/utils/billing';
 import { useOrganizationQuery } from '@/utils/useOrganizationQuery';
 import { getCurrentOrganizationId } from '@/utils/useUser';
+import { trans } from 'laravel-vue-i18n';
 
 const { updateProject } = useProjectsStore();
 const { clients } = useClientsQuery();
@@ -68,7 +69,7 @@ const currentClientName = computed(() => {
     if (project.value.client_id) {
         return clients.value.find((client) => client.id === project.value.client_id)?.name;
     }
-    return 'No Client';
+    return trans('No Client');
 });
 
 async function submitBillableRate() {
@@ -82,7 +83,7 @@ async function submitBillableRate() {
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Edit Project {{ props.originalProject.name }} </span>
+                <span> {{ $t('Edit Project :name', { name: props.originalProject.name }) }} </span>
             </div>
         </template>
 
@@ -90,17 +91,17 @@ async function submitBillableRate() {
             <FieldGroup>
                 <FieldGroup class="flex-row items-end">
                     <Field class="w-auto text-center">
-                        <FieldLabel for="color">Color</FieldLabel>
+                        <FieldLabel for="color">{{ $t('Color') }}</FieldLabel>
                         <ProjectColorSelector v-model="project.color"></ProjectColorSelector>
                     </Field>
                     <Field class="w-full">
-                        <FieldLabel for="projectName">Project name</FieldLabel>
+                        <FieldLabel for="projectName">{{ $t('Project name') }}</FieldLabel>
                         <TextInput
                             id="projectName"
                             ref="projectNameInput"
                             v-model="project.name"
                             type="text"
-                            placeholder="Project Name"
+                            :placeholder="$t('Project Name')"
                             class="block w-full"
                             required
                             autocomplete="projectName"
@@ -108,7 +109,7 @@ async function submitBillableRate() {
                     </Field>
                 </FieldGroup>
                 <Field>
-                    <FieldLabel for="client" :icon="UserCircleIcon">Client</FieldLabel>
+                    <FieldLabel for="client" :icon="UserCircleIcon">{{ $t('Client') }}</FieldLabel>
                     <ClientDropdown v-model="project.client_id" :create-client :clients="clients">
                         <template #trigger>
                             <Button variant="input" class="w-full justify-between">
@@ -132,14 +133,14 @@ async function submitBillableRate() {
             </FieldGroup>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Update Project
+                {{ $t('Update Project') }}
             </PrimaryButton>
         </template>
     </DialogModal>

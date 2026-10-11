@@ -49,10 +49,13 @@ async function submit() {
 
 <template>
     <FormSection>
-        <template #title>Organization Settings</template>
+        <template #title>{{ $t('Organization Settings') }}</template>
         <template #description>
-            Configure various settings for your organization, including time entry and task
-            management permissions.
+            {{
+                $t(
+                    'Configure various settings for your organization, including time entry and task management permissions.'
+                )
+            }}
         </template>
 
         <template #form>
@@ -61,27 +64,29 @@ async function submit() {
                     <Checkbox
                         id="preventOverlappingTimeEntries"
                         v-model:checked="form.prevent_overlapping_time_entries" />
-                    <FieldLabel for="preventOverlappingTimeEntries"
-                        >Prevent overlapping time entries (new entries only)</FieldLabel
-                    >
+                    <FieldLabel for="preventOverlappingTimeEntries">{{
+                        $t('Prevent overlapping time entries (new entries only)')
+                    }}</FieldLabel>
                 </Field>
                 <Field orientation="horizontal">
                     <Checkbox
                         id="employeesCanManageTasks"
                         v-model:checked="form.employees_can_manage_tasks" />
-                    <FieldLabel for="employeesCanManageTasks"
-                        >Allow Employees to manage tasks</FieldLabel
-                    >
+                    <FieldLabel for="employeesCanManageTasks">{{
+                        $t('Allow Employees to manage tasks')
+                    }}</FieldLabel>
                 </Field>
                 <Field orientation="horizontal">
                     <Checkbox id="breaksEnabled" v-model:checked="form.breaks_enabled" />
-                    <FieldLabel for="breaksEnabled">Allow tracking breaks</FieldLabel>
+                    <FieldLabel for="breaksEnabled">{{ $t('Allow tracking breaks') }}</FieldLabel>
                 </Field>
             </div>
         </template>
 
         <template #actions>
-            <PrimaryButton :disabled="mutation.isPending.value" @click="submit">Save</PrimaryButton>
+            <PrimaryButton :disabled="mutation.isPending.value" @click="submit">{{
+                $t('Save')
+            }}</PrimaryButton>
         </template>
     </FormSection>
 </template>

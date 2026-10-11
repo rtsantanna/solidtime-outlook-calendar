@@ -22,6 +22,7 @@ import { isAllowedToPerformPremiumAction } from '@/utils/billing';
 import { canCreateProjects } from '@/utils/permissions';
 import { useOrganizationQuery } from '@/utils/useOrganizationQuery';
 import { getCurrentOrganizationId } from '@/utils/useUser';
+import { trans } from 'laravel-vue-i18n';
 
 const { organization } = useOrganizationQuery(getCurrentOrganizationId()!);
 const searchValue = ref('');
@@ -87,7 +88,7 @@ function isProjectSelected(project: Project) {
 }
 
 const selectedProjectName = computed(() => {
-    return currentProject.value?.name || 'No Project';
+    return currentProject.value?.name || trans('No Project');
 });
 
 const selectedProjectColor = computed(() => {
@@ -128,7 +129,7 @@ function updateValue(project: Project) {
                             ref="searchInput"
                             v-model="searchValue"
                             class="bg-transparent border-0 placeholder-muted-foreground text-sm text-popover-foreground py-2 px-3 focus:ring-0 border-b border-popover-border focus:border-popover-border w-full"
-                            placeholder="Search for a project..." />
+                            :placeholder="$t('Search for a project...')" />
                     </ComboboxAnchor>
                     <ComboboxContent>
                         <ComboboxViewport
@@ -164,7 +165,7 @@ function updateValue(project: Project) {
                                 showCreateProject = true;
                             ">
                             <Plus class="h-4 w-4 shrink-0" />
-                            <span>Create new Project</span>
+                            <span>{{ $t('Create new Project') }}</span>
                         </div>
                     </ComboboxContent>
                 </ComboboxRoot>

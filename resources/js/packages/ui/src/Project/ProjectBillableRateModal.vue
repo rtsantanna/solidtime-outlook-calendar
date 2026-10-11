@@ -24,10 +24,10 @@ defineEmits<{
     <BillableRateModal
         v-model:show="show"
         v-model:saving="saving"
-        title="Update Project Billable Rate"
+        :title="$t('Update Project Billable Rate')"
         @submit="$emit('submit')">
         <p class="py-1 text-center">
-            The billable rate of {{ projectName }} will be updated to
+            {{ $t('The billable rate of :name will be updated to', { name: projectName }) }}
             <strong>{{
                 newBillableRate
                     ? formatCents(
@@ -37,13 +37,16 @@ defineEmits<{
                           organization?.currency_symbol,
                           organization?.number_format
                       )
-                    : ' the default rate of the organization member'
+                    : $t('the default rate of the organization member')
             }}</strong
             >.
         </p>
         <p class="py-1 text-center font-semibold max-w-md mx-auto">
-            Do you want to update all existing time entries, where the project billable rate applies
-            as well?
+            {{
+                $t(
+                    'Do you want to update all existing time entries, where the project billable rate applies as well?'
+                )
+            }}
         </p>
     </BillableRateModal>
 </template>

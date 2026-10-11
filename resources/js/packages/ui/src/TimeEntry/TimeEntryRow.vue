@@ -300,20 +300,20 @@ async function handleDeleteTimeEntry() {
         <ContextMenuContent class="min-w-[160px]">
             <ContextMenuItem v-if="canRecreate" class="space-x-3" @select="onStartStopClick()">
                 <PlayIcon class="w-4 h-4 text-icon-default" />
-                <span>Continue</span>
+                <span>{{ $t('Continue') }}</span>
             </ContextMenuItem>
             <ContextMenuItem class="space-x-3" @select="handleEdit()">
                 <PencilIcon class="w-4 h-4 text-icon-default" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </ContextMenuItem>
             <ContextMenuItem v-if="canRecreate" class="space-x-3" @select="duplicateTimeEntry?.()">
                 <DocumentDuplicateIcon class="w-4 h-4 text-icon-default" />
-                <span>Duplicate</span>
+                <span>{{ $t('Duplicate') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator />
             <ContextMenuItem class="space-x-3 text-destructive" @select="deleteTimeEntry()">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

@@ -16,6 +16,7 @@ import { PlusCircleIcon, MinusIcon } from '@heroicons/vue/16/solid';
 import ProjectCreateModal from '@/packages/ui/src/Project/ProjectCreateModal.vue';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '@/packages/ui/src/Buttons';
+import { trans } from 'laravel-vue-i18n';
 
 const NO_PROJECT_ID = '';
 
@@ -188,7 +189,7 @@ function addProjectToFilterObject(
     } else {
         tempFilteredClients.push({
             id: 'no_client',
-            name: 'No Client',
+            name: trans('No Client'),
             color: 'var(--theme-color-icon-default)',
             created_at: '',
             updated_at: '',
@@ -205,7 +206,7 @@ function updateFilteredResults() {
     if (searchValue.value.length === 0) {
         tempFilteredClients.push({
             id: 'no_project_no_client',
-            name: 'No Client',
+            name: trans('No Client'),
             color: 'var(--theme-color-icon-default)',
             created_at: '',
             updated_at: '',
@@ -214,7 +215,7 @@ function updateFilteredResults() {
             projects: [
                 {
                     id: NO_PROJECT_ID,
-                    name: 'No Project',
+                    name: trans('No Project'),
                     color: 'var(--theme-color-icon-default)',
                     value: NO_PROJECT_ID,
                     client_id: null,
@@ -513,10 +514,10 @@ const currentTask = computed(() => {
 
 const selectedProjectName = computed(() => {
     if (project.value === null) {
-        return props.emptyPlaceholder;
+        return trans(props.emptyPlaceholder);
     }
     if (project.value === '') {
-        return 'No Project';
+        return trans('No Project');
     }
     return currentProject.value?.name;
 });
@@ -594,7 +595,7 @@ const showCreateProject = ref(false);
                     :value="searchValue"
                     data-testid="client_dropdown_search"
                     class="bg-card-background border-0 placeholder-text-tertiary text-sm text-text-primary py-2.5 focus:ring-0 border-b border-card-background-separator focus:border-card-background-separator w-full"
-                    placeholder="Search for a project or task..."
+                    :placeholder="$t('Search for a project or task...')"
                     @input="updateSearchValue"
                     @keydown.enter.prevent="addClientIfNoneExists"
                     @keydown.esc.prevent="open = false"
@@ -654,9 +655,13 @@ const showCreateProject = ref(false);
                                                         searchInput?.focus();
                                                     }
                                                 ">
-                                                <span class="whitespace-nowrap"
-                                                    >{{ row.project.tasks.length }} Tasks</span
-                                                >
+                                                <span class="whitespace-nowrap">{{
+                                                    $tChoice(
+                                                        ':count Task|:count Tasks',
+                                                        row.project.tasks.length,
+                                                        { count: String(row.project.tasks.length) }
+                                                    )
+                                                }}</span>
                                                 <ChevronDownIcon
                                                     :class="{
                                                         'transform rotate-180':
@@ -695,7 +700,7 @@ const showCreateProject = ref(false);
                         ">
                         <PlusCircleIcon
                             class="w-5 flex-shrink-0 text-icon-default"></PlusCircleIcon>
-                        <span>Create new Project</span>
+                        <span>{{ $t('Create new Project') }}</span>
                     </button>
                 </div>
             </div>

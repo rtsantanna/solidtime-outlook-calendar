@@ -1,14 +1,14 @@
 <x-filament-widgets::widget>
     <x-filament::section>
         <div>
-            <span class="text-gray-950 font-bold dark:text-white">Version</span>
+            <span class="text-gray-950 font-bold dark:text-white">{{ __('Version') }}</span>
             @if($version !== null)
                 <span>v{{ $version }}</span>
             @else
                 <span>-</span>
             @endif
             <br>
-            <span class="text-gray-950 font-bold dark:text-white">Build</span>
+            <span class="text-gray-950 font-bold dark:text-white">{{ __('Build') }}</span>
             @if($build !== null)
                 <span>{{ $build }}</span>
             @else
@@ -26,13 +26,13 @@
                         class="h-5 w-5 text-orange-500 dark:text-orange-400"
                     />
                 </span>
-                <span>Update available (v{{ $currentVersion }})</span>
+                <span>{{ __('Update available (v:version)', ['version' => $currentVersion]) }}</span>
             @else
                 <x-filament::icon
                     icon="heroicon-o-check-circle"
                     class="h-5 w-5 text-green-500 dark:text-green-400"
                 />
-                <span>Current version</span>
+                <span>{{ __('Current version') }}</span>
             @endif
         </div>
         @endif

@@ -39,6 +39,7 @@ import { ref } from 'vue';
 import { useNotificationsStore } from '@/utils/notification';
 import { useTimeEntriesMutations } from '@/utils/useTimeEntriesMutations';
 import { useTimeEntriesInfiniteQuery } from '@/utils/useTimeEntriesInfiniteQuery';
+import { trans } from 'laravel-vue-i18n';
 
 const page = usePage<{
     auth: {
@@ -146,8 +147,8 @@ async function discardCurrentTimeEntry() {
     if (currentTimeEntry.value.id) {
         await handleApiRequestNotifications(
             () => deleteTimeEntry(currentTimeEntry.value.id),
-            'Time entry discarded successfully',
-            'Failed to discard time entry'
+            trans('Time entry discarded successfully'),
+            trans('Failed to discard time entry')
         );
         await currentTimeEntryStore.fetchCurrentTimeEntry();
     }
@@ -181,7 +182,7 @@ const { tags } = useTagsQuery();
         :tasks
         :tags
         :clients></TimeEntryCreateModal>
-    <CardTitle title="Time Tracker" :icon="ClockIcon"></CardTitle>
+    <CardTitle :title="$t('Time Tracker')" :icon="ClockIcon"></CardTitle>
     <div class="relative pt-1.5">
         <TimeTrackerRunningInDifferentOrganizationOverlay
             v-if="isRunningInDifferentOrganization"

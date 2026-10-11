@@ -109,11 +109,11 @@ class HarvestTimeEntriesImporter extends DefaultImporter
                 $timeEntry->client_id = $clientId;
                 $timeEntry->organization_id = $this->organization->id;
                 if (strlen($record['Notes']) > 5000) {
-                    throw new ImportException('Time entry note is too long');
+                    throw new ImportException(__('Time entry note is too long'));
                 }
                 $timeEntry->description = $record['Notes'];
                 if (! in_array($record['Billable?'], ['Yes', 'No'], true)) {
-                    throw new ImportException('Invalid billable value');
+                    throw new ImportException(__('Invalid billable value'));
                 }
                 $timeEntry->billable = $record['Billable?'] === 'Yes';
                 $timeEntry->tags = [];
@@ -123,17 +123,17 @@ class HarvestTimeEntriesImporter extends DefaultImporter
                 try {
                     $date = Carbon::createFromFormat('Y-m-d', $record['Date'], $timezone);
                 } catch (InvalidFormatException) {
-                    throw new ImportException('Date ("'.$record['Date'].'") is invalid');
+                    throw new ImportException(__('Date (":value") is invalid', ['value' => $record['Date']]));
                 }
                 if ($date === null) {
-                    throw new ImportException('Date ("'.$record['Date'].'") is invalid');
+                    throw new ImportException(__('Date (":value") is invalid', ['value' => $record['Date']]));
                 }
                 if (! isset($record['Hours']) || ! is_string($record['Hours'])) {
-                    throw new ImportException('Hours ("'.($record['Hours'] ?? '<null>').'") is invalid');
+                    throw new ImportException(__('Hours (":value") is invalid', ['value' => ($record['Hours'] ?? '<null>')]));
                 }
                 $hoursField = Str::replace(',', '.', $record['Hours']);
                 if (! is_numeric($hoursField)) {
-                    throw new ImportException('Hours ("'.$record['Hours'].'") is invalid');
+                    throw new ImportException(__('Hours (":value") is invalid', ['value' => $record['Hours']]));
                 }
                 $hours = (float) $hoursField;
                 $timeEntry->start = $date->copy()->startOfDay()->utc();
@@ -157,10 +157,10 @@ class HarvestTimeEntriesImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -173,7 +173,7 @@ class HarvestTimeEntriesImporter extends DefaultImporter
     {
         foreach (self::REQUIRED_FIELDS as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
     }

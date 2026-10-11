@@ -23,7 +23,7 @@ function openBreaksDocs() {
                 <div
                     class="text-xs pb-1.5 font-semibold text-text-tertiary flex items-center space-x-1">
                     <BellAlertIcon class="w-3.5"></BellAlertIcon>
-                    <span> New Feature </span>
+                    <span> {{ $t('New Feature') }} </span>
                 </div>
                 <button>
                     <XMarkIcon
@@ -33,22 +33,26 @@ function openBreaksDocs() {
             </div>
 
             <p class="text-xs">
-                <span class="font-semibold">Breaks</span> are here! Enable them in the organization
-                settings to track break time in the time tracker and timesheet.
+                <span class="font-semibold">{{ $t('Breaks') }}</span>
+                {{
+                    $t(
+                        'are here! Enable them in the organization settings to track break time in the time tracker and timesheet.'
+                    )
+                }}
             </p>
             <SecondaryButton
                 v-if="canUpdateOrganization()"
                 size="small"
                 class="w-full text-center justify-center mt-1.5"
                 @click="openOrganizationSettings"
-                >Enable now</SecondaryButton
+                >{{ $t('Enable now') }}</SecondaryButton
             >
             <SecondaryButton
                 v-else
                 size="small"
                 class="w-full text-center justify-center mt-1.5"
                 @click="openBreaksDocs"
-                >Learn more</SecondaryButton
+                >{{ $t('Learn more') }}</SecondaryButton
             >
         </div>
     </div>

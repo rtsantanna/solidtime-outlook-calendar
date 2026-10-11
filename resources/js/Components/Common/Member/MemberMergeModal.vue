@@ -10,6 +10,7 @@ import { Badge } from '@/packages/ui/src';
 import { useMutation, useQueryClient } from '@tanstack/vue-query';
 import { getCurrentOrganizationId } from '@/utils/useUser';
 import { useNotificationsStore } from '@/utils/notification';
+import { trans } from 'laravel-vue-i18n';
 const queryClient = useQueryClient();
 const { handleApiRequestNotifications, addNotification } = useNotificationsStore();
 
@@ -48,15 +49,15 @@ async function submit() {
         saving.value = true;
         await handleApiRequestNotifications(
             () => mergeMember.mutateAsync(newMemberId),
-            'Members successfully merged!',
-            'There was an error merging the members.',
+            trans('Members successfully merged!'),
+            trans('There was an error merging the members.'),
             () => {
                 queryClient.invalidateQueries({ queryKey: ['members'] });
                 show.value = false;
             }
         );
     } else {
-        addNotification('error', 'Please select a member to merge into.');
+        addNotification('error', trans('Please select a member to merge into.'));
     }
 }
 </script>
@@ -65,14 +66,15 @@ async function submit() {
     <DialogModal closeable :show="show" @close="show = false">
         <template #title>
             <div class="flex space-x-2">
-                <span> Merge Member </span>
+                <span> {{ $t('Merge Member') }} </span>
             </div>
         </template>
 
         <template #content>
             <p>
-                Merging the user <strong>{{ member.name }} </strong> into another one will transfer
-                all time entries to the new user. <strong>This cannot be reverted!</strong>
+                {{ $t('Merging the user') }} <strong>{{ member.name }} </strong>
+                {{ $t('into another one will transfer all time entries to the new user.') }}
+                <strong>{{ $t('This cannot be reverted!') }}</strong>
             </p>
             <div class="py-5 flex flex-col md:flex-row gap-6 items-center">
                 <div class="flex-1">
@@ -93,14 +95,14 @@ async function submit() {
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit()">
-                Merge Member
+                {{ $t('Merge Member') }}
             </PrimaryButton>
         </template>
     </DialogModal>

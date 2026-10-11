@@ -20,7 +20,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Forgot Password" />
+    <Head :title="$t('Forgot Password')" />
 
     <AuthenticationCard>
         <template #logo>
@@ -28,8 +28,11 @@ const submit = () => {
         </template>
 
         <div class="mb-4 text-sm text-text-secondary">
-            Forgot your password? No problem. Just let us know your email address and we will email
-            you a password reset link that will allow you to choose a new one.
+            {{
+                $t(
+                    'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.'
+                )
+            }}
         </div>
 
         <div v-if="status" class="mb-4 font-medium text-sm text-green-400">
@@ -38,7 +41,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <Field>
-                <FieldLabel for="email">Email</FieldLabel>
+                <FieldLabel for="email">{{ $t('Email') }}</FieldLabel>
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -54,7 +57,7 @@ const submit = () => {
                 <PrimaryButton
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
-                    Email Password Reset Link
+                    {{ $t('Email Password Reset Link') }}
                 </PrimaryButton>
             </div>
         </form>

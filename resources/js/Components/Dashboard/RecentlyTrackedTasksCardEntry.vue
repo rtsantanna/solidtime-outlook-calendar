@@ -49,12 +49,12 @@ async function startTaskTimer() {
         <div class="col-span-4">
             <p class="text-text-primary text-sm pb-1.5 truncate">
                 <span v-if="timeEntry.description"> {{ timeEntry.description }}</span>
-                <span v-else class="text-text-secondary">No description</span>
+                <span v-else class="text-text-secondary">{{ $t('No description') }}</span>
             </p>
             <ProjectBadge size="base" class="min-w-0 max-w-full" :color="project?.color">
                 <div class="flex items-center lg:space-x-0.5 min-w-0">
                     <span class="whitespace-nowrap">
-                        {{ project?.name ?? 'No Project' }}
+                        {{ project?.name ?? $t('No Project') }}
                     </span>
                     <ChevronRightIcon
                         v-if="task"

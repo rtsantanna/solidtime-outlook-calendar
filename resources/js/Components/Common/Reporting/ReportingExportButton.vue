@@ -32,24 +32,31 @@ function triggerDownload(format: ExportFormat) {
 <template>
     <DropdownMenu>
         <DropdownMenuTrigger as-child>
-            <SecondaryButton :icon="ArrowDownTrayIcon" :loading> Export </SecondaryButton>
+            <SecondaryButton :icon="ArrowDownTrayIcon" :loading>{{ $t('Export') }}</SecondaryButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
             <DropdownMenuItem @click="triggerDownload('pdf')">
                 <div class="flex items-center space-x-2">
-                    <span>Export as PDF</span>
+                    <span>{{ $t('Export as PDF') }}</span>
                     <LockClosedIcon
                         v-if="!isAllowedToPerformPremiumAction()"
                         class="w-3.5 text-text-tertiary" />
                 </div>
             </DropdownMenuItem>
-            <DropdownMenuItem @click="triggerDownload('xlsx')"> Export as Excel </DropdownMenuItem>
-            <DropdownMenuItem @click="triggerDownload('csv')"> Export as CSV </DropdownMenuItem>
-            <DropdownMenuItem @click="triggerDownload('ods')"> Export as ODS </DropdownMenuItem>
+            <DropdownMenuItem @click="triggerDownload('xlsx')">{{
+                $t('Export as Excel')
+            }}</DropdownMenuItem>
+            <DropdownMenuItem @click="triggerDownload('csv')">{{
+                $t('Export as CSV')
+            }}</DropdownMenuItem>
+            <DropdownMenuItem @click="triggerDownload('ods')">{{
+                $t('Export as ODS')
+            }}</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
     <UpgradeModal v-model:show="showPremiumModal">
-        <strong>PDF Reports</strong> are only available in solidtime Professional.
+        <strong>{{ $t('PDF Reports') }}</strong>
+        {{ $t('are only available in solidtime Professional.') }}
     </UpgradeModal>
 </template>
 

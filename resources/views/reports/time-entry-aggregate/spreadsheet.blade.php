@@ -15,13 +15,13 @@
             {{ $subGroup->description() }}
         </th>
         <th style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}">
-            Duration
+            {{ __('Duration') }}
         </th>
         <th style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}">
-            Duration (decimal)
+            {{ __('Duration (decimal)') }}
         </th>
         <th style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}">
-            Amount ({{ Str::upper($currency) }})
+            {{ __('Amount (:currency)', ['currency' => Str::upper($currency)]) }}
         </th>
     </tr>
     </thead>
@@ -40,7 +40,7 @@
                 @if($exportFormat === ExportFormat::ODS || $exportFormat === ExportFormat::CSV)
                     @if ($group === TimeEntryAggregationType::Billable)
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
-                            {{ $group1Entry['key'] ? 'Yes' : 'No' }}
+                            {{ $group1Entry['key'] ? __('Yes') : __('No') }}
                         </td>
                     @else
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
@@ -49,7 +49,7 @@
                     @endif
                     @if ($subGroup === TimeEntryAggregationType::Billable)
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
-                            {{ $group2Entry['key'] ? 'Yes' : 'No' }}
+                            {{ $group2Entry['key'] ? __('Yes') : __('No') }}
                         </td>
                     @else
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
@@ -70,7 +70,7 @@
                 @else
                     @if ($group === TimeEntryAggregationType::Billable)
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
-                            {{ $group1Entry['key'] ? 'Yes' : 'No' }}
+                            {{ $group1Entry['key'] ? __('Yes') : __('No') }}
                         </td>
                     @else
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
@@ -79,7 +79,7 @@
                     @endif
                     @if ($subGroup === TimeEntryAggregationType::Billable)
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
-                            {{ $group2Entry['key'] ? 'Yes' : 'No' }}
+                            {{ $group2Entry['key'] ? __('Yes') : __('No') }}
                         </td>
                     @else
                         <td style="border: 1px solid black;" data-type="{{ DataType::TYPE_STRING }}">
@@ -117,7 +117,7 @@
     <tr style="border: 1px solid black;">
         <td style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}"></td>
         <td style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}">
-            Total
+            {{ __('Total') }}
         </td>
         @if($exportFormat === ExportFormat::ODS || $exportFormat === ExportFormat::CSV)
             <td style="border: 1px solid black; font-weight: bold;" data-type="{{ DataType::TYPE_STRING }}">

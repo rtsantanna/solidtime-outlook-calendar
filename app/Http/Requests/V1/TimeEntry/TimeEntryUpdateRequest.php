@@ -111,7 +111,7 @@ class TimeEntryUpdateRequest extends BaseFormRequest
                     if ($value === TimeEntryType::Break->value
                         && ! $this->organization->breaks_enabled
                         && $timeEntry?->type !== TimeEntryType::Break) {
-                        $fail('Breaks are disabled for this organization.');
+                        $fail(__('Breaks are disabled for this organization.'));
                     }
                 },
             ],

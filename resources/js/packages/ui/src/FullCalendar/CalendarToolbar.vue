@@ -36,8 +36,8 @@ const emit = defineEmits<{
                 :model-value="activeView"
                 @update:model-value="(v) => emit('change-view', String(v))">
                 <TabsList class="flex items-center space-x-0.5 sm:space-x-1">
-                    <TabBarItem value="timeGridWeek">week</TabBarItem>
-                    <TabBarItem value="timeGridDay">day</TabBarItem>
+                    <TabBarItem value="timeGridWeek">{{ $t('week') }}</TabBarItem>
+                    <TabBarItem value="timeGridDay">{{ $t('day') }}</TabBarItem>
                 </TabsList>
             </Tabs>
             <CalendarSettingsPopover

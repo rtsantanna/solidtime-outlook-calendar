@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { Field, FieldDescription, FieldLabel } from '../field';
 import BillableRateInput from '@/packages/ui/src/Input/BillableRateInput.vue';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '..';
@@ -67,9 +68,9 @@ const displayedRate = computed({
 
 const billableDescription = computed(() => {
     if (billableDefault.value === 'non-billable') {
-        return 'New time entries for this project will not be marked billable by default.';
+        return trans('New time entries for this project will not be marked billable by default.');
     }
-    return 'New time entries for this project will be marked billable by default.';
+    return trans('New time entries for this project will be marked billable by default.');
 });
 
 const emit = defineEmits(['submit']);
@@ -77,28 +78,30 @@ const emit = defineEmits(['submit']);
 
 <template>
     <Field>
-        <FieldLabel for="billable" :icon="BillableIcon">Billable Default</FieldLabel>
+        <FieldLabel for="billable" :icon="BillableIcon">{{ $t('Billable Default') }}</FieldLabel>
         <Select v-model="billableDefault">
             <SelectTrigger id="billable">
                 <SelectValue />
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="non-billable">Non-billable</SelectItem>
-                <SelectItem value="billable">Billable</SelectItem>
+                <SelectItem value="non-billable">{{ $t('Non-billable') }}</SelectItem>
+                <SelectItem value="billable">{{ $t('Billable') }}</SelectItem>
             </SelectContent>
         </Select>
         <FieldDescription>{{ billableDescription }}</FieldDescription>
     </Field>
     <Field>
-        <FieldLabel :icon="BillableIcon" for="billableRateType">Billable Rate</FieldLabel>
+        <FieldLabel :icon="BillableIcon" for="billableRateType">{{
+            $t('Billable Rate')
+        }}</FieldLabel>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <Select v-model="rateType">
                 <SelectTrigger id="billableRateType">
                     <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value="default-rate">Default Rate</SelectItem>
-                    <SelectItem value="custom-rate">Custom Rate</SelectItem>
+                    <SelectItem value="default-rate">{{ $t('Default Rate') }}</SelectItem>
+                    <SelectItem value="custom-rate">{{ $t('Custom Rate') }}</SelectItem>
                 </SelectContent>
             </Select>
             <TooltipProvider v-if="rateType === 'default-rate'">
@@ -112,7 +115,9 @@ const emit = defineEmits(['submit']);
                                 name="billableRate" />
                         </div>
                     </TooltipTrigger>
-                    <TooltipContent> Uses the default rate of the organization </TooltipContent>
+                    <TooltipContent>
+                        {{ $t('Uses the default rate of the organization') }}
+                    </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
             <BillableRateInput

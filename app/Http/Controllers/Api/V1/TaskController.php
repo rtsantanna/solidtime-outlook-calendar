@@ -44,7 +44,7 @@ class TaskController extends Controller
             ->exists();
 
         if (! $hasAccess) {
-            throw new AuthorizationException('You do not have permission to '.$permission.' in this project.');
+            throw new AuthorizationException(__('You do not have permission to :permission in this project.', ['permission' => $permission]));
         }
     }
 

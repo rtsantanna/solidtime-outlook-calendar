@@ -37,7 +37,9 @@ const task = computed(() => {
             class="text-sm font-medium truncate min-w-0 flex-1">
             {{ timeEntry.description }}
         </span>
-        <span v-else class="text-sm text-text-tertiary font-medium flex-1"> No Description </span>
+        <span v-else class="text-sm text-text-tertiary font-medium flex-1">
+            {{ $t('No Description') }}
+        </span>
         <ProjectBadge
             ref="projectDropdownTrigger"
             :color="project?.color"
@@ -54,7 +56,7 @@ const task = computed(() => {
                     {{ task.name }}
                 </div>
             </div>
-            <div v-else>No Project</div>
+            <div v-else>{{ $t('No Project') }}</div>
         </ProjectBadge>
     </button>
 </template>

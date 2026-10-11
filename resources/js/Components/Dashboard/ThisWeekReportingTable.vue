@@ -132,11 +132,11 @@ const showBillableRate = computed(() => {
     <div class="rounded-lg bg-card-background border border-card-border">
         <div
             class="text-sm flex text-text-primary pt-3 items-center space-x-3 font-medium px-6 border-b border-card-background-separator pb-3">
-            <span>Group by</span>
+            <span>{{ $t('Group by') }}</span>
             <ReportingGroupBySelect
                 v-model="group"
                 :group-by-options="groupByOptions"></ReportingGroupBySelect>
-            <span>and</span>
+            <span>{{ $t('and') }}</span>
             <ReportingGroupBySelect
                 v-model="subGroup"
                 :group-by-options="
@@ -149,16 +149,18 @@ const showBillableRate = computed(() => {
             :style="`grid-template-columns: 1fr 100px ${showBillableRate ? '150px' : ''}`">
             <div
                 class="contents [&>*]:border-card-background-separator [&>*]:border-b [&>*]:pb-1.5 [&>*]:pt-1 text-text-tertiary text-sm">
-                <div class="pl-6">Name</div>
-                <div class="text-right" :class="!showBillableRate ? 'pr-6' : ''">Duration</div>
-                <div v-if="showBillableRate" class="text-right pr-6">Cost</div>
+                <div class="pl-6">{{ $t('Name') }}</div>
+                <div class="text-right" :class="!showBillableRate ? 'pr-6' : ''">
+                    {{ $t('Duration') }}
+                </div>
+                <div v-if="showBillableRate" class="text-right pr-6">{{ $t('Cost') }}</div>
             </div>
 
             <div
                 v-if="isLoading"
                 class="flex justify-center py-10 text-text-tertiary"
                 :class="showBillableRate ? 'col-span-3' : 'col-span-2'">
-                Loading reporting data…
+                {{ $t('Loading reporting data…') }}
             </div>
 
             <template
@@ -174,7 +176,7 @@ const showBillableRate = computed(() => {
                     :entry="entry"></ReportingRow>
                 <div class="contents [&>*]:transition text-text-tertiary [&>*]:h-[50px]">
                     <div class="flex items-center pl-6 font-medium">
-                        <span>Total</span>
+                        <span>{{ $t('Total') }}</span>
                     </div>
                     <div
                         class="justify-end flex items-center font-medium"
@@ -209,8 +211,10 @@ const showBillableRate = computed(() => {
                 v-else
                 class="chart flex flex-col items-center justify-center py-12"
                 :class="showBillableRate ? 'col-span-3' : 'col-span-2'">
-                <p class="text-lg text-text-primary font-medium">No time entries found</p>
-                <p>Try to track some time entries this week</p>
+                <p class="text-lg text-text-primary font-medium">
+                    {{ $t('No time entries found') }}
+                </p>
+                <p>{{ $t('Try to track some time entries this week') }}</p>
             </div>
         </div>
     </div>

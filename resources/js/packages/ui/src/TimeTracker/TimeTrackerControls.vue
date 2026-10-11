@@ -106,7 +106,7 @@ watch(
                     v-if="isOnBreak"
                     class="flex w-full items-center gap-2 py-4 sm:py-2.5 px-3.5 @2xl:px-4 text-base font-medium text-amber-600 dark:text-amber-400">
                     <Coffee class="w-5 h-5 shrink-0" />
-                    <span>On break</span>
+                    <span>{{ $t('On break') }}</span>
                 </div>
                 <TimeTrackerEntryInput
                     v-else
@@ -122,8 +122,8 @@ watch(
                     <button
                         v-if="breaksEnabled && !isOnBreak && isActive"
                         type="button"
-                        title="Take a break"
-                        aria-label="Take a break"
+                        :title="$t('Take a break')"
+                        :aria-label="$t('Take a break')"
                         class="flex items-center justify-center w-8 h-8 rounded-full bg-quaternary text-text-tertiary hover:text-amber-500 focus:ring-2 focus:ring-border-tertiary transition"
                         @click="emit('startBreak')">
                         <Coffee class="w-4 h-4" />
@@ -180,8 +180,8 @@ watch(
             <button
                 v-if="breaksEnabled && !isOnBreak && isActive"
                 type="button"
-                title="Take a break"
-                aria-label="Take a break"
+                :title="$t('Take a break')"
+                :aria-label="$t('Take a break')"
                 class="flex items-center justify-center w-9 h-9 rounded-full bg-quaternary text-text-tertiary hover:text-amber-500 focus:ring-2 focus:ring-border-tertiary transition"
                 @click="emit('startBreak')">
                 <Coffee class="w-5 h-5" />

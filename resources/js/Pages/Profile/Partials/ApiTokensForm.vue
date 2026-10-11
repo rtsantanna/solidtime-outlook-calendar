@@ -18,6 +18,7 @@ import { useNotificationsStore } from '@/utils/notification';
 import { useClipboard } from '@vueuse/core';
 import { formatDateTimeLocalized } from '../../../packages/ui/src/utils/time';
 import { ClockIcon } from '@heroicons/vue/20/solid';
+import { trans } from 'laravel-vue-i18n';
 import type { Organization } from '@/packages/api/src';
 
 const queryClient = useQueryClient();
@@ -38,8 +39,8 @@ async function createApiToken() {
             createApiTokenMutation.mutateAsync({
                 name: createApiTokenForm.name,
             }),
-        'API Token successfully created',
-        'There was an error while creating the API Token',
+        trans('API Token successfully created'),
+        trans('There was an error while creating the API Token'),
         (response) => {
             createApiTokenForm.name = '';
             displayingToken.value = true;
@@ -66,8 +67,8 @@ async function deleteApiToken() {
     if (apiTokenBeingDeleted.value) {
         await handleApiRequestNotifications(
             () => deleteApiTokenMutation.mutateAsync(apiTokenBeingDeleted.value!.id),
-            'API Token successfully deleted',
-            'There was an error while deleting the API Token',
+            trans('API Token successfully deleted'),
+            trans('There was an error while deleting the API Token'),
             () => {
                 apiTokenBeingDeleted.value = null;
             }
@@ -79,8 +80,8 @@ async function revokeApiToken() {
     if (apiTokenBeingRevoked.value) {
         await handleApiRequestNotifications(
             () => revokeApiTokenMutation.mutateAsync(apiTokenBeingRevoked.value!.id),
-            'API Token successfully revoked',
-            'There was an error while revoking the API Token',
+            trans('API Token successfully revoked'),
+            trans('There was an error while revoking the API Token'),
             () => {
                 apiTokenBeingRevoked.value = null;
             }
@@ -137,17 +138,20 @@ const revokeApiTokenMutation = useMutation({
     <div>
         <!-- Generate API Token -->
         <FormSection @submitted="createApiToken">
-            <template #title> Create API Token </template>
+            <template #title> {{ $t('Create API Token') }} </template>
 
             <template #description>
-                API tokens allow third-party services to authenticate with our application on your
-                behalf.
+                {{
+                    $t(
+                        'API tokens allow third-party services to authenticate with our application on your behalf.'
+                    )
+                }}
             </template>
 
             <template #form>
                 <!-- Token Name -->
                 <Field class="col-span-6 sm:col-span-4">
-                    <FieldLabel for="api_key_name">API Key Name</FieldLabel>
+                    <FieldLabel for="api_key_name">{{ $t('API Key Name') }}</FieldLabel>
                     <TextInput
                         id="api_key_name"
                         v-model="createApiTokenForm.name"
@@ -159,7 +163,7 @@ const revokeApiTokenMutation = useMutation({
                     <FieldDescription>
                         <span class="flex space-x-1.5 items-center text-text-tertiary font-medium">
                             <ClockIcon class="w-4"></ClockIcon>
-                            <span> API Tokens are valid for 1 year </span>
+                            <span> {{ $t('API Tokens are valid for 1 year') }} </span>
                         </span>
                     </FieldDescription>
                 </Field>
@@ -167,13 +171,13 @@ const revokeApiTokenMutation = useMutation({
 
             <template #actions>
                 <ActionMessage :on="createApiTokenForm.recentlySuccessful" class="me-3">
-                    Created.
+                    {{ $t('Created.') }}
                 </ActionMessage>
 
                 <PrimaryButton
                     :class="{ 'opacity-25': createApiTokenForm.processing }"
                     :disabled="createApiTokenForm.processing">
-                    Create API Key
+                    {{ $t('Create API Key') }}
                 </PrimaryButton>
             </template>
         </FormSection>
@@ -184,11 +188,14 @@ const revokeApiTokenMutation = useMutation({
             <!-- Manage API Tokens -->
             <div class="mt-10 sm:mt-0">
                 <ActionSection>
-                    <template #title> Manage API Tokens </template>
+                    <template #title> {{ $t('Manage API Tokens') }} </template>
 
                     <template #description>
-                        You may delete or revoke any of your existing tokens if they are no longer
-                        needed.
+                        {{
+                            $t(
+                                'You may delete or revoke any of your existing tokens if they are no longer needed.'
+                            )
+                        }}
                     </template>
 
                     <!-- API Token List -->
@@ -202,45 +209,55 @@ const revokeApiTokenMutation = useMutation({
                                     <div>{{ token.name }}</div>
                                     <div class="text-sm text-text-tertiary space-x-3">
                                         <span v-if="token.created_at">
-                                            Created at
                                             {{
-                                                formatDateTimeLocalized(
-                                                    token.created_at,
-                                                    organization?.date_format,
-                                                    organization?.time_format
-                                                )
+                                                $t('Created at :date', {
+                                                    date: formatDateTimeLocalized(
+                                                        token.created_at,
+                                                        organization?.date_format,
+                                                        organization?.time_format
+                                                    ),
+                                                })
                                             }}
                                         </span>
                                         <span v-if="token.expires_at">
-                                            Expires at
                                             {{
-                                                formatDateTimeLocalized(
-                                                    token.expires_at,
-                                                    organization?.date_format,
-                                                    organization?.time_format
-                                                )
+                                                $t('Expires at :date', {
+                                                    date: formatDateTimeLocalized(
+                                                        token.expires_at,
+                                                        organization?.date_format,
+                                                        organization?.time_format
+                                                    ),
+                                                })
                                             }}
                                         </span>
-                                        <span v-if="token.revoked"> Revoked </span>
+                                        <span v-if="token.revoked"> {{ $t('Revoked') }} </span>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center ms-2">
                                     <div v-if="token.last_used_ago" class="text-sm text-gray-400">
-                                        Last used {{ token.last_used_ago }}
+                                        {{
+                                            $t('Last used :time', {
+                                                time: String(token.last_used_ago),
+                                            })
+                                        }}
                                     </div>
                                     <button
                                         v-if="!token.revoked"
                                         class="cursor-pointer ms-6 text-sm text-text-secondary"
-                                        :aria-label="'Revoke API Token ' + token.name"
+                                        :aria-label="
+                                            $t('Revoke API Token :name', { name: token.name })
+                                        "
                                         @click="confirmApiTokenRevocation(token)">
-                                        Revoke
+                                        {{ $t('Revoke') }}
                                     </button>
                                     <button
                                         class="cursor-pointer ms-6 text-sm text-red-500"
-                                        :aria-label="'Delete API Token ' + token.name"
+                                        :aria-label="
+                                            $t('Delete API Token :name', { name: token.name })
+                                        "
                                         @click="confirmApiTokenDeletion(token)">
-                                        Delete
+                                        {{ $t('Delete') }}
                                     </button>
                                 </div>
                             </div>
@@ -252,12 +269,17 @@ const revokeApiTokenMutation = useMutation({
 
         <!-- Token Value Modal -->
         <DialogModal :show="displayingToken" @close="displayingToken = false">
-            <template #title> API Token created successfully </template>
+            <template #title> {{ $t('API Token created successfully') }} </template>
 
             <template #content>
                 <div>
-                    Please copy your new API token. For your security, it won't be shown again.
-                    <strong>This token is valid for one year</strong> unless you revoke it.
+                    {{
+                        $t(
+                            "Please copy your new API token. For your security, it won't be shown again."
+                        )
+                    }}
+                    <strong>{{ $t('This token is valid for one year') }}</strong>
+                    {{ $t('unless you revoke it.') }}
                 </div>
 
                 <div></div>
@@ -269,13 +291,15 @@ const revokeApiTokenMutation = useMutation({
                         :model-value="newToken"
                         class="flex-1 text-gray-500"></TextInput>
                     <PrimaryButton v-if="isSupported" @click="copy(newToken)">{{
-                        copied ? 'Copied!' : 'Copy Token'
+                        copied ? $t('Copied!') : $t('Copy Token')
                     }}</PrimaryButton>
                 </div>
             </template>
 
             <template #footer>
-                <SecondaryButton @click="displayingToken = false"> Close </SecondaryButton>
+                <SecondaryButton @click="displayingToken = false">
+                    {{ $t('Close') }}
+                </SecondaryButton>
             </template>
         </DialogModal>
 
@@ -283,19 +307,23 @@ const revokeApiTokenMutation = useMutation({
         <ConfirmationModal
             :show="apiTokenBeingDeleted != null"
             @close="apiTokenBeingDeleted = null">
-            <template #title> Delete API Token </template>
+            <template #title> {{ $t('Delete API Token') }} </template>
 
-            <template #content> Are you sure you would like to delete this API token? </template>
+            <template #content>
+                {{ $t('Are you sure you would like to delete this API token?') }}
+            </template>
 
             <template #footer>
-                <SecondaryButton @click="apiTokenBeingDeleted = null"> Cancel </SecondaryButton>
+                <SecondaryButton @click="apiTokenBeingDeleted = null">
+                    {{ $t('Cancel') }}
+                </SecondaryButton>
 
                 <DangerButton
                     class="ms-3"
                     :class="{ 'opacity-25': createApiTokenMutation.isPending.value }"
                     :disabled="createApiTokenMutation.isPending.value"
                     @click="deleteApiToken">
-                    Delete
+                    {{ $t('Delete') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>
@@ -303,19 +331,23 @@ const revokeApiTokenMutation = useMutation({
         <ConfirmationModal
             :show="apiTokenBeingRevoked != null"
             @close="apiTokenBeingRevoked = null">
-            <template #title> Revoke API Token </template>
+            <template #title> {{ $t('Revoke API Token') }} </template>
 
-            <template #content> Are you sure you would like to revoke this API token? </template>
+            <template #content>
+                {{ $t('Are you sure you would like to revoke this API token?') }}
+            </template>
 
             <template #footer>
-                <SecondaryButton @click="apiTokenBeingRevoked = null"> Cancel </SecondaryButton>
+                <SecondaryButton @click="apiTokenBeingRevoked = null">
+                    {{ $t('Cancel') }}
+                </SecondaryButton>
 
                 <DangerButton
                     class="ms-3"
                     :class="{ 'opacity-25': revokeApiTokenMutation.isPending.value }"
                     :disabled="revokeApiTokenMutation.isPending.value"
                     @click="revokeApiToken">
-                    Revoke
+                    {{ $t('Revoke') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>

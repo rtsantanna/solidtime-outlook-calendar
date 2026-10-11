@@ -12,26 +12,28 @@ const preferredColor = usePreferredColorScheme();
 
 <template>
     <FormSection>
-        <template #title> Theme</template>
+        <template #title> {{ $t('Theme') }}</template>
 
-        <template #description> Choose how you want solidtime to look on your device </template>
+        <template #description>
+            {{ $t('Choose how you want solidtime to look on your device') }}
+        </template>
 
         <template #form>
             <!-- Theme -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="theme">Theme</FieldLabel>
+                <FieldLabel for="theme">{{ $t('Theme') }}</FieldLabel>
                 <Select id="theme" v-model="themeSetting">
                     <SelectTrigger>
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="system">System</SelectItem>
-                        <SelectItem value="light">Light</SelectItem>
-                        <SelectItem value="dark">Dark</SelectItem>
+                        <SelectItem value="system">{{ $t('System') }}</SelectItem>
+                        <SelectItem value="light">{{ $t('Light') }}</SelectItem>
+                        <SelectItem value="dark">{{ $t('Dark') }}</SelectItem>
                     </SelectContent>
                 </Select>
                 <FieldDescription v-if="themeSetting === 'system'">
-                    System default: {{ preferredColor }}
+                    {{ $t('System default: :theme', { theme: $t(preferredColor) }) }}
                 </FieldDescription>
             </Field>
 
@@ -40,7 +42,9 @@ const preferredColor = usePreferredColorScheme();
                 <Checkbox
                     id="group_similar_time_entries"
                     v-model:checked="groupSimilarTimeEntriesSetting" />
-                <FieldLabel for="group_similar_time_entries">Group similar time entries</FieldLabel>
+                <FieldLabel for="group_similar_time_entries">{{
+                    $t('Group similar time entries')
+                }}</FieldLabel>
             </Field>
         </template>
     </FormSection>

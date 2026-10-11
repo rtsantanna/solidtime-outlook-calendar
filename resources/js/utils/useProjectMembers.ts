@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { api } from '@/packages/api/src';
 import type { CreateProjectMemberBody, UpdateProjectMemberBody } from '@/packages/api/src';
@@ -23,8 +24,8 @@ export const useProjectMembersStore = defineStore('project-members', () => {
                             project: projectId,
                         },
                     }),
-                'Project member added successfully',
-                'Failed to add project member'
+                trans('Project member added successfully'),
+                trans('Failed to add project member')
             );
             queryClient.invalidateQueries({
                 queryKey: ['projectMembers', organization, projectId],
@@ -46,8 +47,8 @@ export const useProjectMembersStore = defineStore('project-members', () => {
                             projectMember: projectMemberId,
                         },
                     }),
-                'Project member updated successfully',
-                'Failed to update project member'
+                trans('Project member updated successfully'),
+                trans('Failed to update project member')
             );
             if (response?.data?.project_id) {
                 queryClient.invalidateQueries({
@@ -68,8 +69,8 @@ export const useProjectMembersStore = defineStore('project-members', () => {
                             projectMember: projectMemberId,
                         },
                     }),
-                'Project member removed successfully',
-                'Failed to remove project member'
+                trans('Project member removed successfully'),
+                trans('Failed to remove project member')
             );
             queryClient.invalidateQueries({
                 queryKey: ['projectMembers', organizationId, projectId],

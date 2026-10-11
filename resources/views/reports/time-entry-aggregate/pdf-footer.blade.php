@@ -14,7 +14,7 @@
     </head>
     <body>
         <div class="page-number">
-            Page <span class="pageNumber"></span> of <span class="totalPages"></span>
+            {!! __('Page :page of :total', ['page' => '<span class="pageNumber"></span>', 'total' => '<span class="totalPages"></span>']) !!}
         </div>
     </body>
 </html>

@@ -41,7 +41,7 @@ useFocus(projectNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span>Add Project Member</span>
+                <span>{{ $t('Add Project Member') }}</span>
             </div>
         </template>
 
@@ -61,13 +61,13 @@ useFocus(projectNameInput, { initialValue: true });
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false">Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false">{{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Add Project Member
+                {{ $t('Add Project Member') }}
             </PrimaryButton>
         </template>
     </DialogModal>

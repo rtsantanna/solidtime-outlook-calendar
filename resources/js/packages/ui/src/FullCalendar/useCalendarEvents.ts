@@ -1,5 +1,6 @@
 import { computed, ref, type Ref, type ComputedRef } from 'vue';
 import chroma from 'chroma-js';
+import { trans } from 'laravel-vue-i18n';
 import type { Dayjs } from 'dayjs';
 import type { TimeEntry, Project, Client, Task } from '@/packages/api/src';
 import { getBreakPlacementHint } from '../utils/breakPlacement';
@@ -204,9 +205,11 @@ export function useCalendarEvents(params: {
                 : false;
             let title: string;
             if (isBreak) {
-                title = timeEntry.description ? `Break · ${timeEntry.description}` : 'Break';
+                title = timeEntry.description
+                    ? trans('Break · :description', { description: timeEntry.description })
+                    : trans('Break');
             } else {
-                title = timeEntry.description || 'No description';
+                title = timeEntry.description || trans('No description');
             }
             const baseColor = isBreak ? '#F59E0B' : project?.color || '#6B7280';
             const backgroundColor = chroma

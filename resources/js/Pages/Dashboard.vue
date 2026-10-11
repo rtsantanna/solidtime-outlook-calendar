@@ -28,7 +28,7 @@ const refreshDashboardData = () => {
 </script>
 
 <template>
-    <AppLayout title="Dashboard" data-testid="dashboard_view">
+    <AppLayout :title="$t('Dashboard')" data-testid="dashboard_view">
         <MainContainer
             class="pt-5 sm:pt-8 pb-4 sm:pb-6 border-b border-default-background-separator">
             <TimeTracker @change="refreshDashboardData"></TimeTracker>

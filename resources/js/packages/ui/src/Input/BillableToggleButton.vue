@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { twMerge } from 'tailwind-merge';
+import { trans } from 'laravel-vue-i18n';
 import BillableIcon from '@/packages/ui/src/Icons/BillableIcon.vue';
 import {
     Tooltip,
@@ -26,7 +27,7 @@ const props = withDefaults(
     }
 );
 
-const tooltipLabel = computed(() => (active.value ? 'Billable' : 'Non Billable'));
+const tooltipLabel = computed(() => (active.value ? trans('Billable') : trans('Non Billable')));
 
 const iconColorClasses = computed(() => {
     if (active.value) {

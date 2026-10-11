@@ -24,6 +24,7 @@ import { getOrganizationCurrencyString } from '@/utils/money';
 import { useQuery } from '@tanstack/vue-query';
 import { getCurrentOrganizationId } from '@/utils/useUser';
 import { api, type Organization } from '@/packages/api/src';
+import { trans } from 'laravel-vue-i18n';
 
 use([CanvasRenderer, BarChart, TitleComponent, GridComponent, TooltipComponent, LegendComponent]);
 
@@ -48,9 +49,9 @@ const weekdays = computed(() => {
             customOrder.push(daysOrder[i % daysOrder.length]!);
         }
 
-        return customOrder;
+        return customOrder.map((day) => trans(day));
     } else {
-        return daysOrder;
+        return daysOrder.map((day) => trans(day));
     }
 });
 
@@ -240,7 +241,7 @@ const option = computed(() => {
     <div
         class="grid space-y-5 sm:space-y-0 sm:gap-x-6 xl:gap-x-6 grid-cols-1 lg:grid-cols-3 xl:grid-cols-4">
         <div class="col-span-2 xl:col-span-3">
-            <CardTitle title="This Week" class="pb-8" :icon="ClockIcon"></CardTitle>
+            <CardTitle :title="$t('This Week')" class="pb-8" :icon="ClockIcon"></CardTitle>
             <v-chart v-if="weeklyHistory" :autoresize="true" class="chart" :option="option" />
 
             <div class="mt-6">
@@ -249,7 +250,7 @@ const option = computed(() => {
         </div>
         <div class="space-y-6">
             <StatCard
-                title="Spent Time"
+                :title="$t('Spent Time')"
                 :value="
                     totalWeeklyTime
                         ? formatReportingDuration(
@@ -260,7 +261,7 @@ const option = computed(() => {
                         : '--'
                 " />
             <StatCard
-                title="Billable Time"
+                :title="$t('Billable Time')"
                 :value="
                     totalWeeklyBillableTime
                         ? formatReportingDuration(
@@ -271,7 +272,7 @@ const option = computed(() => {
                         : '--'
                 " />
             <StatCard
-                title="Billable Amount"
+                :title="$t('Billable Amount')"
                 :value="
                     totalWeeklyBillableAmount
                         ? formatCents(

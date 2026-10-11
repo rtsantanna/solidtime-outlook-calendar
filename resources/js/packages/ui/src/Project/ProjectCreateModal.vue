@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import TextInput from '@/packages/ui/src/Input/TextInput.vue';
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import DialogModal from '@/packages/ui/src/DialogModal.vue';
@@ -67,7 +68,7 @@ const currentClientName = computed(() => {
     if (project.value.client_id) {
         return props.clients.find((client) => client.id === project.value.client_id)?.name;
     }
-    return 'No Client';
+    return trans('No Client');
 });
 </script>
 
@@ -75,7 +76,7 @@ const currentClientName = computed(() => {
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Create Project </span>
+                <span> {{ $t('Create Project') }} </span>
             </div>
         </template>
 
@@ -83,18 +84,18 @@ const currentClientName = computed(() => {
             <FieldGroup>
                 <FieldGroup class="flex-row items-end">
                     <Field class="w-auto text-center">
-                        <FieldLabel for="color">Color</FieldLabel>
+                        <FieldLabel for="color">{{ $t('Color') }}</FieldLabel>
                         <ProjectColorSelector v-model="project.color"></ProjectColorSelector>
                     </Field>
                     <Field class="w-full">
-                        <FieldLabel for="projectName">Project name</FieldLabel>
+                        <FieldLabel for="projectName">{{ $t('Project name') }}</FieldLabel>
                         <TextInput
                             id="projectName"
                             ref="projectNameInput"
                             v-model="project.name"
                             name="projectName"
                             type="text"
-                            placeholder="The next big thing"
+                            :placeholder="$t('The next big thing')"
                             class="block w-full"
                             required
                             autocomplete="projectName"
@@ -102,7 +103,7 @@ const currentClientName = computed(() => {
                     </Field>
                 </FieldGroup>
                 <Field>
-                    <FieldLabel for="client" :icon="UserCircleIcon">Client</FieldLabel>
+                    <FieldLabel for="client" :icon="UserCircleIcon">{{ $t('Client') }}</FieldLabel>
                     <ClientDropdown
                         v-model="project.client_id"
                         :create-client="createClient"
@@ -130,13 +131,13 @@ const currentClientName = computed(() => {
             </FieldGroup>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false">{{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Create Project
+                {{ $t('Create Project') }}
             </PrimaryButton>
         </template>
     </DialogModal>

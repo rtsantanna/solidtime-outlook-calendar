@@ -206,7 +206,7 @@ onMounted(async () => {
         <MainContainer
             class="py-3 sm:py-5 border-b border-default-background-separator flex justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-6">
-                <PageTitle :icon="ChartBarIcon" title="Reporting"></PageTitle>
+                <PageTitle :icon="ChartBarIcon" :title="$t('Reporting')"></PageTitle>
             </div>
         </MainContainer>
         <MainContainer>
@@ -222,17 +222,17 @@ onMounted(async () => {
                     class="col-span-3 bg-card-background rounded-lg border border-card-border pt-3">
                     <div
                         class="text-sm flex text-text-primary items-center font-medium px-6 border-b border-card-background-separator pb-3">
-                        Group by
+                        {{ $t('Group by') }}
                         <strong class="px-2">{{ getGroupLabel(group) }}</strong>
-                        and
+                        {{ $t('and') }}
                         <strong class="px-2">{{ getGroupLabel(subGroup) }}</strong>
                     </div>
                     <div class="grid items-center" style="grid-template-columns: 1fr 100px 150px">
                         <div
                             class="contents [&>*]:border-card-background-separator [&>*]:border-b [&>*]:bg-tertiary [&>*]:pb-1.5 [&>*]:pt-1 text-text-secondary text-sm">
-                            <div class="pl-6">Name</div>
-                            <div class="text-right">Duration</div>
-                            <div class="text-right pr-6">Cost</div>
+                            <div class="pl-6">{{ $t('Name') }}</div>
+                            <div class="text-right">{{ $t('Duration') }}</div>
+                            <div class="text-right pr-6">{{ $t('Cost') }}</div>
                         </div>
                         <template
                             v-if="
@@ -249,7 +249,7 @@ onMounted(async () => {
                             <div
                                 class="contents [&>*]:transition text-text-tertiary [&>*]:h-[50px]">
                                 <div class="flex items-center pl-6 font-medium">
-                                    <span>Total</span>
+                                    <span>{{ $t('Total') }}</span>
                                 </div>
                                 <div class="justify-end flex items-center font-medium">
                                     {{
@@ -279,9 +279,9 @@ onMounted(async () => {
                             v-else
                             class="chart flex flex-col items-center justify-center py-12 col-span-3">
                             <p class="text-lg text-text-primary font-semibold">
-                                No time entries found
+                                {{ $t('No time entries found') }}
                             </p>
-                            <p>Try to change the filters and time range</p>
+                            <p>{{ $t('Try to change the filters and time range') }}</p>
                         </div>
                     </div>
                 </div>

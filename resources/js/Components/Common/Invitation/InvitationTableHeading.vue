@@ -5,11 +5,11 @@ import TableHeading from '@/Components/Common/TableHeading.vue';
 <template>
     <TableHeading>
         <div class="px-3 py-1.5 text-left text-text-tertiary pl-4 sm:pl-6 lg:pl-8 3xl:pl-12">
-            Email
+            {{ $t('Email') }}
         </div>
-        <div class="px-3 py-1.5 text-left text-text-tertiary">Role</div>
+        <div class="px-3 py-1.5 text-left text-text-tertiary">{{ $t('Role') }}</div>
         <div class="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8 3xl:pr-12 bg-row-heading-background">
-            <span class="sr-only">Edit</span>
+            <span class="sr-only">{{ $t('Edit') }}</span>
         </div>
     </TableHeading>
 </template>

@@ -83,10 +83,10 @@ const shownTasks = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="Projects" data-testid="projects_view">
+    <AppLayout :title="$t('Projects')" data-testid="projects_view">
         <MainContainer
             class="py-5 border-b border-default-background-separator flex justify-between items-center">
-            <nav class="flex" aria-label="Breadcrumb">
+            <nav class="flex" :aria-label="$t('Breadcrumb')">
                 <ol role="list" class="flex items-center space-x-2">
                     <li>
                         <div class="flex items-center space-x-6">
@@ -94,7 +94,9 @@ const shownTasks = computed(() => {
                                 :href="route('projects')"
                                 class="flex items-center space-x-2 sm:space-x-2.5">
                                 <FolderIcon class="w-5 text-icon-default"></FolderIcon>
-                                <span class="text-sm sm:text-base font-medium">Projects</span>
+                                <span class="text-sm sm:text-base font-medium">{{
+                                    $t('Projects')
+                                }}</span>
                             </Link>
                         </div>
                     </li>
@@ -122,10 +124,10 @@ const shownTasks = computed(() => {
                         / h
                     </Badge>
                     <Badge v-if="project?.is_billable && !project?.billable_rate">
-                        Default Rate
+                        {{ $t('Default Rate') }}
                     </Badge>
-                    <Badge v-if="!project?.is_billable"> Non-Billable </Badge>
-                    <Badge>{{ project?.is_public ? 'Public' : 'Private' }}</Badge>
+                    <Badge v-if="!project?.is_billable"> {{ $t('Non-Billable') }} </Badge>
+                    <Badge>{{ project?.is_public ? $t('Public') : $t('Private') }}</Badge>
                 </div>
             </nav>
             <div>
@@ -133,7 +135,7 @@ const shownTasks = computed(() => {
                     v-if="canCreateProjects()"
                     :icon="PencilSquareIcon"
                     @click="showEditProjectModal = true">
-                    Edit Project
+                    {{ $t('Edit Project') }}
                 </SecondaryButton>
                 <ProjectEditModal
                     v-if="project"
@@ -144,20 +146,20 @@ const shownTasks = computed(() => {
         <MainContainer>
             <div class="grid lg:grid-cols-2 gap-x-6 pt-6">
                 <div>
-                    <CardTitle title="Tasks" :icon="CheckCircleIcon">
+                    <CardTitle :title="$t('Tasks')" :icon="CheckCircleIcon">
                         <template #actions>
                             <div class="w-full items-center flex justify-between">
                                 <div class="pl-6">
                                     <TabBar v-model="activeTab">
-                                        <TabBarItem value="active">Active </TabBarItem>
-                                        <TabBarItem value="done">Done </TabBarItem>
+                                        <TabBarItem value="active">{{ $t('Active') }} </TabBarItem>
+                                        <TabBarItem value="done">{{ $t('Done') }} </TabBarItem>
                                     </TabBar>
                                 </div>
                                 <SecondaryButton
                                     v-if="canCreateTasks()"
                                     :icon="PlusIcon"
                                     @click="createTask = true"
-                                    >Create Task
+                                    >{{ $t('Create Task') }}
                                 </SecondaryButton>
                                 <TaskCreateModal
                                     v-model:show="createTask"
@@ -175,10 +177,10 @@ const shownTasks = computed(() => {
                     </Card>
                 </div>
                 <div v-if="canViewProjectMembers()">
-                    <CardTitle title="Project Members" :icon="UserGroupIcon">
+                    <CardTitle :title="$t('Project Members')" :icon="UserGroupIcon">
                         <template #actions>
                             <SecondaryButton :icon="PlusIcon" @click="createProjectMember = true">
-                                Add Member
+                                {{ $t('Add Member') }}
                             </SecondaryButton>
                             <ProjectMemberCreateModal
                                 v-model:show="createProjectMember"

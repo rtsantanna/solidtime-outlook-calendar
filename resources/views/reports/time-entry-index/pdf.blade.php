@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Report</title>
+    <title>{{ __('Report') }}</title>
     <style>
 
         html, body, div, span, applet, object, iframe,
@@ -127,7 +127,7 @@
 </head>
 <body>
 <div>
-    <p style="font-size: 32px; font-weight: 600; margin-bottom: 5px;">Detailed Report</p>
+    <p style="font-size: 32px; font-weight: 600; margin-bottom: 5px;">{{ __('Detailed Report') }}</p>
     <div style="font-size: 16px; font-weight: 600; color: #71717a;">
         <span>{{ $localization->formatDate($start->timezone($timezone)) }} - {{ $localization->formatDate($end->timezone($timezone)) }}</span><br><br>
     </div>
@@ -136,13 +136,13 @@
     <div
         style="background-color: #fafafa; padding: 5px 14px; display: flex; gap: 20px;">
         <div style="padding: 8px 12px; border-radius: 8px;">
-            <div style="color: #71717a; font-weight: 600;">Duration</div>
+            <div style="color: #71717a; font-weight: 600;">{{ __('Duration') }}</div>
             <div
                 style="font-size: 24px; font-weight: 500; margin-top: 2px;">{{ $localization->formatIntervalForReporting(CarbonInterval::seconds($aggregatedData['seconds'])) }} </div>
         </div>
         @if($showBillableRate)
         <div style="padding: 8px 12px; border-radius: 8px;">
-            <div style="color: #71717a; font-weight: 600;">Total cost</div>
+            <div style="color: #71717a; font-weight: 600;">{{ __('Total cost') }}</div>
             <div style="font-size: 24px; font-weight: 500; margin-top: 2px;">
                 {{ $localization->formatCurrency(Money::of(BigDecimal::ofUnscaledValue($aggregatedData['cost'], 2)->__toString(), $currency)) }}
             </div>
@@ -153,13 +153,13 @@
         <table style="width: 100%;">
             <thead>
             <tr style="border-top: 1px #d4d4d8 solid;">
-                <th>Time Entry</th>
-                <th>User</th>
-                <th style="text-align: center;">Time</th>
-                <th>Duration</th>
-                <th>Billable</th>
-                <th>Break</th>
-                <th>Tags</th>
+                <th>{{ __('Time Entry') }}</th>
+                <th>{{ __('User') }}</th>
+                <th style="text-align: center;">{{ __('Date and time') }}</th>
+                <th>{{ __('Duration') }}</th>
+                <th>{{ __('Billable') }}</th>
+                <th>{{ __('Break') }}</th>
+                <th>{{ __('Tags') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -168,14 +168,14 @@
                     <td style="overflow-wrap: break-word; max-width: 250px;">
                         {{ $timeEntry->description === '' ? '-' : $timeEntry->description }} <br>
                         @if($timeEntry->task?->name)
-                            <span style="font-weight: 600;">Task:</span> {{ $timeEntry->task?->name ?? '-' }} <br>
+                            <span style="font-weight: 600;">{{ __('Task:') }}</span> {{ $timeEntry->task?->name ?? '-' }} <br>
                         @endif
                         @if($timeEntry->project?->name)
-                            <span style="font-weight: 600;">Project:</span> {{ $timeEntry->project?->name }} <br>
+                            <span style="font-weight: 600;">{{ __('Project:') }}</span> {{ $timeEntry->project?->name }} <br>
                         @endif
                         @if($timeEntry->client?->name)
                             <span style="font-weight: 600;">
-                                    Client:
+                                    {{ __('Client:') }}
                                 </span>{{ $timeEntry->client?->name }} <br>
                         @endif
                     </td>
@@ -192,8 +192,8 @@
                     <td style="overflow-wrap: break-word; min-width: 75px;">
                         {{ $localization->formatIntervalForReporting($timeEntry->getDuration()) }}
                     </td>
-                    <td style="overflow-wrap: break-word;">{{ $timeEntry->billable ? 'Yes' : 'No' }}</td>
-                    <td style="overflow-wrap: break-word;">{{ $timeEntry->type === \App\Enums\TimeEntryType::Break ? 'Yes' : 'No' }}</td>
+                    <td style="overflow-wrap: break-word;">{{ $timeEntry->billable ? __('Yes') : __('No') }}</td>
+                    <td style="overflow-wrap: break-word;">{{ $timeEntry->type === \App\Enums\TimeEntryType::Break ? __('Yes') : __('No') }}</td>
                     <td style="overflow-wrap: break-word; min-width: 75px;">{{ count($timeEntry->tagsRelation) === 0 ? '-' : $timeEntry->tagsRelation->implode('name', ', ') }}</td>
                 </tr>
             @endforeach

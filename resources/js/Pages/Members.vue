@@ -30,21 +30,21 @@ const { tableState, handleSort } = useTableSortState<SortColumn>('member-table-s
 </script>
 
 <template>
-    <AppLayout title="Members" data-testid="members_view">
+    <AppLayout :title="$t('Members')" data-testid="members_view">
         <MainContainer
             class="py-5 border-b border-default-background-separator flex justify-between items-center">
             <div class="flex items-center space-x-4 sm:space-x-6">
-                <PageTitle :icon="UserGroupIcon" title="Members"> </PageTitle>
+                <PageTitle :icon="UserGroupIcon" :title="$t('Members')"> </PageTitle>
                 <TabBar v-model="activeTab">
-                    <TabBarItem value="all">All</TabBarItem>
-                    <TabBarItem value="invitations">Invitations</TabBarItem>
+                    <TabBarItem value="all">{{ $t('All') }}</TabBarItem>
+                    <TabBarItem value="invitations">{{ $t('Invitations') }}</TabBarItem>
                 </TabBar>
             </div>
             <SecondaryButton
                 v-if="canCreateInvitations()"
                 :icon="PlusIcon"
                 @click="inviteMember = true"
-                >Invite member</SecondaryButton
+                >{{ $t('Invite member') }}</SecondaryButton
             >
             <MemberInviteModal
                 v-model:show="inviteMember"

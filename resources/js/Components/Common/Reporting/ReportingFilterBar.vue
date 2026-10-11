@@ -18,6 +18,7 @@ import TagDropdown from '@/packages/ui/src/Tag/TagDropdown.vue';
 import { useTagsQuery } from '@/utils/useTagsQuery';
 import { useTagsStore } from '@/utils/useTags';
 import type { TagMatchType } from '@/types/reporting';
+import { trans } from 'laravel-vue-i18n';
 
 type TimeEntryRoundingType = 'up' | 'down' | 'nearest';
 
@@ -44,8 +45,8 @@ const breaksEnabled = useBreaksEnabled();
 const { tags } = useTagsQuery();
 
 const tagMatchOptions: { value: TagMatchType; label: string }[] = [
-    { value: 'contains', label: 'Contains' },
-    { value: 'not_contains', label: 'Does Not Contain' },
+    { value: 'contains', label: trans('Contains') },
+    { value: 'not_contains', label: trans('Does Not Contain') },
 ];
 
 function selectTagMatchType(value: AcceptableValue) {
@@ -62,13 +63,13 @@ async function createTag(name: string) {
     <div class="py-2.5 w-full border-b border-default-background-separator">
         <MainContainer class="sm:flex space-y-4 sm:space-y-0 justify-between">
             <div class="flex flex-wrap items-center space-y-2 sm:space-y-0 space-x-3">
-                <div class="text-sm font-medium">Filters</div>
+                <div class="text-sm font-medium">{{ $t('Filters') }}</div>
                 <MemberMultiselectDropdown v-model="selectedMembers" @submit="emit('submit')">
                     <template #trigger>
                         <ReportingFilterBadge
                             :count="selectedMembers.length"
                             :active="selectedMembers.length > 0"
-                            title="Members"
+                            :title="$t('Members')"
                             :icon="UserGroupIcon" />
                     </template>
                 </MemberMultiselectDropdown>
@@ -77,7 +78,7 @@ async function createTag(name: string) {
                         <ReportingFilterBadge
                             :count="selectedProjects.length"
                             :active="selectedProjects.length > 0"
-                            title="Projects"
+                            :title="$t('Projects')"
                             :icon="FolderIcon" />
                     </template>
                 </ProjectMultiselectDropdown>
@@ -86,7 +87,7 @@ async function createTag(name: string) {
                         <ReportingFilterBadge
                             :count="selectedTasks.length"
                             :active="selectedTasks.length > 0"
-                            title="Tasks"
+                            :title="$t('Tasks')"
                             :icon="CheckCircleIcon" />
                     </template>
                 </TaskMultiselectDropdown>
@@ -95,7 +96,7 @@ async function createTag(name: string) {
                         <ReportingFilterBadge
                             :count="selectedClients.length"
                             :active="selectedClients.length > 0"
-                            title="Clients"
+                            :title="$t('Clients')"
                             :icon="FolderIcon" />
                     </template>
                 </ClientMultiselectDropdown>
@@ -108,7 +109,7 @@ async function createTag(name: string) {
                         <ReportingFilterBadge
                             :count="selectedTags.length"
                             :active="selectedTags.length > 0"
-                            title="Tags"
+                            :title="$t('Tags')"
                             :icon="TagIcon" />
                     </template>
                     <template #content-before-list>
@@ -116,7 +117,7 @@ async function createTag(name: string) {
                             <div
                                 id="tag-match-type-label"
                                 class="mb-1.5 px-2 text-xs font-medium text-text-tertiary uppercase">
-                                Match
+                                {{ $t('Match') }}
                             </div>
                             <RadioGroupRoot
                                 :model-value="tagMatchType"
@@ -156,14 +157,14 @@ async function createTag(name: string) {
                                         : 'text-text-quaternary'
                                 " />
                             <span class="text-text-secondary">{{
-                                billable === 'false' ? 'Non Billable' : 'Billable'
+                                billable === 'false' ? $t('Non Billable') : $t('Billable')
                             }}</span>
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem :value="null">Both</SelectItem>
-                        <SelectItem value="true">Billable</SelectItem>
-                        <SelectItem value="false">Non Billable</SelectItem>
+                        <SelectItem :value="null">{{ $t('Both') }}</SelectItem>
+                        <SelectItem value="true">{{ $t('Billable') }}</SelectItem>
+                        <SelectItem value="false">{{ $t('Non Billable') }}</SelectItem>
                     </SelectContent>
                 </Select>
                 <Select
@@ -185,17 +186,17 @@ async function createTag(name: string) {
                                 " />
                             <span class="text-text-secondary">{{
                                 entryType === null
-                                    ? 'Type'
+                                    ? $t('Type')
                                     : entryType === 'break'
-                                      ? 'Breaks'
-                                      : 'Work time'
+                                      ? $t('Breaks')
+                                      : $t('Work time')
                             }}</span>
                         </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem :value="null">Both</SelectItem>
-                        <SelectItem value="work">Work time</SelectItem>
-                        <SelectItem value="break">Breaks</SelectItem>
+                        <SelectItem :value="null">{{ $t('Both') }}</SelectItem>
+                        <SelectItem value="work">{{ $t('Work time') }}</SelectItem>
+                        <SelectItem value="break">{{ $t('Breaks') }}</SelectItem>
                     </SelectContent>
                 </Select>
                 <ReportingRoundingControls

@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { computed, ref, watch } from 'vue';
 import { api } from '@/packages/api/src';
@@ -133,7 +134,7 @@ export const useCurrentTimeEntryStore = defineStore('currentTimeEntry', () => {
                         },
                         { params: { organization: organization } }
                     ),
-                'Timer started!'
+                trans('Timer started!')
             );
             if (response?.data) {
                 currentTimeEntry.value = response.data;
@@ -165,7 +166,7 @@ export const useCurrentTimeEntryStore = defineStore('currentTimeEntry', () => {
                             },
                         }
                     ),
-                'Timer stopped!'
+                trans('Timer stopped!')
             );
             $reset();
         } else {
@@ -196,8 +197,8 @@ export const useCurrentTimeEntryStore = defineStore('currentTimeEntry', () => {
                     },
                     { params: { organization: organization } }
                 ),
-            'Break started!',
-            'Your timer was stopped, but the break could not be started.'
+            trans('Break started!'),
+            trans('Your timer was stopped, but the break could not be started.')
         );
         if (response?.data) {
             currentTimeEntry.value = response.data;
@@ -249,7 +250,7 @@ export const useCurrentTimeEntryStore = defineStore('currentTimeEntry', () => {
                             },
                         }
                     ),
-                'Time entry updated!'
+                trans('Time entry updated!')
             );
             if (response?.data) {
                 if (response.data.end === null) {

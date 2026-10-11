@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import PrimaryButton from '@/packages/ui/src/Buttons/PrimaryButton.vue';
 import { computed, onMounted, ref } from 'vue';
 import { useNotificationsStore } from '@/utils/notification';
@@ -39,11 +40,14 @@ const files = ref<FileList | null>(null);
 
 async function importData() {
     if (importType.value === null) {
-        addNotification('error', 'Please select the import type');
+        addNotification('error', trans('Please select the import type'));
         return;
     }
     if (files.value?.length !== 1) {
-        addNotification('error', 'Please select the CSV or ZIP file that you want to import');
+        addNotification(
+            'error',
+            trans('Please select the CSV or ZIP file that you want to import')
+        );
         return;
     }
     const rawBase64String = await toBase64(files.value[0]!);
@@ -112,7 +116,7 @@ const currentImporterDescription = computed(() => {
 });
 
 const filenames = computed(() => {
-    return files.value?.item(0)?.name ?? 'Import File selected';
+    return files.value?.item(0)?.name ?? trans('Import File selected');
 });
 
 const importType = ref<ImportType | null>(null);
@@ -122,41 +126,46 @@ const showResultModal = ref(false);
 
 <template>
     <DialogModal closeable :show="showResultModal" @close="showResultModal = false">
-        <template #title>Import Result</template>
+        <template #title>{{ $t('Import Result') }}</template>
         <template #content>
             <div class="pb-6">
-                The import was successful! Here is an overview of the imported data:
+                {{ $t('The import was successful! Here is an overview of the imported data:') }}
             </div>
 
             <div class="py-2.5 px-3 border-t border-t-card-background-separator">
-                <span class="text-text-primary font-semibold">Clients created:</span>
+                <span class="text-text-primary font-semibold">{{ $t('Clients created:') }}</span>
                 {{ reportResult?.report.clients.created }}
             </div>
             <div class="py-2.5 px-3 border-t border-t-card-background-separator">
-                <span class="text-text-primary font-semibold">Projects created:</span>
+                <span class="text-text-primary font-semibold">{{ $t('Projects created:') }}</span>
                 {{ reportResult?.report.projects.created }}
             </div>
             <div class="py-2.5 px-3 border-t border-t-card-background-separator">
-                <span class="text-text-primary font-semibold">Tasks created:</span>
+                <span class="text-text-primary font-semibold">{{ $t('Tasks created:') }}</span>
                 {{ reportResult?.report.tasks.created }}
             </div>
             <div class="py-2.5 px-3 border-t border-t-card-background-separator">
-                <span class="text-text-primary font-semibold">Time entries created:</span>
+                <span class="text-text-primary font-semibold">{{
+                    $t('Time entries created:')
+                }}</span>
                 {{ reportResult?.report.time_entries.created }}
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="showResultModal = false"> Close </SecondaryButton>
+            <SecondaryButton @click="showResultModal = false"> {{ $t('Close') }} </SecondaryButton>
         </template>
     </DialogModal>
     <div>
-        <CardTitle title="Import Data" :icon="ArrowDownOnSquareIcon"></CardTitle>
+        <CardTitle :title="$t('Import Data')" :icon="ArrowDownOnSquareIcon"></CardTitle>
         <Card class="mb-3">
             <div class="py-2 px-3 sm:px-4 text-sm flex items-center space-x-3">
                 <InformationCircleIcon class="h-5 min-w-0 w-5 text-bg-tertiary" />
                 <p class="flex-1">
-                    Import existing data from Toggl, Clockify or a different solidtime instance.
-                    Please select the type of data you want to import and follow the instructions.
+                    {{
+                        $t(
+                            'Import existing data from Toggl, Clockify or a different solidtime instance. Please select the type of data you want to import and follow the instructions.'
+                        )
+                    }}
                 </p>
             </div>
         </Card>
@@ -164,14 +173,14 @@ const showResultModal = ref(false);
         <Card>
             <div class="px-4 py-5 sm:px-5">
                 <Field>
-                    <FieldLabel for="importType">Import Type</FieldLabel>
+                    <FieldLabel for="importType">{{ $t('Import Type') }}</FieldLabel>
                     <select
                         id="importType"
                         v-model="importType"
                         name="importType"
                         class="block w-full border-input-border bg-input-background text-text-primary focus:border-input-border-active rounded-md shadow-sm">
                         <option :value="null" selected disabled>
-                            Select an import type to get instructions...
+                            {{ $t('Select an import type to get instructions...') }}
                         </option>
                         <option
                             v-for="importTypeOption in importTypeOptions"
@@ -181,7 +190,9 @@ const showResultModal = ref(false);
                         </option>
                     </select>
                     <div v-if="currentImporterDescription" class="py-3 text-text-primary">
-                        <div class="font-semibold text-text-secondary py-1">Instructions:</div>
+                        <div class="font-semibold text-text-secondary py-1">
+                            {{ $t('Instructions:') }}
+                        </div>
                         <div class="max-w-2xl" v-html="currentImporterDescription"></div>
                     </div>
                 </Field>
@@ -198,7 +209,7 @@ const showResultModal = ref(false);
                                 for="file-upload"
                                 class="relative cursor-pointer rounded-md font-semibold text-text-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 focus-within:ring-offset-gray-900 hover:text-indigo-500">
                                 <span v-if="files">{{ filenames }}</span>
-                                <span v-else>Upload the Export file</span>
+                                <span v-else>{{ $t('Upload the Export file') }}</span>
                                 <input
                                     id="file-upload"
                                     ref="importFile"
@@ -209,7 +220,7 @@ const showResultModal = ref(false);
                             </label>
                         </div>
                         <p class="text-xs leading-5 text-text-secondary">
-                            CSV and ZIP are supported
+                            {{ $t('CSV and ZIP are supported') }}
                         </p>
                     </div>
                 </div>
@@ -217,7 +228,7 @@ const showResultModal = ref(false);
 
             <div
                 class="flex items-center justify-end px-4 py-3 bg-card-background border-t border-card-background-separator text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
-                <PrimaryButton :loading @click="importData">Import Data </PrimaryButton>
+                <PrimaryButton :loading @click="importData">{{ $t('Import Data') }} </PrimaryButton>
             </div>
         </Card>
     </div>

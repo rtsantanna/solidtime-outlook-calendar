@@ -43,14 +43,14 @@ const logout = () => {
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="center" class="max-w-48">
-                <DropdownMenuLabel>Manage Account</DropdownMenuLabel>
+                <DropdownMenuLabel>{{ $t('Manage Account') }}</DropdownMenuLabel>
 
                 <DropdownMenuItem as-child>
                     <Link
                         :href="route('profile.show')"
                         class="inline-flex items-center gap-2.5 w-full">
                         <UserCircleIcon class="w-5 h-5 text-icon-default" />
-                        <span>Profile Settings</span>
+                        <span>{{ $t('Profile Settings') }}</span>
                     </Link>
                 </DropdownMenuItem>
 
@@ -60,7 +60,7 @@ const logout = () => {
                         class="inline-flex items-center gap-2.5 w-full"
                         @click="openFeedback">
                         <ChatBubbleLeftRightIcon class="w-5 h-5 text-icon-default" />
-                        <span>Feedback</span>
+                        <span>{{ $t('Feedback') }}</span>
                     </button>
                 </DropdownMenuItem>
 
@@ -68,7 +68,7 @@ const logout = () => {
                     <DropdownMenuItem as-child class="inline-flex items-center gap-2.5 w-full">
                         <button type="submit" data-testid="logout_button">
                             <ArrowLeftOnRectangleIcon class="w-5 h-5 text-icon-default" />
-                            <span>Log Out</span>
+                            <span>{{ $t('Log Out') }}</span>
                         </button>
                     </DropdownMenuItem>
                 </form>

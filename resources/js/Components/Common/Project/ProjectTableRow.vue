@@ -22,6 +22,7 @@ import UpgradeBadge from '@/Components/Common/UpgradeBadge.vue';
 import { formatHumanReadableDuration } from '../../../packages/ui/src/utils/time';
 import { isAllowedToPerformPremiumAction } from '@/utils/billing';
 import { canUpdateProjects, canDeleteProjects } from '@/utils/permissions';
+import { trans } from 'laravel-vue-i18n';
 import type { Organization } from '@/packages/api/src';
 import {
     ContextMenu,
@@ -71,7 +72,7 @@ const billableRateInfo = computed(() => {
                 organization?.value?.number_format
             );
         } else {
-            return 'Default Rate';
+            return trans('Default Rate');
         }
     }
     return null;
@@ -98,13 +99,19 @@ const showEditProjectModal = ref(false);
                     <span class="overflow-ellipsis overflow-hidden">
                         {{ project.name }}
                     </span>
-                    <span class="text-text-secondary"> {{ projectTasksCount }} Tasks </span>
+                    <span class="text-text-secondary">
+                        {{
+                            $tChoice(':count Task|:count Tasks', projectTasksCount, {
+                                count: String(projectTasksCount),
+                            })
+                        }}
+                    </span>
                 </div>
                 <div class="whitespace-nowrap min-w-0 px-3 py-4 text-sm text-text-primary">
                     <div v-if="project.client_id" class="overflow-ellipsis overflow-hidden">
                         {{ client?.name }}
                     </div>
-                    <div v-else class="text-text-tertiary">No client</div>
+                    <div v-else class="text-text-tertiary">{{ $t('No client') }}</div>
                 </div>
                 <div class="whitespace-nowrap px-3 py-4 text-sm text-text-primary">
                     <div v-if="project.spent_time">
@@ -136,22 +143,22 @@ const showEditProjectModal = ref(false);
                     class="whitespace-nowrap px-3 py-4 text-sm text-text-primary flex space-x-1.5 items-center font-medium">
                     <template v-if="project.is_archived">
                         <ArchiveBoxIcon class="w-4 text-icon-default"></ArchiveBoxIcon>
-                        <span>Archived</span>
+                        <span>{{ $t('Archived') }}</span>
                     </template>
                     <template v-else>
                         <CheckCircleIcon class="w-4 text-icon-default"></CheckCircleIcon>
-                        <span>Active</span>
+                        <span>{{ $t('Active') }}</span>
                     </template>
                 </div>
                 <div
                     class="whitespace-nowrap px-3 py-4 text-sm text-text-primary flex space-x-1.5 items-center font-medium">
                     <template v-if="project.is_public">
                         <GlobeAltIcon class="w-4 text-icon-default"></GlobeAltIcon>
-                        <span>Public</span>
+                        <span>{{ $t('Public') }}</span>
                     </template>
                     <template v-else>
                         <LockClosedIcon class="w-4 text-icon-default"></LockClosedIcon>
-                        <span>Private</span>
+                        <span>{{ $t('Private') }}</span>
                     </template>
                 </div>
                 <div
@@ -170,14 +177,14 @@ const showEditProjectModal = ref(false);
                 class="space-x-3"
                 @select="showEditProjectModal = true">
                 <PencilSquareIcon class="w-4 h-4 text-icon-default" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </ContextMenuItem>
             <ContextMenuItem
                 v-if="canUpdateProjects()"
                 class="space-x-3"
                 @select="archiveProject()">
                 <ArchiveBoxIconSolid class="w-4 h-4 text-icon-default" />
-                <span>{{ project.is_archived ? 'Unarchive' : 'Archive' }}</span>
+                <span>{{ project.is_archived ? $t('Unarchive') : $t('Archive') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator v-if="canDeleteProjects()" />
             <ContextMenuItem
@@ -185,7 +192,7 @@ const showEditProjectModal = ref(false);
                 class="space-x-3 text-destructive"
                 @select="deleteProject()">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

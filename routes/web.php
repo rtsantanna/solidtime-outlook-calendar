@@ -79,8 +79,8 @@ Route::middleware([
             'availableRoles' => collect(PermissionStore::roleDefinitions())
                 ->map(fn (array $definition, string $key): array => [
                     'key' => $key,
-                    'name' => $definition['name'],
-                    'description' => $definition['description'],
+                    'name' => __($definition['name']),
+                    'description' => __($definition['description']),
                 ])
                 ->values()
                 ->all(),

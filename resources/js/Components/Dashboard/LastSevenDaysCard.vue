@@ -31,7 +31,7 @@ const { data: last7Days, isLoading } = useQuery({
 </script>
 
 <template>
-    <DashboardCard title="Last 7 Days" :icon="CalendarIcon">
+    <DashboardCard :title="$t('Last 7 Days')" :icon="CalendarIcon">
         <div v-if="isLoading" class="flex justify-center items-center h-40">
             <LoadingSpinner />
         </div>
@@ -44,6 +44,6 @@ const { data: last7Days, isLoading } = useQuery({
                 :history="day.history"
                 :duration="day.duration"></DayOverviewCardEntry>
         </div>
-        <div v-else class="text-center text-gray-500 py-8">No data available</div>
+        <div v-else class="text-center text-gray-500 py-8">{{ $t('No data available') }}</div>
     </DashboardCard>
 </template>

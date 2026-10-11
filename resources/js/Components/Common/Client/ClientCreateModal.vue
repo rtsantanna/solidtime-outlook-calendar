@@ -31,20 +31,20 @@ useFocus(clientNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Create Client </span>
+                <span> {{ $t('Create Client') }} </span>
             </div>
         </template>
 
         <template #content>
             <div class="flex items-center space-x-4">
                 <Field class="col-span-6 sm:col-span-4 flex-1">
-                    <FieldLabel for="clientName">Client Name</FieldLabel>
+                    <FieldLabel for="clientName">{{ $t('Client Name') }}</FieldLabel>
                     <TextInput
                         id="clientName"
                         ref="clientNameInput"
                         v-model="client.name"
                         type="text"
-                        placeholder="Client Name"
+                        :placeholder="$t('Client Name')"
                         class="block w-full"
                         required
                         autocomplete="clientName"
@@ -53,14 +53,14 @@ useFocus(clientNameInput, { initialValue: true });
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel </SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }} </SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Create Client
+                {{ $t('Create Client') }}
             </PrimaryButton>
         </template>
     </DialogModal>

@@ -14,6 +14,7 @@ import { getUserTimezone, getWeekStart } from './settings';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import { computed } from 'vue';
 import { formatNumber } from './number';
+import { trans, transChoice } from 'laravel-vue-i18n';
 
 export type DateFormat =
     | 'point-separated-d-m-yyyy'
@@ -79,7 +80,7 @@ dayjs.extend(updateLocale);
 dayjs.extend(weekOfYear);
 
 export function getDayJsInstance() {
-    dayjs.updateLocale('en', {
+    dayjs.updateLocale(dayjs.locale(), {
         weekStart: firstDayIndex.value,
     });
     return dayjs;
@@ -233,7 +234,7 @@ export function formatDateTimeLocalized(
 }
 
 export function formatWeek(date: string | null): string {
-    return 'Week ' + getDayJsInstance()(date).week();
+    return trans('Week :number', { number: String(getDayJsInstance()(date).week()) });
 }
 
 /*
@@ -263,9 +264,9 @@ export function formatHumanReadableDate(date: string) {
     const today = dayjs();
 
     if (dateObj.isToday()) {
-        return 'Today';
+        return trans('Today');
     } else if (dateObj.isYesterday()) {
-        return 'Yesterday';
+        return trans('Yesterday');
     }
 
     // Calculate difference in days
@@ -273,11 +274,15 @@ export function formatHumanReadableDate(date: string) {
 
     if (diffInDays > 0 && diffInDays <= 30) {
         // For dates in the past (2-30 days ago)
-        return `${diffInDays} ${diffInDays === 1 ? 'day' : 'days'} ago`;
+        return transChoice(':count day ago|:count days ago', diffInDays, {
+            count: String(diffInDays),
+        });
     } else if (diffInDays < 0 && diffInDays >= -30) {
         // For dates in the future (within 30 days)
         const futureDays = Math.abs(diffInDays);
-        return `In ${futureDays} ${futureDays === 1 ? 'day' : 'days'}`;
+        return transChoice('In :count day|In :count days', futureDays, {
+            count: String(futureDays),
+        });
     }
 
     // For dates older than 30 days, show the actual date

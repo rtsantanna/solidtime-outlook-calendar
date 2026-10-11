@@ -172,41 +172,41 @@ const page = usePage<{
                     <nav class="pt-2">
                         <ul>
                             <NavigationSidebarItem
-                                title="Dashboard"
+                                :title="$t('Dashboard')"
                                 :icon="HomeIcon"
                                 :href="route('dashboard')"
                                 :current="route().current('dashboard')"></NavigationSidebarItem>
                             <NavigationSidebarItem
-                                title="Time"
+                                :title="$t('Time')"
                                 :icon="ClockIcon"
                                 :current="route().current('time')"
                                 :href="route('time')"></NavigationSidebarItem>
                             <NavigationSidebarItem
-                                title="Calendar"
+                                :title="$t('Calendar')"
                                 :icon="CalendarIcon"
                                 :current="route().current('calendar')"
                                 :href="route('calendar')"></NavigationSidebarItem>
                             <NavigationSidebarItem
-                                title="Timesheet"
+                                :title="$t('Timesheet')"
                                 :icon="TableCellsIcon"
                                 :current="route().current('timesheet')"
                                 :href="route('timesheet')"></NavigationSidebarItem>
                             <NavigationSidebarItem
-                                title="Reporting"
+                                :title="$t('Reporting')"
                                 :icon="ChartBarIcon"
                                 :sub-items="[
                                     {
-                                        title: 'Overview',
+                                        title: $t('Overview'),
                                         route: 'reporting',
                                         show: true,
                                     },
                                     {
-                                        title: 'Detailed',
+                                        title: $t('Detailed'),
                                         route: 'reporting.detailed',
                                         show: true,
                                     },
                                     {
-                                        title: 'Shared',
+                                        title: $t('Shared'),
                                         route: 'reporting.shared',
                                         show: canViewReport(),
                                     },
@@ -221,37 +221,39 @@ const page = usePage<{
                         </ul>
                     </nav>
 
-                    <div class="text-text-tertiary text-xs font-semibold pt-5 pb-1.5">Manage</div>
+                    <div class="text-text-tertiary text-xs font-semibold pt-5 pb-1.5">
+                        {{ $t('Manage') }}
+                    </div>
 
                     <nav>
                         <ul>
                             <NavigationSidebarItem
                                 v-if="canViewProjects()"
-                                title="Projects"
+                                :title="$t('Projects')"
                                 :icon="FolderIcon"
                                 :href="route('projects')"
                                 :current="route().current('projects')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="canViewClients()"
-                                title="Clients"
+                                :title="$t('Clients')"
                                 :icon="UserCircleIcon"
                                 :current="route().current('clients')"
                                 :href="route('clients')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="canViewMembers()"
-                                title="Members"
+                                :title="$t('Members')"
                                 :icon="UserGroupIcon"
                                 :current="route().current('members')"
                                 :href="route('members')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="canViewTags()"
-                                title="Tags"
+                                :title="$t('Tags')"
                                 :icon="TagIcon"
                                 :current="route().current('tags')"
                                 :href="route('tags')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="isInvoicingActivated() && canViewInvoices()"
-                                title="Invoices"
+                                :title="$t('Invoices')"
                                 :icon="DocumentTextIcon"
                                 :current="
                                     route().current('invoices') || route().current('invoices.*')
@@ -262,25 +264,25 @@ const page = usePage<{
                     <div
                         v-if="canUpdateOrganization()"
                         class="text-text-tertiary text-xs font-semibold pt-5 pb-1.5">
-                        Admin
+                        {{ $t('Admin') }}
                     </div>
 
                     <nav>
                         <ul>
                             <NavigationSidebarItem
                                 v-if="canManageBilling() && isBillingActivated()"
-                                title="Billing"
+                                :title="$t('Billing')"
                                 :icon="CreditCardIcon"
                                 href="/billing"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="canUpdateOrganization()"
-                                title="Import / Export"
+                                :title="$t('Import / Export')"
                                 :icon="ArrowsRightLeftIcon"
                                 :current="route().current('import')"
                                 :href="route('import')"></NavigationSidebarItem>
                             <NavigationSidebarItem
                                 v-if="canUpdateOrganization()"
-                                title="Settings"
+                                :title="$t('Settings')"
                                 :icon="Cog6ToothIcon"
                                 :href="
                                     route(
@@ -305,7 +307,7 @@ const page = usePage<{
 
                         <NavigationSidebarItem
                             class="flex-1"
-                            title="Profile Settings"
+                            :title="$t('Profile Settings')"
                             :icon="Cog6ToothIcon"
                             :href="route('profile.show')"></NavigationSidebarItem>
 

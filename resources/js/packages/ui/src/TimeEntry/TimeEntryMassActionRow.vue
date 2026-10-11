@@ -78,11 +78,11 @@ const showMassUpdateModal = ref(false);
             v-if="selectedTimeEntries.length > 0"
             for="selectAll"
             class="select-none text-text-secondary">
-            {{ selectedTimeEntries.length }} selected
+            {{ $t(':count selected', { count: String(selectedTimeEntries.length) }) }}
         </FieldLabel>
-        <FieldLabel v-else for="selectAll" class="text-text-secondary select-none"
-            >Select All</FieldLabel
-        >
+        <FieldLabel v-else for="selectAll" class="text-text-secondary select-none">{{
+            $t('Select All')
+        }}</FieldLabel>
         <Button
             v-if="selectedTimeEntries.length"
             variant="ghost"
@@ -90,7 +90,7 @@ const showMassUpdateModal = ref(false);
             class="text-text-tertiary hover:text-text-secondary"
             @click="showMassUpdateModal = true">
             <PencilSquareIcon class="w-4"></PencilSquareIcon>
-            <span>Edit</span>
+            <span>{{ $t('Edit') }}</span>
         </Button>
         <Button
             v-if="selectedTimeEntries.length"
@@ -99,7 +99,7 @@ const showMassUpdateModal = ref(false);
             class="text-red-400 hover:text-red-500 hover:bg-red-500/10"
             @click="deleteSelected">
             <TrashIcon class="w-3.5"></TrashIcon>
-            <span>Delete</span>
+            <span>{{ $t('Delete') }}</span>
         </Button>
     </MainContainer>
 </template>

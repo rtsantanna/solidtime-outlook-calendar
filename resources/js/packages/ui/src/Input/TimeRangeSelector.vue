@@ -60,7 +60,7 @@ const dropdownContent = ref();
         ref="dropdownContent"
         class="grid grid-cols-2 divide-x divide-card-background-separator text-center py-2">
         <div class="px-2" @keydown.enter.prevent="nextTick(() => emit('close'))">
-            <div class="font-semibold text-text-primary text-sm pb-2">Start</div>
+            <div class="font-semibold text-text-primary text-sm pb-2">{{ $t('Start') }}</div>
             <div class="flex flex-col items-center space-y-2 w-28 mx-auto">
                 <TimePickerSimple
                     v-model="tempStart"
@@ -78,7 +78,7 @@ const dropdownContent = ref();
             </div>
         </div>
         <div class="px-2">
-            <div class="font-semibold text-text-primary text-sm pb-2">End</div>
+            <div class="font-semibold text-text-primary text-sm pb-2">{{ $t('End') }}</div>
             <div
                 v-if="end !== null && tempEnd !== null"
                 class="flex flex-col items-center space-y-2 w-28 mx-auto">
@@ -94,7 +94,9 @@ const dropdownContent = ref();
                     @changed="updateTimeEntry"></DatePicker>
             </div>
             <div v-else-if="end === null && !showEndTimePicker">
-                <Button variant="outline" size="sm" @click="setEndTime"> Set End Time </Button>
+                <Button variant="outline" size="sm" @click="setEndTime">
+                    {{ $t('Set End Time') }}
+                </Button>
             </div>
             <div
                 v-else-if="showEndTimePicker && tempEnd !== null"
@@ -106,7 +108,7 @@ const dropdownContent = ref();
                     @keydown.enter.prevent.stop="confirmEndTime"></TimePickerSimple>
                 <DatePicker v-model="tempEnd" class="w-full" size="sm"></DatePicker>
                 <Button variant="outline" size="sm" class="w-full" @click="confirmEndTime">
-                    Confirm
+                    {{ $t('Confirm') }}
                 </Button>
             </div>
             <div v-else class="text-text-secondary">-- : --</div>

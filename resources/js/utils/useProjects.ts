@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { api } from '@/packages/api/src';
 import type { CreateProjectBody, UpdateProjectBody } from '@/packages/api/src';
@@ -20,8 +21,8 @@ export const useProjectsStore = defineStore('projects', () => {
                             organization: organization,
                         },
                     }),
-                'Project created successfully',
-                'Failed to create project'
+                trans('Project created successfully'),
+                trans('Failed to create project')
             );
 
             queryClient.invalidateQueries({ queryKey: ['projects'] });
@@ -40,8 +41,8 @@ export const useProjectsStore = defineStore('projects', () => {
                             project: projectId,
                         },
                     }),
-                'Project deleted successfully',
-                'Failed to delete project'
+                trans('Project deleted successfully'),
+                trans('Failed to delete project')
             );
             queryClient.invalidateQueries({ queryKey: ['projects'] });
         }
@@ -58,8 +59,8 @@ export const useProjectsStore = defineStore('projects', () => {
                             project: projectId,
                         },
                     }),
-                'Project updated successfully',
-                'Failed to update project'
+                trans('Project updated successfully'),
+                trans('Failed to update project')
             );
             queryClient.invalidateQueries({ queryKey: ['projects'] });
         }

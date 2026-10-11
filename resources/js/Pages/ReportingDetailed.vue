@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import MainContainer from '@/packages/ui/src/MainContainer.vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PageTitle from '@/Components/Common/PageTitle.vue';
@@ -237,8 +238,8 @@ async function downloadExport(format: ExportFormat) {
                         format: format,
                     },
                 }),
-            'Export successful',
-            'Export failed'
+            trans('Export successful'),
+            trans('Export failed')
         );
         if (response?.download_url) {
             showExportModal.value = true;
@@ -249,43 +250,44 @@ async function downloadExport(format: ExportFormat) {
 </script>
 
 <template>
-    <AppLayout title="Reporting" data-testid="reporting_view" class="overflow-hidden">
+    <AppLayout :title="$t('Reporting')" data-testid="reporting_view" class="overflow-hidden">
         <ReportingExportModal
             v-model:show="showExportModal"
             :export-url="exportUrl"></ReportingExportModal>
         <UpgradeModal v-model:show="showPremiumModal">
-            <strong>PDF Reports</strong> are only available in solidtime Professional.
+            <strong>{{ $t('PDF Reports') }}</strong>
+            {{ $t('are only available in solidtime Professional.') }}
         </UpgradeModal>
         <MainContainer
             class="h-14 sm:h-16 border-b border-default-background-separator flex flex-wrap gap-y-3 justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-6">
-                <PageTitle :icon="ChartBarIcon" title="Reporting"></PageTitle>
+                <PageTitle :icon="ChartBarIcon" :title="$t('Reporting')"></PageTitle>
                 <ReportingTabNavbar active="detailed" class="hidden sm:flex"></ReportingTabNavbar>
             </div>
             <div class="hidden sm:block">
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
                         <SecondaryButton :icon="ArrowDownTrayIcon" :loading="exportLoading">
-                            Export
+                            {{ $t('Export') }}
                         </SecondaryButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem @click="triggerExport('pdf')">
                             <div class="flex items-center space-x-2">
-                                <span>Export as PDF</span>
+                                <span>{{ $t('Export as PDF') }}</span>
                                 <LockClosedIcon
                                     v-if="!isAllowedToPerformPremiumAction()"
                                     class="w-3.5 text-text-tertiary" />
                             </div>
                         </DropdownMenuItem>
                         <DropdownMenuItem @click="triggerExport('xlsx')">
-                            Export as Excel
+                            {{ $t('Export as Excel') }}
                         </DropdownMenuItem>
                         <DropdownMenuItem @click="triggerExport('csv')">
-                            Export as CSV
+                            {{ $t('Export as CSV') }}
                         </DropdownMenuItem>
                         <DropdownMenuItem @click="triggerExport('ods')">
-                            Export as ODS
+                            {{ $t('Export as ODS') }}
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -294,27 +296,27 @@ async function downloadExport(format: ExportFormat) {
                 <DropdownMenuTrigger as-child class="sm:hidden">
                     <button
                         class="p-1.5 rounded-lg border border-border-tertiary text-text-secondary hover:text-text-primary hover:bg-secondary transition"
-                        aria-label="More options">
+                        :aria-label="$t('More options')">
                         <EllipsisVerticalIcon class="w-5 h-5" />
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem @click="triggerExport('pdf')">
                         <div class="flex items-center space-x-2">
-                            <span>Export as PDF</span>
+                            <span>{{ $t('Export as PDF') }}</span>
                             <LockClosedIcon
                                 v-if="!isAllowedToPerformPremiumAction()"
                                 class="w-3.5 text-text-tertiary" />
                         </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('xlsx')">
-                        Export as Excel
+                        {{ $t('Export as Excel') }}
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('csv')">
-                        Export as CSV
+                        {{ $t('Export as CSV') }}
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('ods')">
-                        Export as ODS
+                        {{ $t('Export as ODS') }}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
@@ -398,8 +400,10 @@ async function downloadExport(format: ExportFormat) {
             <div v-if="timeEntries.length === 0">
                 <div class="text-center pt-12">
                     <ClockIcon class="w-8 text-icon-default inline pb-2"></ClockIcon>
-                    <h3 class="text-text-primary font-semibold">No time entries found</h3>
-                    <p class="pb-5">Adjust the filters to see more time entries!</p>
+                    <h3 class="text-text-primary font-semibold">
+                        {{ $t('No time entries found') }}
+                    </h3>
+                    <p class="pb-5">{{ $t('Adjust the filters to see more time entries!') }}</p>
                 </div>
             </div>
         </div>

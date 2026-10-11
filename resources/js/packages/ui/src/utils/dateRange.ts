@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs';
+import { trans } from 'laravel-vue-i18n';
 import { formatDate, getDayJsInstance, getLocalizedDayJs, type DateFormat } from './time';
 
 export type DateRangeDirection = -1 | 1;
@@ -38,9 +39,9 @@ export function getDateRangeLabel(
     const rangeEnd = end.startOf('day');
 
     const relativeDays: Array<[number, string]> = [
-        [0, 'Today'],
-        [-1, 'Yesterday'],
-        [1, 'Tomorrow'],
+        [0, trans('Today')],
+        [-1, trans('Yesterday')],
+        [1, trans('Tomorrow')],
     ];
     for (const [offset, label] of relativeDays) {
         const day = reference.add(offset, 'day');
@@ -48,15 +49,15 @@ export function getDateRangeLabel(
     }
 
     const relativePeriods: Array<['week' | 'month' | 'year', number, string]> = [
-        ['week', 0, 'This Week'],
-        ['week', -1, 'Last Week'],
-        ['week', 1, 'Next Week'],
-        ['month', 0, 'This Month'],
-        ['month', -1, 'Last Month'],
-        ['month', 1, 'Next Month'],
-        ['year', 0, 'This Year'],
-        ['year', -1, 'Last Year'],
-        ['year', 1, 'Next Year'],
+        ['week', 0, trans('This Week')],
+        ['week', -1, trans('Last Week')],
+        ['week', 1, trans('Next Week')],
+        ['month', 0, trans('This Month')],
+        ['month', -1, trans('Last Month')],
+        ['month', 1, trans('Next Month')],
+        ['year', 0, trans('This Year')],
+        ['year', -1, trans('Last Year')],
+        ['year', 1, trans('Next Year')],
     ];
     for (const [unit, offset, label] of relativePeriods) {
         const period = reference.add(offset, unit);
@@ -75,9 +76,9 @@ export function getDateRangeLabel(
     }
 
     const rollingRanges: Array<[number, string]> = [
-        [14, 'Last 14 Days'],
-        [30, 'Last 30 Days'],
-        [90, 'Last 90 Days'],
+        [14, trans('Last 14 Days')],
+        [30, trans('Last 30 Days')],
+        [90, trans('Last 90 Days')],
     ];
     for (const [days, label] of rollingRanges) {
         if (isRange(rangeStart, rangeEnd, reference.subtract(days - 1, 'day'), reference)) {
@@ -85,7 +86,7 @@ export function getDateRangeLabel(
         }
     }
     if (isRange(rangeStart, rangeEnd, reference.subtract(12, 'month'), reference)) {
-        return 'Last 12 Months';
+        return trans('Last 12 Months');
     }
 
     if (isSameDay(rangeStart, rangeEnd)) {

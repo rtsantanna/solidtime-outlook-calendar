@@ -150,16 +150,16 @@ const showBillableRate = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="Projects" data-testid="projects_view">
+    <AppLayout :title="$t('Projects')" data-testid="projects_view">
         <MainContainer class="py-3 sm:pt-5 flex justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-6">
-                <PageTitle :icon="FolderIcon" title="Projects"></PageTitle>
+                <PageTitle :icon="FolderIcon" :title="$t('Projects')"></PageTitle>
             </div>
             <SecondaryButton
                 v-if="canCreateProjects()"
                 :icon="PlusIcon"
                 @click="showCreateProjectModal = true"
-                >Create Project
+                >{{ $t('Create Project') }}
             </SecondaryButton>
             <ProjectCreateModal
                 v-model:show="showCreateProjectModal"
@@ -212,8 +212,8 @@ const showBillableRate = computed(() => {
                         v-model="search"
                         size="sm"
                         type="search"
-                        aria-label="Search projects"
-                        placeholder="Search projects..."
+                        :aria-label="$t('Search projects')"
+                        :placeholder="$t('Search projects...')"
                         class="w-60 border-transparent bg-transparent pl-7 shadow-none placeholder:text-text-tertiary hover:bg-black/5 focus-visible:bg-input-background dark:hover:bg-white/5 [&::-webkit-search-cancel-button]:hidden" />
                 </div>
             </div>

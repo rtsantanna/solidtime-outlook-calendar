@@ -120,12 +120,12 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
                 $timeEntry->client_id = $clientId;
                 $timeEntry->organization_id = $this->organization->id;
                 if (strlen($record['Description']) > 5000) {
-                    throw new ImportException('Time entry description is too long');
+                    throw new ImportException(__('Time entry description is too long'));
                 }
                 $timeEntry->description = $record['Description'];
                 if (isset($record['Billable'])) {
                     if (! in_array($record['Billable'], ['Yes', 'No'], true)) {
-                        throw new ImportException('Invalid billable value');
+                        throw new ImportException(__('Invalid billable value'));
                     }
                     $timeEntry->billable = $record['Billable'] === 'Yes';
                 }
@@ -148,7 +148,7 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
 
                     if ($checkResult === 1) {
                         if ((int) $matches[1] > 12) {
-                            throw new ImportException('Start date ("'.$startDateStr.'") is invalid, please select the correct date format before exporting from Clockify');
+                            throw new ImportException(__('Start date (":date") is invalid, please select the correct date format before exporting from Clockify', ['date' => $startDateStr]));
                         }
                         if ($matches[6] === '') {
                             $start = Carbon::createFromFormat('m/d/Y h:i A', $startStr, $timezone);
@@ -157,10 +157,10 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
                         }
                     }
                 } catch (InvalidFormatException) {
-                    throw new ImportException('Start date ("'.$startDateStr.'") or time ("'.$startTimeStr.'") are invalid');
+                    throw new ImportException(__('Start date (":date") or time (":time") are invalid', ['date' => $startDateStr, 'time' => $startTimeStr]));
                 }
                 if ($start === null) {
-                    throw new ImportException('Start date ("'.$startDateStr.'") or time ("'.$startTimeStr.'") are invalid');
+                    throw new ImportException(__('Start date (":date") or time (":time") are invalid', ['date' => $startDateStr, 'time' => $startTimeStr]));
                 }
                 $timeEntry->start = $start->utc();
 
@@ -175,7 +175,7 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
 
                     if ($checkResult === 1) {
                         if ((int) $matches[1] > 12) {
-                            throw new ImportException('Start date ("'.$endDateStr.'") is invalid, please select the correct date format before exporting from Clockify');
+                            throw new ImportException(__('Start date (":date") is invalid, please select the correct date format before exporting from Clockify', ['date' => $endDateStr]));
                         }
                         if ($matches[6] === '') {
                             $end = Carbon::createFromFormat('m/d/Y h:i A', $endStr, $timezone);
@@ -184,10 +184,10 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
                         }
                     }
                 } catch (InvalidFormatException) {
-                    throw new ImportException('End date ("'.$endDateStr.'") or time ("'.$endTimeStr.'") are invalid');
+                    throw new ImportException(__('End date (":date") or time (":time") are invalid', ['date' => $endDateStr, 'time' => $endTimeStr]));
                 }
                 if ($end === null) {
-                    throw new ImportException('End date ("'.$endDateStr.'") or time ("'.$endTimeStr.'") are invalid');
+                    throw new ImportException(__('End date (":date") or time (":time") are invalid', ['date' => $endDateStr, 'time' => $endTimeStr]));
                 }
                 $timeEntry->end = $end->utc();
 
@@ -210,10 +210,10 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -237,12 +237,12 @@ class ClockifyTimeEntriesImporter extends DefaultImporter
         ];
         foreach ($requiredFields as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
         // Clockify names the task column "Task" or "Activity" depending on the export; accept either.
         if ($this->getTaskKey($header) === null) {
-            throw new ImportException('Invalid CSV header, missing field: Task');
+            throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => 'Task']));
         }
     }
 

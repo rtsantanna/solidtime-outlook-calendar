@@ -65,19 +65,19 @@ async function submit() {
 
 <template>
     <FormSection>
-        <template #title>Format Settings</template>
+        <template #title>{{ $t('Format Settings') }}</template>
 
         <template #description>
-            Configure the default format settings for the organization.
+            {{ $t('Configure the default format settings for the organization.') }}
         </template>
 
         <template #form>
             <!-- Number Format -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="numberFormat">Number Format</FieldLabel>
+                <FieldLabel for="numberFormat">{{ $t('Number Format') }}</FieldLabel>
                 <Select v-model="form.number_format">
                     <SelectTrigger id="numberFormat">
-                        <SelectValue placeholder="Select number format" />
+                        <SelectValue :placeholder="$t('Select number format')" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="point-comma">1.111,11</SelectItem>
@@ -91,10 +91,10 @@ async function submit() {
 
             <!-- Currency Format -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="currencyFormat">Currency Format</FieldLabel>
+                <FieldLabel for="currencyFormat">{{ $t('Currency Format') }}</FieldLabel>
                 <Select v-model="form.currency_format">
                     <SelectTrigger id="currencyFormat">
-                        <SelectValue placeholder="Select currency format" />
+                        <SelectValue :placeholder="$t('Select currency format')" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="iso-code-before-with-space">EUR 111</SelectItem>
@@ -109,10 +109,10 @@ async function submit() {
 
             <!-- Date Format -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="dateFormat">Date Format</FieldLabel>
+                <FieldLabel for="dateFormat">{{ $t('Date Format') }}</FieldLabel>
                 <Select v-model="form.date_format">
                     <SelectTrigger id="dateFormat">
-                        <SelectValue placeholder="Select date format" />
+                        <SelectValue :placeholder="$t('Select date format')" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="point-separated-d-m-yyyy">D.M.YYYY</SelectItem>
@@ -127,27 +127,27 @@ async function submit() {
 
             <!-- Time Format -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="timeFormat">Time Format</FieldLabel>
+                <FieldLabel for="timeFormat">{{ $t('Time Format') }}</FieldLabel>
                 <Select v-model="form.time_format">
                     <SelectTrigger id="timeFormat">
-                        <SelectValue placeholder="Select time format" />
+                        <SelectValue :placeholder="$t('Select time format')" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="12-hours">12-hour clock</SelectItem>
-                        <SelectItem value="24-hours">24-hour clock</SelectItem>
+                        <SelectItem value="12-hours">{{ $t('12-hour clock') }}</SelectItem>
+                        <SelectItem value="24-hours">{{ $t('24-hour clock') }}</SelectItem>
                     </SelectContent>
                 </Select>
             </Field>
 
             <!-- Interval Format -->
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="intervalFormat">Time Duration Format</FieldLabel>
+                <FieldLabel for="intervalFormat">{{ $t('Time Duration Format') }}</FieldLabel>
                 <Select v-model="form.interval_format">
                     <SelectTrigger id="intervalFormat">
-                        <SelectValue placeholder="Select interval format" />
+                        <SelectValue :placeholder="$t('Select interval format')" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="decimal">Decimal</SelectItem>
+                        <SelectItem value="decimal">{{ $t('Decimal') }}</SelectItem>
                         <SelectItem value="hours-minutes">12h 3m</SelectItem>
                         <SelectItem value="hours-minutes-colon-separated">12:03</SelectItem>
                         <SelectItem value="hours-minutes-seconds-colon-separated"
@@ -156,17 +156,18 @@ async function submit() {
                     </SelectContent>
                 </Select>
                 <FieldDescription v-if="showsHhMmSsInReports">
-                    Reports and totals shown next to cost use HH:MM:SS for this format, so the
-                    duration reconciles with the billable amount down to the second. Everywhere else
-                    (time tracker, calendar, entry rows) seconds are omitted and durations stay in
-                    your chosen format.
+                    {{
+                        $t(
+                            'Reports and totals shown next to cost use HH:MM:SS for this format, so the duration reconciles with the billable amount down to the second. Everywhere else (time tracker, calendar, entry rows) seconds are omitted and durations stay in your chosen format.'
+                        )
+                    }}
                 </FieldDescription>
             </Field>
         </template>
 
         <template #actions>
             <PrimaryButton :disabled="mutation.isPending.value" @click="submit">
-                {{ mutation.isPending.value ? 'Saving...' : 'Save' }}
+                {{ mutation.isPending.value ? $t('Saving...') : $t('Save') }}
             </PrimaryButton>
         </template>
     </FormSection>

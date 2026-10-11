@@ -36,7 +36,7 @@
                             type="button"
                             class="inline-flex rounded-md bg-card-background text-text-secondary hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             @click="show = false">
-                            <span class="sr-only">Close</span>
+                            <span class="sr-only">{{ $t('Close') }}</span>
                             <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                         </button>
                     </div>

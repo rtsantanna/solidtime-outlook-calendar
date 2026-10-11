@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import type { Member } from '@/packages/api/src';
 import { api } from '@/packages/api/src';
 import { useForm } from '@tanstack/vue-form';
@@ -54,8 +55,8 @@ const form = useForm({
     onSubmit: async () => {
         await handleApiRequestNotifications(
             () => deleteMutation.mutateAsync(),
-            'Member deleted successfully',
-            'Error deleting member'
+            trans('Member deleted successfully'),
+            trans('Error deleting member')
         );
     },
 });
@@ -69,25 +70,30 @@ const close = () => {
 <template>
     <Modal :show="show" max-width="md" @close="close">
         <div class="p-6">
-            <h2 class="text-lg font-medium text-text-primary">Delete Member</h2>
+            <h2 class="text-lg font-medium text-text-primary">{{ $t('Delete Member') }}</h2>
 
             <div class="mt-4 text-sm text-text-secondary">
                 <p class="mb-4">
-                    Are you sure you want to delete {{ member.name }}? This action cannot be undone.
+                    {{
+                        $t('Are you sure you want to delete :name? This action cannot be undone.', {
+                            name: member.name,
+                        })
+                    }}
                 </p>
-                <p class="mb-4">This will permanently delete:</p>
+                <p class="mb-4">{{ $t('This will permanently delete:') }}</p>
 
                 <ul class="list-disc ml-6 mt-2">
-                    <li>All time entries created by this member</li>
-                    <li>Their project assignments</li>
-                    <li>Their organization membership</li>
+                    <li>{{ $t('All time entries created by this member') }}</li>
+                    <li>{{ $t('Their project assignments') }}</li>
+                    <li>{{ $t('Their organization membership') }}</li>
                 </ul>
                 <p class="pt-4">
-                    <strong>Note:</strong> Deleting time entries will affect all reports and
-                    statistics. If you want to keep the time entries but remove the member from your
-                    organization, you can convert them to a placeholder user instead. Placeholder
-                    users are not charged and their time entries remain intact for reporting
-                    purposes.
+                    <strong>{{ $t('Note:') }}</strong>
+                    {{
+                        $t(
+                            'Deleting time entries will affect all reports and statistics. If you want to keep the time entries but remove the member from your organization, you can convert them to a placeholder user instead. Placeholder users are not charged and their time entries remain intact for reporting purposes.'
+                        )
+                    }}
                 </p>
             </div>
 
@@ -106,7 +112,9 @@ const close = () => {
                         :validators="{
                             onSubmit: ({ value }) => {
                                 if (!value) {
-                                    return 'You must confirm that you understand the consequences of this action';
+                                    return $t(
+                                        'You must confirm that you understand the consequences of this action'
+                                    );
                                 }
                                 return '';
                             },
@@ -120,8 +128,11 @@ const close = () => {
                                     @update:checked="field.handleChange"
                                     @blur="field.handleBlur" />
                                 <FieldLabel :for="field.name" class="font-medium text-text-primary">
-                                    I understand that this will permanently delete all data related
-                                    to this member
+                                    {{
+                                        $t(
+                                            'I understand that this will permanently delete all data related to this member'
+                                        )
+                                    }}
                                 </FieldLabel>
                                 <FieldError v-if="field.state.meta.errors[0]" class="pl-7 pt-2">
                                     {{ field.state.meta.errors[0] }}
@@ -131,11 +142,11 @@ const close = () => {
                     </form.Field>
                 </div>
                 <div class="mt-6 flex justify-end space-x-3">
-                    <SecondaryButton @click="close">Cancel</SecondaryButton>
+                    <SecondaryButton @click="close">{{ $t('Cancel') }}</SecondaryButton>
                     <form.Subscribe>
                         <template #default="{ canSubmit, isSubmitting }">
                             <DangerButton type="submit" :disabled="!canSubmit">
-                                {{ isSubmitting ? 'Deleting...' : 'Delete Member' }}
+                                {{ isSubmitting ? $t('Deleting...') : $t('Delete Member') }}
                             </DangerButton>
                         </template>
                     </form.Subscribe>

@@ -63,7 +63,7 @@ class ImportController extends Controller
             $importData = base64_decode($request->input('data'), true);
             if ($importData === false) {
                 return new JsonResponse([
-                    'message' => 'Invalid base64 encoded data',
+                    'message' => __('Invalid base64 encoded data'),
                 ], 400);
             }
 

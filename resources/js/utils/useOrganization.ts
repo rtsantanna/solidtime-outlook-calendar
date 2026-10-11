@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { router } from '@inertiajs/vue3';
 import { initializeStores } from '@/utils/init';
 import { defineStore } from 'pinia';
@@ -19,7 +20,7 @@ export async function switchOrganization(organizationId: string) {
         await handleApiRequestNotifications(
             () => api.updateMyCurrentOrganization({ organization_id: organizationId }),
             undefined,
-            'Failed to switch organization'
+            trans('Failed to switch organization')
         );
     } catch {
         // The error notification is surfaced by the request handler.
@@ -53,7 +54,7 @@ export const useOrganizationStore = defineStore('organization', () => {
                         },
                     }),
                 undefined,
-                'Failed to fetch organization'
+                trans('Failed to fetch organization')
             );
         }
     }
@@ -68,8 +69,8 @@ export const useOrganizationStore = defineStore('organization', () => {
                             organization: organization,
                         },
                     }),
-                'Organization updated successfully',
-                'Failed to update organization'
+                trans('Organization updated successfully'),
+                trans('Failed to update organization')
             );
             await fetchOrganization();
         }
@@ -87,15 +88,15 @@ export const useOrganizationStore = defineStore('organization', () => {
                     organization: organizationId,
                 },
             });
-            addNotification('success', 'Organization deleted successfully');
+            addNotification('success', trans('Organization deleted successfully'));
         } catch (error) {
             if (!axios.isAxiosError(error) || error.response?.status !== 422) {
                 addNotification(
                     'error',
-                    'Failed to delete organization',
+                    trans('Failed to delete organization'),
                     axios.isAxiosError(error)
-                        ? (error.response?.data?.message ?? 'Please try again later.')
-                        : 'Please try again later.'
+                        ? (error.response?.data?.message ?? trans('Please try again later.'))
+                        : trans('Please try again later.')
                 );
             }
             throw error;

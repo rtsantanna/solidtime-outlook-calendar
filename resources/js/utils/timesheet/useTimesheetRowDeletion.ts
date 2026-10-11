@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { computed, ref, type Ref } from 'vue';
 import type { Project, TimeEntry } from '@/packages/api/src';
 import type { TimesheetRow, TimesheetRowKey } from '@/utils/useTimesheetGrid';
@@ -30,8 +31,11 @@ export function useTimesheetRowDeletion(
     });
 
     const deleteRowProjectName = computed(() => {
-        if (!rowToDelete.value?.projectId) return 'No Project';
-        return projects.value.find((p) => p.id === rowToDelete.value?.projectId)?.name ?? 'Unknown';
+        if (!rowToDelete.value?.projectId) return trans('No Project');
+        return (
+            projects.value.find((p) => p.id === rowToDelete.value?.projectId)?.name ??
+            trans('Unknown')
+        );
     });
 
     function requestRemoveRow(row: TimesheetRow): void {

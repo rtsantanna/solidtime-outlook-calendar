@@ -84,9 +84,9 @@ const showBlackFridayBanner = computed(() => {
                 </svg>
                 <div class="flex-1 space-x-1">
                     <span class="font-medium">
-                        <strong>BLACK FRIDAY SALE!</strong> Use the code
-                        <strong>BLACKFRIDAY</strong> at checkout and get
-                        <strong>30% off</strong> the solidtime yearly plan.
+                        <strong>{{ $t('BLACK FRIDAY SALE!') }}</strong> {{ $t('Use the code') }}
+                        <strong>BLACKFRIDAY</strong> {{ $t('at checkout and get') }}
+                        <strong>{{ $t('30% off') }}</strong> {{ $t('the solidtime yearly plan.') }}
                     </span>
                 </div>
             </div>
@@ -94,7 +94,7 @@ const showBlackFridayBanner = computed(() => {
                 <Link v-if="canManageBilling()" href="/billing">
                     <div
                         class="text-text-primary font-semibold uppercase text-xs flex space-x-1 items-center hover:bg-white/10 rounded-lg px-2 py-1.5">
-                        <span>Upgrade now</span>
+                        <span>{{ $t('Upgrade now') }}</span>
                     </div>
                 </Link>
                 <button class="p-1" @click="hideBlackFridayBanner = true">
@@ -111,11 +111,20 @@ const showBlackFridayBanner = computed(() => {
                 <CheckBadgeIcon class="w-4 text-text-primary/50"></CheckBadgeIcon>
                 <div class="flex-1 space-x-1">
                     <span class="font-medium">
-                        Your trial expires in {{ daysLeftInTrial() }} days.
+                        {{
+                            $tChoice(
+                                'Your trial expires in :count day.|Your trial expires in :count days.',
+                                daysLeftInTrial(),
+                                { count: String(daysLeftInTrial()) }
+                            )
+                        }}
                     </span>
                     <span class="hidden md:inline">
-                        To continue using all features & support the development of solidtime,
-                        please upgrade your plan.
+                        {{
+                            $t(
+                                'To continue using all features & support the development of solidtime, please upgrade your plan.'
+                            )
+                        }}
                     </span>
                 </div>
             </div>
@@ -123,7 +132,7 @@ const showBlackFridayBanner = computed(() => {
                 <Link v-if="canManageBilling()" href="/billing">
                     <div
                         class="text-text-primary font-semibold uppercase text-xs flex space-x-1 items-center hover:bg-white/10 rounded-lg px-2 py-1.5">
-                        <span>Upgrade now</span>
+                        <span>{{ $t('Upgrade now') }}</span>
                     </div>
                 </Link>
                 <button class="p-1" @click="hideTrialBanner = true">
@@ -139,10 +148,15 @@ const showBlackFridayBanner = computed(() => {
             <div class="flex items-center space-x-1.5">
                 <XCircleIcon class="w-4 text-text-primary/50"></XCircleIcon>
                 <div class="flex-1 space-x-1">
-                    <span class="font-medium"> Your organization is currently blocked. </span>
+                    <span class="font-medium">
+                        {{ $t('Your organization is currently blocked.') }}
+                    </span>
                     <span class="hidden md:inline">
-                        Please upgrade to a premium plan or remove all users except the owner to
-                        unblock your organization.
+                        {{
+                            $t(
+                                'Please upgrade to a premium plan or remove all users except the owner to unblock your organization.'
+                            )
+                        }}
                     </span>
                 </div>
             </div>
@@ -150,7 +164,7 @@ const showBlackFridayBanner = computed(() => {
                 <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
                     <div
                         class="text-text-primary font-semibold uppercase text-xs flex space-x-1 items-center hover:bg-white/10 rounded-lg px-2 py-1.5">
-                        <span>Upgrade now</span>
+                        <span>{{ $t('Upgrade now') }}</span>
                     </div>
                 </Link>
                 <button class="p-1" @click="hideBlockedBanner = true">
@@ -166,10 +180,15 @@ const showBlackFridayBanner = computed(() => {
             <div class="flex items-center space-x-1.5">
                 <XCircleIcon class="w-4 text-text-primary/50"></XCircleIcon>
                 <div class="flex-1 space-x-1">
-                    <span class="font-medium"> You are currently using the Free Plan. </span>
+                    <span class="font-medium">
+                        {{ $t('You are currently using the Free Plan.') }}
+                    </span>
                     <span class="hidden md:inline">
-                        To unlock all premium features & support the development of solidtime,
-                        please upgrade your plan.</span
+                        {{
+                            $t(
+                                'To unlock all premium features & support the development of solidtime, please upgrade your plan.'
+                            )
+                        }}</span
                     >
                 </div>
             </div>
@@ -177,7 +196,7 @@ const showBlackFridayBanner = computed(() => {
                 <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
                     <div
                         class="text-text-primary font-semibold uppercase text-xs flex space-x-1 items-center hover:bg-white/10 rounded-lg px-2 py-1.5">
-                        <span>Upgrade now</span>
+                        <span>{{ $t('Upgrade now') }}</span>
                     </div>
                 </Link>
                 <button class="p-1" @click="hideFreeUpgradeBanner = true">

@@ -50,7 +50,7 @@ class GenericProjectsImporter extends DefaultImporter
                         try {
                             $archivedAt = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $record['archived_at'], 'UTC');
                         } catch (InvalidFormatException) {
-                            throw new ImportException('Value of archived_at ("'.$record['archived_at'].'") is invalid');
+                            throw new ImportException(__('Value of :field (":value") is invalid', ['field' => 'archived_at', 'value' => $record['archived_at']]));
                         }
                     }
                     $this->projectImportHelper->getKey([
@@ -70,10 +70,10 @@ class GenericProjectsImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -86,7 +86,7 @@ class GenericProjectsImporter extends DefaultImporter
     {
         foreach (self::REQUIRED_FIELDS as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
     }

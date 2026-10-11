@@ -468,7 +468,7 @@ function getEventDurationSeconds(dayEvent: DayEvent, dayStr: string): number {
         <div v-if="loading" class="flex items-center justify-center h-full">
             <div class="flex flex-col items-center space-y-4">
                 <LoadingSpinner class="h-8 w-8" />
-                <p class="text-muted-foreground">Loading calendar data...</p>
+                <p class="text-muted-foreground">{{ $t('Loading calendar data...') }}</p>
             </div>
         </div>
 
@@ -721,7 +721,7 @@ function getEventDurationSeconds(dayEvent: DayEvent, dayStr: string): number {
                     <template v-if="contextMenuTimeEntry && contextMenuTimeEntry.end !== null">
                         <ContextMenuItem class="space-x-3" @select="handleContextEdit()">
                             <PencilIcon class="w-4 h-4 text-icon-default" />
-                            <span>Edit</span>
+                            <span>{{ $t('Edit') }}</span>
                         </ContextMenuItem>
                         <!-- Duplicate/Split create a new entry of the same type, which the
                              server rejects for breaks when breaks are disabled -->
@@ -730,47 +730,47 @@ function getEventDurationSeconds(dayEvent: DayEvent, dayStr: string): number {
                             class="space-x-3"
                             @select="handleContextDuplicate()">
                             <DocumentDuplicateIcon class="w-4 h-4 text-icon-default" />
-                            <span>Duplicate</span>
+                            <span>{{ $t('Duplicate') }}</span>
                         </ContextMenuItem>
                         <ContextMenuItem
                             v-if="contextMenuTimeEntry.type !== 'break' || breaksEnabled"
                             class="space-x-3"
                             @select="handleContextSplit()">
                             <ScissorsIcon class="w-4 h-4 text-icon-default" />
-                            <span>Split</span>
+                            <span>{{ $t('Split') }}</span>
                         </ContextMenuItem>
                         <ContextMenuSeparator />
                         <ContextMenuItem
                             class="space-x-3 text-destructive"
                             @select="handleContextDelete()">
                             <TrashIcon class="w-4 h-4 text-icon-default" />
-                            <span>Delete</span>
+                            <span>{{ $t('Delete') }}</span>
                         </ContextMenuItem>
                     </template>
                     <template v-else-if="contextMenuTimeEntry && contextMenuTimeEntry.end === null">
                         <ContextMenuItem class="space-x-3" @select="handleContextStop()">
                             <StopIcon class="w-4 h-4 text-icon-default" />
-                            <span>Stop</span>
+                            <span>{{ $t('Stop') }}</span>
                         </ContextMenuItem>
                         <ContextMenuSeparator />
                         <ContextMenuItem
                             class="space-x-3 text-destructive"
                             @select="handleContextDiscard()">
                             <XMarkIcon class="w-4 h-4 text-icon-default" />
-                            <span>Discard</span>
+                            <span>{{ $t('Discard') }}</span>
                         </ContextMenuItem>
                     </template>
                     <template v-else>
                         <ContextMenuItem class="space-x-3" @select="handleContextCreate()">
                             <PlusIcon class="w-4 h-4 text-icon-default" />
-                            <span>Create Time Entry</span>
+                            <span>{{ $t('Create Time Entry') }}</span>
                         </ContextMenuItem>
                         <ContextMenuItem
                             v-if="breaksEnabled"
                             class="space-x-3"
                             @select="handleContextCreateBreak()">
                             <Coffee class="w-4 h-4 text-icon-default" />
-                            <span>Add Break</span>
+                            <span>{{ $t('Add Break') }}</span>
                         </ContextMenuItem>
                     </template>
                 </ContextMenuContent>

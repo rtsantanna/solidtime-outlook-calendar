@@ -46,7 +46,7 @@ function formatValue(modelValue: number | null) {
             @update:model-value="(value) => (model = value ? value * 100 : null)">
             <NumberFieldContent>
                 <NumberFieldDecrement />
-                <NumberFieldInput placeholder="Billable Rate" />
+                <NumberFieldInput :placeholder="$t('Billable Rate')" />
                 <NumberFieldIncrement />
             </NumberFieldContent>
         </NumberField>

@@ -38,20 +38,20 @@ useFocus(taskNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Update Task </span>
+                <span>{{ $t('Update Task') }}</span>
             </div>
         </template>
 
         <template #content>
             <FieldGroup>
                 <Field>
-                    <FieldLabel for="taskName">Task name</FieldLabel>
+                    <FieldLabel for="taskName">{{ $t('Task name') }}</FieldLabel>
                     <TextInput
                         id="taskName"
                         ref="taskNameInput"
                         v-model="taskBody.name"
                         type="text"
-                        placeholder="Task Name"
+                        :placeholder="$t('Task Name')"
                         class="block w-full"
                         required
                         autocomplete="taskName"
@@ -64,13 +64,13 @@ useFocus(taskNameInput, { initialValue: true });
             </FieldGroup>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel </SecondaryButton>
+            <SecondaryButton @click="show = false">{{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Update Task
+                {{ $t('Update Task') }}
             </PrimaryButton>
         </template>
     </DialogModal>

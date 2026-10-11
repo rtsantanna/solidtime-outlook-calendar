@@ -66,7 +66,7 @@ useFocus(projectNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span>Edit Project Member</span>
+                <span>{{ $t('Edit Project Member') }}</span>
             </div>
         </template>
 
@@ -83,7 +83,7 @@ useFocus(projectNameInput, { initialValue: true });
                     <span>{{ props.name }}</span>
                 </div>
                 <Field class="col-span-3 sm:col-span-1 flex-1">
-                    <FieldLabel for="billable_rate">Billable Rate</FieldLabel>
+                    <FieldLabel for="billable_rate">{{ $t('Billable Rate') }}</FieldLabel>
                     <BillableRateInput
                         v-model="projectMemberBody.billable_rate"
                         :currency="getOrganizationCurrencyString()"
@@ -93,13 +93,13 @@ useFocus(projectNameInput, { initialValue: true });
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false">Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false">{{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Update Project Member
+                {{ $t('Update Project Member') }}
             </PrimaryButton>
         </template>
     </DialogModal>

@@ -2,6 +2,7 @@
 import VChart from 'vue-echarts';
 import { computed } from 'vue';
 import { useCssVariable } from '@/packages/ui/src';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     history: number[];
@@ -34,7 +35,15 @@ const option = computed(() => ({
     backgroundColor: 'transparent',
     xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: [
+            trans('Mon'),
+            trans('Tue'),
+            trans('Wed'),
+            trans('Thu'),
+            trans('Fri'),
+            trans('Sat'),
+            trans('Sun'),
+        ],
         show: false,
     },
     yAxis: {

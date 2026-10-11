@@ -82,7 +82,7 @@ async function submit() {
         <template #title>
             <div class="flex items-center space-x-2 text-amber-600 dark:text-amber-400">
                 <Coffee class="w-5 h-5" />
-                <span> Add break </span>
+                <span> {{ $t('Add break') }} </span>
             </div>
         </template>
 
@@ -93,11 +93,11 @@ async function submit() {
                     v-model:end="localEnd"
                     date-picker-size="sm"></TimeRangeFields>
                 <Field>
-                    <FieldLabel for="break_note">Note (optional)</FieldLabel>
+                    <FieldLabel for="break_note">{{ $t('Note (optional)') }}</FieldLabel>
                     <TextInput
                         id="break_note"
                         v-model="note"
-                        placeholder="e.g. Lunch"
+                        :placeholder="$t('e.g. Lunch')"
                         type="text"
                         class="block w-full"
                         @keydown.enter="submit" />
@@ -105,14 +105,16 @@ async function submit() {
             </div>
         </template>
         <template #footer>
-            <SecondaryButton tabindex="2" @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton tabindex="2" @click="show = false">
+                {{ $t('Cancel') }}</SecondaryButton
+            >
             <PrimaryButton
                 tabindex="2"
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving || durationSeconds <= 0"
                 @click="submit">
-                Add Break
+                {{ $t('Add Break') }}
             </PrimaryButton>
         </template>
     </DialogModal>

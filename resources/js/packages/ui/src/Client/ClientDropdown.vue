@@ -12,6 +12,7 @@ import {
 } from 'reka-ui';
 import Dropdown from '@/packages/ui/src/Input/Dropdown.vue';
 import { Check, Plus } from '@lucide/vue';
+import { trans } from 'laravel-vue-i18n';
 
 const model = defineModel<string | null>({
     default: null,
@@ -54,7 +55,7 @@ async function addClientIfNoneExists() {
     }
 }
 
-const NO_CLIENT: { id: string | null; name: string } = { id: null, name: 'No Client' };
+const NO_CLIENT: { id: string | null; name: string } = { id: null, name: trans('No Client') };
 
 const currentClient = computed(() => {
     return props.clients.find((client) => client.id === model.value) ?? NO_CLIENT;
@@ -102,7 +103,7 @@ function updateValue(client: { id: string | null; name: string }) {
                             ref="searchInput"
                             v-model="searchValue"
                             class="bg-transparent border-0 placeholder-muted-foreground text-sm text-popover-foreground py-2 px-3 focus:ring-0 border-b border-popover-border focus:border-popover-border w-full"
-                            placeholder="Search for a client..." />
+                            :placeholder="$t('Search for a client...')" />
                     </ComboboxAnchor>
                     <ComboboxContent>
                         <ComboboxViewport
@@ -130,7 +131,9 @@ function updateValue(client: { id: string | null; name: string }) {
                             class="flex items-center gap-2 rounded-sm mx-1 px-2 py-1.5 text-sm cursor-pointer hover:bg-accent hover:text-accent-foreground"
                             @click="addClientIfNoneExists">
                             <Plus class="h-4 w-4 shrink-0" />
-                            <span>Add "{{ searchValue }}" as a new Client</span>
+                            <span>{{
+                                $t('Add ":name" as a new Client', { name: searchValue })
+                            }}</span>
                         </div>
                     </ComboboxContent>
                 </ComboboxRoot>

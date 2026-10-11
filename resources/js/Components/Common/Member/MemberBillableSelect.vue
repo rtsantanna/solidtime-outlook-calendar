@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/packages/ui/src';
 import type { BillableKey } from '@/types/projects';
 
@@ -11,11 +12,11 @@ type Option = { key: BillableKey; name: string };
 const options: Option[] = [
     {
         key: 'default-rate',
-        name: 'Organization Default Rate',
+        name: trans('Organization Default Rate'),
     },
     {
         key: 'custom-rate',
-        name: 'Custom Rate',
+        name: trans('Custom Rate'),
     },
 ];
 

@@ -66,10 +66,10 @@ class ClockifyProjectsImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -87,12 +87,12 @@ class ClockifyProjectsImporter extends DefaultImporter
         ];
         foreach ($requiredFields as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
         // Clockify names the tasks column "Task", "Tasks" or "Activities" depending on the export; accept any.
         if ($this->getTasksKey($header) === null) {
-            throw new ImportException('Invalid CSV header, missing field: Tasks');
+            throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => 'Tasks']));
         }
     }
 

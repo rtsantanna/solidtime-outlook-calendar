@@ -26,8 +26,12 @@ const formattedProgressBarPercentage = computed(() => {
                 :style="{ width: progressBarPercentage + '%' }"></div>
         </div>
         <div class="text-xs font-semibold pt-1.5">
-            {{ formattedProgressBarPercentage }} of
-            {{ formatHours(estimated) }}
+            {{
+                $t(':percentage of :hours', {
+                    percentage: formattedProgressBarPercentage,
+                    hours: formatHours(estimated),
+                })
+            }}
         </div>
     </div>
 </template>

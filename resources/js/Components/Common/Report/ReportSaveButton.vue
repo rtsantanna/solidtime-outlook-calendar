@@ -31,11 +31,12 @@ function onSaveReportClick() {
         v-model:show="showCreateReportModal"
         :properties="reportProperties"></ReportCreateModal>
     <UpgradeModal v-model:show="showPremiumModal">
-        <strong>Sharable Reports</strong> is only available in solidtime Professional.
+        <strong>{{ $t('Sharable Reports') }}</strong>
+        {{ $t('is only available in solidtime Professional.') }}
     </UpgradeModal>
-    <SecondaryButton v-if="canCreateReports()" :icon="SaveIcon" @click="onSaveReportClick"
-        >Save Report</SecondaryButton
-    >
+    <SecondaryButton v-if="canCreateReports()" :icon="SaveIcon" @click="onSaveReportClick">{{
+        $t('Save Report')
+    }}</SecondaryButton>
 </template>
 
 <style scoped></style>

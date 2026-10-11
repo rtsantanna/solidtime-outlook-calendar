@@ -28,17 +28,17 @@ onMounted(async () => {
 </script>
 
 <template>
-    <AppLayout title="Organization Settings">
+    <AppLayout :title="$t('Organization Settings')">
         <template #header>
             <h2 class="font-semibold text-xl text-text-primary leading-tight">
-                Organization Settings
+                {{ $t('Organization Settings') }}
             </h2>
         </template>
 
         <div>
             <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <div v-if="loading || !organization" class="py-16 text-center text-text-secondary">
-                    Loading organization settings...
+                    {{ $t('Loading organization settings...') }}
                 </div>
                 <template v-else>
                     <UpdateTeamNameForm :team="team" :permissions="permissions" />

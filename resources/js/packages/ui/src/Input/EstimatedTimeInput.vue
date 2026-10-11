@@ -19,7 +19,7 @@ const props = defineProps<{
     <DurationSecondsInput
         v-model="model"
         :input-class="twMerge('placeholder:text-text-tertiary', props.class)"
-        placeholder="e.g. 2h 30m or 1.5"
+        :placeholder="$t('e.g. 2h 30m or 1.5')"
         default-unit="hours"
         @submit="emit('submit')" />
 </template>

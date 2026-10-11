@@ -131,7 +131,7 @@ class GenericTimeEntriesImporter extends DefaultImporter
                 $timeEntry->organization_id = $this->organization->id;
                 $timeEntry->description = $record['description'];
                 if (! in_array($record['billable'], ['true', 'false'], true)) {
-                    throw new ImportException('Invalid billable value');
+                    throw new ImportException(__('Invalid billable value'));
                 }
                 $timeEntry->billable = $record['billable'] === 'true';
                 $timeEntry->tags = $this->getTags($record['tags']);
@@ -139,20 +139,20 @@ class GenericTimeEntriesImporter extends DefaultImporter
                 try {
                     $start = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $record['start'], 'UTC');
                 } catch (InvalidFormatException) {
-                    throw new ImportException('Value of start ("'.$record['start'].'") is invalid');
+                    throw new ImportException(__('Value of :field (":value") is invalid', ['field' => 'start', 'value' => $record['start']]));
                 }
                 if ($start === null) {
-                    throw new ImportException('Value of start ("'.$record['start'].'") is invalid');
+                    throw new ImportException(__('Value of :field (":value") is invalid', ['field' => 'start', 'value' => $record['start']]));
                 }
                 $timeEntry->start = $start->utc();
 
                 try {
                     $end = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $record['end'], 'UTC');
                 } catch (InvalidFormatException) {
-                    throw new ImportException('Value of end ("'.$record['end'].'") is invalid');
+                    throw new ImportException(__('Value of :field (":value") is invalid', ['field' => 'end', 'value' => $record['end']]));
                 }
                 if ($end === null) {
-                    throw new ImportException('Value of end ("'.$record['end'].'") is invalid');
+                    throw new ImportException(__('Value of :field (":value") is invalid', ['field' => 'end', 'value' => $record['end']]));
                 }
                 $timeEntry->end = $end->utc();
                 $timeEntry->billable_rate = $this->billableRateService->getBillableRateForTimeEntryWithGivenRelations(
@@ -174,10 +174,10 @@ class GenericTimeEntriesImporter extends DefaultImporter
         } catch (ImportException $exception) {
             throw $exception;
         } catch (CsvException $exception) {
-            throw new ImportException('Invalid CSV data');
+            throw new ImportException(__('Invalid CSV data'));
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         }
     }
 
@@ -190,7 +190,7 @@ class GenericTimeEntriesImporter extends DefaultImporter
     {
         foreach (self::REQUIRED_FIELDS as $requiredField) {
             if (! in_array($requiredField, $header, true)) {
-                throw new ImportException('Invalid CSV header, missing field: '.$requiredField);
+                throw new ImportException(__('Invalid CSV header, missing field: :field', ['field' => $requiredField]));
             }
         }
     }

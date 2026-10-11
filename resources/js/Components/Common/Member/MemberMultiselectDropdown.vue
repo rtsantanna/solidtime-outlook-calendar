@@ -20,7 +20,7 @@ const emit = defineEmits<{
 
 <template>
     <MultiselectDropdown
-        search-placeholder="Search for a Member..."
+        :search-placeholder="$t('Search for a Member...')"
         :items="members"
         :get-key-from-item="getKeyFromItem"
         :get-name-for-item="getNameForItem"

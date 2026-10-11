@@ -83,7 +83,7 @@ function selectMember(member: Member) {
                     <span v-if="currentValue" class="truncate text-text-primary">{{
                         currentValue
                     }}</span>
-                    <span v-else class="text-muted-foreground">Select a member...</span>
+                    <span v-else class="text-muted-foreground">{{ $t('Select a member...') }}</span>
                 </div>
                 <ChevronDown class="w-4 h-4 text-icon-default shrink-0" />
             </Button>
@@ -104,7 +104,7 @@ function selectMember(member: Member) {
                     <ComboboxInput
                         ref="searchInput"
                         class="bg-card-background border-0 placeholder-text-tertiary text-sm text-text-primary py-2.5 focus:ring-0 border-b border-card-background-separator focus:border-card-background-separator w-full"
-                        placeholder="Search for a member..." />
+                        :placeholder="$t('Search for a member...')" />
                 </ComboboxAnchor>
                 <ComboboxContent
                     :dismiss-able="false"

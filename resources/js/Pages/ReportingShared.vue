@@ -33,11 +33,11 @@ const reports = computed(() => {
 </script>
 
 <template>
-    <AppLayout title="Reporting" data-testid="reporting_view" class="overflow-hidden">
+    <AppLayout :title="$t('Reporting')" data-testid="reporting_view" class="overflow-hidden">
         <MainContainer
             class="h-14 sm:h-16 border-b border-default-background-separator flex flex-wrap gap-y-3 justify-between items-center">
             <div class="flex items-center space-x-3 sm:space-x-6">
-                <PageTitle :icon="ChartBarIcon" title="Reporting"></PageTitle>
+                <PageTitle :icon="ChartBarIcon" :title="$t('Reporting')"></PageTitle>
                 <ReportingTabNavbar active="shared" class="hidden sm:flex"></ReportingTabNavbar>
             </div>
         </MainContainer>
@@ -56,8 +56,9 @@ const reports = computed(() => {
                         <slot></slot>
                     </p>
                     <p class="py-1">
-                        If you want to use <strong>sharable reports</strong> ,
-                        <strong>please upgrade to a paid plan</strong>.
+                        {{ $t('If you want to use') }} <strong>{{ $t('sharable reports') }}</strong
+                        >, <strong>{{ $t('please upgrade to a paid plan') }}</strong
+                        >.
                     </p>
 
                     <Link v-if="isBillingActivated() && canManageBilling()" href="/billing">
@@ -66,7 +67,7 @@ const reports = computed(() => {
                             type="button"
                             class="mt-6"
                             :icon="CreditCardIcon">
-                            Go to Billing
+                            {{ $t('Go to Billing') }}
                         </PrimaryButton>
                     </Link>
                 </div>

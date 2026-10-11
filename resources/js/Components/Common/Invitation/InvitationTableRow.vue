@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import type { Invitation } from '@/packages/api/src';
 import TableRow from '@/Components/TableRow.vue';
 import { capitalizeFirstLetter } from '../../../utils/format';
@@ -24,8 +25,8 @@ async function deleteInvitation() {
                         organization: organizationId,
                     },
                 }),
-            'Invitation removed successfully',
-            'Error removing invitation',
+            trans('Invitation removed successfully'),
+            trans('Error removing invitation'),
             () => {
                 useInvitationsStore().fetchInvitations();
             }
@@ -44,8 +45,8 @@ async function resendInvitation() {
                         organization: organizationId,
                     },
                 }),
-            'Invitation mail sent successfully',
-            'Error sending invitation mail'
+            trans('Invitation mail sent successfully'),
+            trans('Error sending invitation mail')
         );
     }
 }
@@ -58,7 +59,7 @@ async function resendInvitation() {
             {{ invitation.email }}
         </div>
         <div class="whitespace-nowrap px-3 py-4 text-sm text-text-secondary">
-            {{ capitalizeFirstLetter(invitation.role) }}
+            {{ capitalizeFirstLetter($t(invitation.role)) }}
         </div>
         <div
             class="relative whitespace-nowrap flex items-center pl-3 text-right text-sm font-medium pr-4 sm:pr-6 lg:pr-8 3xl:pr-12">

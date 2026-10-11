@@ -32,16 +32,16 @@ defineProps<{
                             :class="{ 'opacity-25': saving }"
                             :disabled="saving"
                             @click="emit('submit')">
-                            Yes, update existing time entries
+                            {{ $t('Yes, update existing time entries') }}
                         </PrimaryButton>
                     </div>
                     <p class="text-center pt-3 pb-1">
-                        Learn more about the
+                        {{ $t('Learn more about the') }}
                         <a
                             target="_blank"
                             href="https://docs.solidtime.io/user-guide/billable-rates"
                             class="text-blue-400 hover:text-blue-500 transition"
-                            >billable rate logic
+                            >{{ $t('billable rate logic') }}
                             <ArrowTopRightOnSquareIcon
                                 class="w-4 -mt-0.5 inline-block"></ArrowTopRightOnSquareIcon
                         ></a>
@@ -50,7 +50,7 @@ defineProps<{
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel </SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }} </SecondaryButton>
         </template>
     </DialogModal>
 </template>

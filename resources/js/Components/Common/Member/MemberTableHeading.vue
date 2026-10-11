@@ -21,25 +21,25 @@ defineEmits<{
             column="name"
             v-bind="props"
             @sort="$emit('sort', $event)">
-            Name
+            {{ $t('Name') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell column="email" v-bind="props" @sort="$emit('sort', $event)">
-            Email
+            {{ $t('Email') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell column="role" v-bind="props" @sort="$emit('sort', $event)">
-            Role
+            {{ $t('Role') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell
             column="billable_rate"
             v-bind="props"
             @sort="$emit('sort', $event)">
-            Billable Rate
+            {{ $t('Billable Rate') }}
         </SortableTableHeaderCell>
         <SortableTableHeaderCell column="status" v-bind="props" @sort="$emit('sort', $event)">
-            Status
+            {{ $t('Status') }}
         </SortableTableHeaderCell>
         <div class="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8 3xl:pr-12 bg-row-heading-background">
-            <span class="sr-only">Edit</span>
+            <span class="sr-only">{{ $t('Edit') }}</span>
         </div>
     </TableHeading>
 </template>

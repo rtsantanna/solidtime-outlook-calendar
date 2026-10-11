@@ -51,7 +51,7 @@ const formattedDuration = computed(() =>
             <ExclamationTriangleIcon
                 v-if="isMisplacedBreak"
                 data-testid="calendar_break_placement_hint"
-                title="This break does not align with your work entries"
+                :title="$t('This break does not align with your work entries')"
                 class="w-3 h-3 shrink-0 text-amber-600 dark:text-amber-400" />
         </div>
         <div v-if="projectName" class="font-medium opacity-90">

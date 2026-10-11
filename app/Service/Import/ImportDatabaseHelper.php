@@ -95,7 +95,7 @@ class ImportDatabaseHelper
 
         $validator = Validator::make($data, $this->validate);
         if ($validator->fails()) {
-            throw new ImportException('Invalid data: '.implode(', ', $validator->errors()->all()));
+            throw new ImportException(__('Invalid data: :errors', ['errors' => implode(', ', $validator->errors()->all())]));
         }
 
         /** @var TModel $model */
@@ -229,7 +229,7 @@ class ImportDatabaseHelper
     private function validateIdentifierData(array $identifierData): void
     {
         if (array_keys($identifierData) !== $this->identifiers) {
-            throw new ImportException('Invalid identifier data');
+            throw new ImportException(__('Invalid identifier data'));
         }
     }
 

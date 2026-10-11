@@ -4,7 +4,7 @@ import ReportingOverview from '@/Components/Common/Reporting/ReportingOverview.v
 </script>
 
 <template>
-    <AppLayout title="Reporting" data-testid="reporting_view" class="overflow-hidden">
+    <AppLayout :title="$t('Reporting')" data-testid="reporting_view" class="overflow-hidden">
         <ReportingOverview></ReportingOverview>
     </AppLayout>
 </template>

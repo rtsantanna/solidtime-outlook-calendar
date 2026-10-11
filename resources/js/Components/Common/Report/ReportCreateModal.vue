@@ -14,6 +14,7 @@ import DatePicker from '@/packages/ui/src/Input/DatePicker.vue';
 import { useNotificationsStore } from '@/utils/notification';
 import { getDayJsInstance } from '@/packages/ui/src/utils/time';
 import { router } from '@inertiajs/vue3';
+import { trans } from 'laravel-vue-i18n';
 
 const show = defineModel('show', { default: false });
 const saving = ref(false);
@@ -62,8 +63,8 @@ async function submit() {
                 public_until: publicUntil,
                 properties: { ...props.properties },
             }),
-        'Success',
-        'Error',
+        trans('Success'),
+        trans('Error'),
         () => {
             report.value = {
                 name: '',
@@ -82,34 +83,36 @@ async function submit() {
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Create Report </span>
+                <span> {{ $t('Create Report') }} </span>
             </div>
         </template>
 
         <template #content>
             <div class="items-center space-y-4 w-full">
                 <Field class="w-full">
-                    <FieldLabel for="name">Name</FieldLabel>
+                    <FieldLabel for="name">{{ $t('Name') }}</FieldLabel>
                     <TextInput id="name" v-model="report.name" class="w-full"></TextInput>
                 </Field>
                 <Field>
-                    <FieldLabel for="description">Description</FieldLabel>
+                    <FieldLabel for="description">{{ $t('Description') }}</FieldLabel>
                     <TextInput
                         id="description"
                         v-model="report.description"
                         class="w-full"></TextInput>
                 </Field>
                 <Field>
-                    <FieldLabel>Visibility</FieldLabel>
+                    <FieldLabel>{{ $t('Visibility') }}</FieldLabel>
                     <div class="flex items-center space-x-12">
                         <Field orientation="horizontal" class="px-2 py-3">
                             <Checkbox id="is_public" v-model:checked="report.is_public"></Checkbox>
-                            <FieldLabel for="is_public">Public</FieldLabel>
+                            <FieldLabel for="is_public">{{ $t('Public') }}</FieldLabel>
                         </Field>
                         <Field v-if="report.is_public" class="flex-row items-center space-x-4">
                             <div>
-                                <FieldLabel for="public_until">Expires at</FieldLabel>
-                                <div class="text-text-tertiary font-medium">(optional)</div>
+                                <FieldLabel for="public_until">{{ $t('Expires at') }}</FieldLabel>
+                                <div class="text-text-tertiary font-medium">
+                                    {{ $t('(optional)') }}
+                                </div>
                             </div>
                             <DatePicker v-model="report.public_until" clearable></DatePicker>
                         </Field>
@@ -118,13 +121,13 @@ async function submit() {
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Create Report
+                {{ $t('Create Report') }}
             </PrimaryButton>
         </template>
     </DialogModal>

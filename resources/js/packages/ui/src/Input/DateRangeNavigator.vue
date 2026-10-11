@@ -36,13 +36,13 @@ const triggerClass =
     <div
         class="tabular-nums inline-flex items-stretch overflow-hidden rounded-md border border-input bg-card-background shadow-xs dark:bg-transparent"
         role="group"
-        aria-label="Date range navigation">
+        :aria-label="$t('Date range navigation')">
         <Button
             type="button"
             variant="ghost"
             size="icon"
             class="h-8 w-8 shrink-0 rounded-none hover:bg-card-background-active"
-            aria-label="Previous"
+            :aria-label="$t('Previous')"
             :disabled="previousDisabled"
             :data-testid="previousTestId"
             @click="emit('previous')">
@@ -71,7 +71,7 @@ const triggerClass =
             variant="ghost"
             size="icon"
             class="h-8 w-8 shrink-0 rounded-none hover:bg-card-background-active"
-            aria-label="Next"
+            :aria-label="$t('Next')"
             :disabled="nextDisabled"
             :data-testid="nextTestId"
             @click="emit('next')">

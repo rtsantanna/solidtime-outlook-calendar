@@ -158,8 +158,8 @@ const option = computed(() => ({
             class="chart"
             :option="option" />
         <div v-else class="chart flex flex-col items-center justify-center">
-            <p class="text-lg text-text-primary font-semibold">No time entries found</p>
-            <p>Try to change the filters and time range</p>
+            <p class="text-lg text-text-primary font-semibold">{{ $t('No time entries found') }}</p>
+            <p>{{ $t('Try to change the filters and time range') }}</p>
         </div>
     </div>
 </template>

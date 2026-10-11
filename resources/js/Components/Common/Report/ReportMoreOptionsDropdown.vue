@@ -24,7 +24,7 @@ const props = defineProps<{
         <DropdownMenuTrigger as-child>
             <button
                 class="focus-visible:outline-none focus-visible:bg-card-background rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:opacity-100 hover:bg-card-background group-hover:opacity-100 opacity-20 transition-opacity text-text-secondary"
-                :aria-label="'Actions for Project ' + props.report.name">
+                :aria-label="$t('Actions for Project :name', { name: props.report.name })">
                 <svg
                     class="h-8 w-8 p-1 rounded-full"
                     viewBox="0 0 24 24"
@@ -42,19 +42,19 @@ const props = defineProps<{
         <DropdownMenuContent class="min-w-[150px]" align="end">
             <DropdownMenuItem
                 v-if="canUpdateReport()"
-                :aria-label="'Edit Report ' + props.report.name"
+                :aria-label="$t('Edit Report :name', { name: props.report.name })"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click.prevent="emit('edit')">
                 <PencilSquareIcon class="w-5 text-icon-active" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="canDeleteReport()"
-                :aria-label="'Delete Report ' + props.report.name"
+                :aria-label="$t('Delete Report :name', { name: props.report.name })"
                 class="flex items-center space-x-3 cursor-pointer text-destructive focus:text-destructive"
                 @click.prevent="emit('delete')">
                 <TrashIcon class="w-5" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

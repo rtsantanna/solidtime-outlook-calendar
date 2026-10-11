@@ -33,7 +33,7 @@ useFocus(tagNameInput, { initialValue: true });
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Create Tags </span>
+                <span> {{ $t('Create Tags') }} </span>
             </div>
         </template>
         <template #content>
@@ -44,7 +44,7 @@ useFocus(tagNameInput, { initialValue: true });
                         ref="tagNameInput"
                         v-model="tag.name"
                         type="text"
-                        placeholder="Tag Name"
+                        :placeholder="$t('Tag Name')"
                         class="mt-1 block w-full"
                         required
                         autocomplete="tagName"
@@ -53,14 +53,14 @@ useFocus(tagNameInput, { initialValue: true });
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel </SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }} </SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit">
-                Create Tag
+                {{ $t('Create Tag') }}
             </PrimaryButton>
         </template>
     </DialogModal>

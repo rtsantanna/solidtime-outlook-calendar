@@ -25,12 +25,14 @@ const gridTemplate = computed(() => {
                 <ReportTableHeading></ReportTableHeading>
                 <div v-if="reports.length === 0" class="col-span-7 py-24 text-center">
                     <FolderPlusIcon class="w-8 text-icon-default inline pb-2"></FolderPlusIcon>
-                    <h3 class="text-text-primary font-semibold">No shared reports found</h3>
+                    <h3 class="text-text-primary font-semibold">
+                        {{ $t('No shared reports found') }}
+                    </h3>
                     <p v-if="canCreateProjects()" class="pb-5">
-                        Go to the overview to create a report
+                        {{ $t('Go to the overview to create a report') }}
                     </p>
                     <SecondaryButton :icon="PlusIcon" @click="router.visit(route('reporting'))"
-                        >Go to overview
+                        >{{ $t('Go to overview') }}
                     </SecondaryButton>
                 </div>
                 <template v-for="report in reports" :key="report.id">

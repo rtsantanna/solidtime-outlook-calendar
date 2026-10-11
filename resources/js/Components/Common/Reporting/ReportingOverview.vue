@@ -50,6 +50,7 @@ import { getRandomColorWithSeed } from '@/packages/ui/src/utils/color';
 import { useProjectsQuery } from '@/utils/useProjectsQuery';
 import { useAggregatedTimeEntriesQuery } from '@/utils/useAggregatedTimeEntriesQuery';
 import type { TagMatchType } from '@/types/reporting';
+import { trans } from 'laravel-vue-i18n';
 
 type TimeEntryRoundingType = 'up' | 'down' | 'nearest';
 
@@ -198,8 +199,8 @@ async function downloadExport(format: ExportFormat) {
                         format: format,
                     },
                 }),
-            'Export successful',
-            'Export failed'
+            trans('Export successful'),
+            trans('Export failed')
         );
 
         if (response?.download_url) {
@@ -300,69 +301,73 @@ const tableData = computed(() => {
         v-model:show="showCreateReportModal"
         :properties="reportProperties"></ReportCreateModal>
     <UpgradeModal v-model:show="showPremiumModal">
-        This feature is only available in solidtime Professional.
+        {{ $t('This feature is only available in solidtime Professional.') }}
     </UpgradeModal>
     <MainContainer
         class="h-14 sm:h-16 border-b border-default-background-separator flex flex-wrap gap-y-3 justify-between items-center">
         <div class="flex items-center space-x-3 sm:space-x-6">
-            <PageTitle :icon="ChartBarIcon" title="Reporting"></PageTitle>
+            <PageTitle :icon="ChartBarIcon" :title="$t('Reporting')"></PageTitle>
             <ReportingTabNavbar active="reporting" class="hidden sm:flex"></ReportingTabNavbar>
         </div>
         <div class="hidden sm:flex space-x-2">
             <DropdownMenu>
                 <DropdownMenuTrigger as-child>
                     <SecondaryButton :icon="ArrowDownTrayIcon" :loading="exportLoading">
-                        Export
+                        {{ $t('Export') }}
                     </SecondaryButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                     <DropdownMenuItem @click="triggerExport('pdf')">
                         <div class="flex items-center space-x-2">
-                            <span>Export as PDF</span>
+                            <span>{{ $t('Export as PDF') }}</span>
                             <LockClosedIcon
                                 v-if="!isAllowedToPerformPremiumAction()"
                                 class="w-3.5 text-text-tertiary" />
                         </div>
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('xlsx')">
-                        Export as Excel
+                        {{ $t('Export as Excel') }}
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('csv')">
-                        Export as CSV
+                        {{ $t('Export as CSV') }}
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="triggerExport('ods')">
-                        Export as ODS
+                        {{ $t('Export as ODS') }}
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
             <SecondaryButton v-if="canCreateReports()" :icon="SaveIcon" @click="onSaveReportClick">
-                Save Report
+                {{ $t('Save Report') }}
             </SecondaryButton>
         </div>
         <DropdownMenu>
             <DropdownMenuTrigger as-child class="sm:hidden">
                 <button
                     class="p-1.5 rounded-lg border border-border-tertiary text-text-secondary hover:text-text-primary hover:bg-secondary transition"
-                    aria-label="More options">
+                    :aria-label="$t('More options')">
                     <EllipsisVerticalIcon class="w-5 h-5" />
                 </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem @click="triggerExport('pdf')">
                     <div class="flex items-center space-x-2">
-                        <span>Export as PDF</span>
+                        <span>{{ $t('Export as PDF') }}</span>
                         <LockClosedIcon
                             v-if="!isAllowedToPerformPremiumAction()"
                             class="w-3.5 text-text-tertiary" />
                     </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem @click="triggerExport('xlsx')">
-                    Export as Excel
+                    {{ $t('Export as Excel') }}
                 </DropdownMenuItem>
-                <DropdownMenuItem @click="triggerExport('csv')"> Export as CSV </DropdownMenuItem>
-                <DropdownMenuItem @click="triggerExport('ods')"> Export as ODS </DropdownMenuItem>
+                <DropdownMenuItem @click="triggerExport('csv')">{{
+                    $t('Export as CSV')
+                }}</DropdownMenuItem>
+                <DropdownMenuItem @click="triggerExport('ods')">{{
+                    $t('Export as ODS')
+                }}</DropdownMenuItem>
                 <DropdownMenuItem v-if="canCreateReports()" @click="onSaveReportClick">
-                    Save Report
+                    {{ $t('Save Report') }}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -396,11 +401,11 @@ const tableData = computed(() => {
             <div class="col-span-3 bg-secondary rounded-lg border border-card-border pt-3">
                 <div
                     class="text-sm flex text-text-primary items-center space-x-3 font-medium px-6 border-b border-card-background-separator pb-3">
-                    <span>Group by</span>
+                    <span>{{ $t('Group by') }}</span>
                     <ReportingGroupBySelect
                         v-model="group"
                         :group-by-options="groupByOptions"></ReportingGroupBySelect>
-                    <span>and</span>
+                    <span>{{ $t('and') }}</span>
                     <ReportingGroupBySelect
                         v-model="subGroup"
                         :group-by-options="
@@ -412,11 +417,11 @@ const tableData = computed(() => {
                     :style="`grid-template-columns: 1fr 100px ${showBillableRate ? '150px' : ''}`">
                     <div
                         class="contents [&>*]:border-card-background-separator [&>*]:border-b [&>*]:bg-secondary [&>*]:pb-1.5 [&>*]:pt-1 text-text-tertiary text-sm">
-                        <div class="pl-6">Name</div>
+                        <div class="pl-6">{{ $t('Name') }}</div>
                         <div class="text-right" :class="!showBillableRate ? 'pr-6' : ''">
-                            Duration
+                            {{ $t('Duration') }}
                         </div>
-                        <div v-if="showBillableRate" class="text-right pr-6">Cost</div>
+                        <div v-if="showBillableRate" class="text-right pr-6">{{ $t('Cost') }}</div>
                     </div>
                     <template
                         v-if="
@@ -431,7 +436,7 @@ const tableData = computed(() => {
                             :entry="entry"></ReportingRow>
                         <div class="contents [&>*]:transition text-text-tertiary [&>*]:h-[50px]">
                             <div class="flex items-center pl-6 font-medium">
-                                <span>Total</span>
+                                <span>{{ $t('Total') }}</span>
                             </div>
                             <div
                                 class="justify-end flex items-center font-medium"
@@ -465,8 +470,10 @@ const tableData = computed(() => {
                         v-else
                         class="chart flex flex-col items-center justify-center py-12"
                         :class="showBillableRate ? 'col-span-3' : 'col-span-2'">
-                        <p class="text-lg text-text-primary font-medium">No time entries found</p>
-                        <p>Try to change the filters and time range</p>
+                        <p class="text-lg text-text-primary font-medium">
+                            {{ $t('No time entries found') }}
+                        </p>
+                        <p>{{ $t('Try to change the filters and time range') }}</p>
                     </div>
                 </div>
             </div>

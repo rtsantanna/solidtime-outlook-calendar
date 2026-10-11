@@ -19,27 +19,33 @@ const emit = defineEmits<{
     <DialogModal closeable :show="show" @close="show = false">
         <template #title>
             <div class="flex justify-center">
-                <span> Confirm Ownership Transfer </span>
+                <span> {{ $t('Confirm Ownership Transfer') }} </span>
             </div>
         </template>
         <template #content>
             <div class="flex items-center space-x-4">
                 <div class="col-span-6 sm:col-span-4 flex-1">
                     <p class="py-1 text-center">
-                        You are about to transfer the ownership of this organization to
-                        {{ memberName }}.
+                        {{
+                            $t(
+                                'You are about to transfer the ownership of this organization to :name.',
+                                {
+                                    name: memberName,
+                                }
+                            )
+                        }}
                     </p>
                 </div>
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="emit('submit')">
-                Confirm Transfer
+                {{ $t('Confirm Transfer') }}
             </PrimaryButton>
         </template>
     </DialogModal>

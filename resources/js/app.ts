@@ -9,8 +9,19 @@ import type { User } from '@/types/models';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 import { type DefineComponent } from 'vue';
 import { setupPrefetching } from '@/utils/prefetch';
+import { i18nVue } from 'laravel-vue-i18n';
+import { normalizeLanguage, setDayjsLanguage } from '@/packages/ui/src/utils/i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+// The server sets <html lang> from APP_LOCALE; lang/<code>.json holds the translations
+// (keys are the English source strings, so a missing translation falls back to English).
+const language = normalizeLanguage(document.documentElement.lang);
+const translations = import.meta.glob<Record<string, string>>('../../lang/*.json', {
+    eager: true,
+    import: 'default',
+});
+setDayjsLanguage(language);
 const pinia = createPinia();
 const queryClient = new QueryClient();
 
@@ -64,7 +75,16 @@ createInertiaApp({
             return page.props.auth.user.timezone;
         };
 
-        app.use(plugin).use(pinia).use(ZiggyVue).use(VueQueryPlugin, { queryClient }).mount(el);
+        app.use(plugin)
+            .use(pinia)
+            .use(ZiggyVue)
+            .use(VueQueryPlugin, { queryClient })
+            .use(i18nVue, {
+                lang: language,
+                fallbackLang: 'en',
+                resolve: (lang: string) => translations[`../../lang/${lang}.json`] ?? {},
+            })
+            .mount(el);
 
         // Setup Inertia prefetching to warm TanStack Query cache
         setupPrefetching(queryClient);

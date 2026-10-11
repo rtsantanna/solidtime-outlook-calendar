@@ -50,10 +50,10 @@ function checkForConfirmationModal() {
 
 <template>
     <FormSection>
-        <template #title> Billable Rate</template>
+        <template #title> {{ $t('Billable Rate') }}</template>
 
         <template #description>
-            Configure the default billable rate for the organization.
+            {{ $t('Configure the default billable rate for the organization.') }}
         </template>
 
         <template #form>
@@ -62,7 +62,9 @@ function checkForConfirmationModal() {
                 :new-billable-rate="organizationBody.billable_rate"
                 @submit="submit"></OrganizationBillableRateModal>
             <Field class="col-span-6 sm:col-span-4">
-                <FieldLabel for="organizationBillableRate">Organization Billable Rate</FieldLabel>
+                <FieldLabel for="organizationBillableRate">{{
+                    $t('Organization Billable Rate')
+                }}</FieldLabel>
                 <BillableRateInput
                     v-if="organization"
                     v-model="organizationBody.billable_rate"
@@ -78,14 +80,14 @@ function checkForConfirmationModal() {
                         v-model:checked="
                             organizationBody.employees_can_see_billable_rates
                         "></Checkbox>
-                    <FieldLabel for="organizationShowBillableRatesToEmployees"
-                        >Show Billable Rates to Employees</FieldLabel
-                    >
+                    <FieldLabel for="organizationShowBillableRatesToEmployees">{{
+                        $t('Show Billable Rates to Employees')
+                    }}</FieldLabel>
                 </Field>
             </div>
         </template>
         <template #actions>
-            <PrimaryButton @click="checkForConfirmationModal">Save</PrimaryButton>
+            <PrimaryButton @click="checkForConfirmationModal">{{ $t('Save') }}</PrimaryButton>
         </template>
     </FormSection>
 </template>

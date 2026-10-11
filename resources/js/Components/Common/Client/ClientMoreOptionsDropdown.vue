@@ -24,7 +24,7 @@ const props = defineProps<{
         <DropdownMenuTrigger as-child>
             <button
                 class="focus-visible:outline-none focus-visible:bg-card-background rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:opacity-100 hover:bg-card-background group-hover:opacity-100 opacity-20 transition-opacity text-text-secondary"
-                :aria-label="'Actions for Client ' + props.client.name">
+                :aria-label="$t('Actions for Client :name', { name: props.client.name })">
                 <svg
                     class="h-8 w-8 p-1 rounded-full"
                     viewBox="0 0 24 24"
@@ -42,29 +42,29 @@ const props = defineProps<{
         <DropdownMenuContent class="min-w-[150px]" align="end">
             <DropdownMenuItem
                 v-if="canUpdateClients()"
-                :aria-label="'Edit Client ' + props.client.name"
+                :aria-label="$t('Edit Client :name', { name: props.client.name })"
                 data-testid="client_edit"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click="emit('edit')">
                 <PencilSquareIcon class="w-5 text-icon-active" />
-                <span>Edit</span>
+                <span>{{ $t('Edit') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="canUpdateClients()"
-                :aria-label="'Archive Client ' + props.client.name"
+                :aria-label="$t('Archive Client :name', { name: props.client.name })"
                 class="flex items-center space-x-3 cursor-pointer"
                 @click.prevent="emit('archive')">
                 <ArchiveBoxIcon class="w-5 text-icon-active" />
-                <span>{{ client.is_archived ? 'Unarchive' : 'Archive' }}</span>
+                <span>{{ client.is_archived ? $t('Unarchive') : $t('Archive') }}</span>
             </DropdownMenuItem>
             <DropdownMenuItem
                 v-if="canDeleteClients()"
-                :aria-label="'Delete Client ' + props.client.name"
+                :aria-label="$t('Delete Client :name', { name: props.client.name })"
                 data-testid="client_delete"
                 class="flex items-center space-x-3 cursor-pointer text-destructive focus:text-destructive"
                 @click="emit('delete')">
                 <TrashIcon class="w-5" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>

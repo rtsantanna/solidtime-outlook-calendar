@@ -118,7 +118,7 @@ function onRefresh() {
 
 <template>
     <AppLayout
-        title="Calendar"
+        :title="$t('Calendar')"
         data-testid="calendar_view"
         main-class="p-0 min-h-0 overflow-hidden">
         <TimeEntryCalendar

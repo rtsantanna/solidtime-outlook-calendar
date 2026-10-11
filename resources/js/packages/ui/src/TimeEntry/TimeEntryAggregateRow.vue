@@ -380,14 +380,14 @@ function onSelectChange(checked: boolean) {
                 class="space-x-3"
                 @select="onStartStopClick(timeEntry.timeEntries[0]!)">
                 <PlayIcon class="w-4 h-4 text-icon-default" />
-                <span>Continue</span>
+                <span>{{ $t('Continue') }}</span>
             </ContextMenuItem>
             <ContextMenuSeparator v-if="canRecreate" />
             <ContextMenuItem
                 class="space-x-3 text-destructive"
                 @select="deleteTimeEntries(timeEntry?.timeEntries ?? [])">
                 <TrashIcon class="w-4 h-4 text-icon-default" />
-                <span>Delete</span>
+                <span>{{ $t('Delete') }}</span>
             </ContextMenuItem>
         </ContextMenuContent>
     </ContextMenu>

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query';
 import { computed } from 'vue';
 import axios from 'axios';
+import { trans } from 'laravel-vue-i18n';
 import { api, type DeleteUserBody, type UpdateUserBody, type User } from '@/packages/api/src';
 import { useNotificationsStore } from '@/utils/notification';
 
@@ -42,10 +43,10 @@ export function useUpdateUserMutation() {
                 if (!axios.isAxiosError(error) || error.response?.status !== 422) {
                     addNotification(
                         'error',
-                        'Failed to update profile',
+                        trans('Failed to update profile'),
                         axios.isAxiosError(error)
-                            ? (error.response?.data?.message ?? 'Please try again later.')
-                            : 'Please try again later.'
+                            ? (error.response?.data?.message ?? trans('Please try again later.'))
+                            : trans('Please try again later.')
                     );
                 }
                 throw error;
@@ -68,10 +69,10 @@ export function useDeleteUserMutation() {
                 if (!axios.isAxiosError(error) || error.response?.status !== 422) {
                     addNotification(
                         'error',
-                        'Failed to delete account',
+                        trans('Failed to delete account'),
                         axios.isAxiosError(error)
-                            ? (error.response?.data?.message ?? 'Please try again later.')
-                            : 'Please try again later.'
+                            ? (error.response?.data?.message ?? trans('Please try again later.'))
+                            : trans('Please try again later.')
                     );
                 }
                 throw error;
@@ -87,8 +88,8 @@ export function useResendUserEmailVerificationMutation() {
         mutationFn: async (userId: string) => {
             return handleApiRequestNotifications(
                 () => api.resendUserEmailVerification(undefined, { params: { user: userId } }),
-                'Verification email sent',
-                'Failed to resend verification email'
+                trans('Verification email sent'),
+                trans('Failed to resend verification email')
             );
         },
     });
@@ -102,8 +103,8 @@ export function useResetUserPendingEmailMutation() {
         mutationFn: async (userId: string) => {
             return handleApiRequestNotifications(
                 () => api.resetUserPendingEmail(undefined, { params: { user: userId } }),
-                'Email change canceled',
-                'Failed to cancel email change'
+                trans('Email change canceled'),
+                trans('Failed to cancel email change')
             );
         },
         onSuccess: () => {

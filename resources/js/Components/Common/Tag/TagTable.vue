@@ -69,13 +69,15 @@ function handleSort(column: SortColumn) {
                     @sort="handleSort"></TagTableHeading>
                 <div v-if="sortedTags.length === 0" class="col-span-5 py-24 text-center">
                     <FolderPlusIcon class="w-8 text-icon-default inline pb-2"></FolderPlusIcon>
-                    <h3 class="text-text-primary font-semibold">No tags found</h3>
-                    <p v-if="canCreateTags()" class="pb-5">Create your first tag now!</p>
+                    <h3 class="text-text-primary font-semibold">{{ $t('No tags found') }}</h3>
+                    <p v-if="canCreateTags()" class="pb-5">
+                        {{ $t('Create your first tag now!') }}
+                    </p>
                     <SecondaryButton
                         v-if="canCreateTags()"
                         :icon="PlusIcon"
                         @click="showCreateTagModal = true"
-                        >Create your First Tag</SecondaryButton
+                        >{{ $t('Create your First Tag') }}</SecondaryButton
                     >
                 </div>
                 <template v-for="tag in sortedTags" :key="tag.id">

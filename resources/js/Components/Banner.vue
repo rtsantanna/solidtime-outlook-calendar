@@ -100,7 +100,7 @@ const show = ref(true);
                         <button
                             type="button"
                             class="-me-1 flex p-2 rounded-md focus:outline-none sm:-me-2 transition hover:bg-tertiary focus:bg-tertiary"
-                            aria-label="Dismiss"
+                            :aria-label="$t('Dismiss')"
                             @click.prevent="show = false">
                             <svg
                                 class="h-5 w-5 text-text-primary"

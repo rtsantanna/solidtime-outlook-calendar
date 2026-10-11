@@ -57,19 +57,21 @@ const switchToTeam = (organization: Organization) => {
 
         <DropdownMenuContent align="start">
             <div class="w-60">
-                <DropdownMenuLabel>Manage Organization</DropdownMenuLabel>
+                <DropdownMenuLabel>{{ $t('Manage Organization') }}</DropdownMenuLabel>
 
                 <DropdownMenuItem as-child>
                     <Link
                         :href="route('organizations.show', page.props.auth.user.current_team.id)"
                         class="inline-flex items-center gap-2.5 w-full">
                         <Cog6ToothIcon class="w-5 h-5 text-icon-default" />
-                        <span>Organization Settings</span>
+                        <span>{{ $t('Organization Settings') }}</span>
                     </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem v-if="canManageBilling() && isBillingActivated()" as-child>
-                    <Link href="/billing" class="inline-flex items-center w-full"> Billing </Link>
+                    <Link href="/billing" class="inline-flex items-center w-full">
+                        {{ $t('Billing') }}
+                    </Link>
                 </DropdownMenuItem>
 
                 <DropdownMenuItem as-child>
@@ -77,14 +79,14 @@ const switchToTeam = (organization: Organization) => {
                         :href="route('organizations.create')"
                         class="inline-flex items-center gap-2.5 w-full">
                         <PlusCircleIcon class="w-5 h-5 text-icon-default" />
-                        <span>Create new organization</span>
+                        <span>{{ $t('Create new organization') }}</span>
                     </Link>
                 </DropdownMenuItem>
 
                 <template v-if="page.props.auth.user.all_teams.length > 1">
                     <div class="border-t border-card-background-separator" />
 
-                    <DropdownMenuLabel>Switch Organizations</DropdownMenuLabel>
+                    <DropdownMenuLabel>{{ $t('Switch Organizations') }}</DropdownMenuLabel>
 
                     <template v-for="team in page.props.auth.user.all_teams" :key="team.id">
                         <form @submit.prevent="switchToTeam(team)">

@@ -26,19 +26,23 @@ defineEmits<{
     <AlertDialog :open="open" @update:open="$emit('update:open', $event)">
         <AlertDialogContent>
             <AlertDialogHeader>
-                <AlertDialogTitle>Remove timesheet row?</AlertDialogTitle>
+                <AlertDialogTitle>{{ $t('Remove timesheet row?') }}</AlertDialogTitle>
                 <AlertDialogDescription>
-                    This will delete {{ entryCount }} time
-                    {{ entryCount === 1 ? 'entry' : 'entries' }}
-                    for "{{ projectName }}". This action cannot be undone.
+                    {{
+                        $tChoice(
+                            'This will delete :count time entry for ":project". This action cannot be undone.|This will delete :count time entries for ":project". This action cannot be undone.',
+                            entryCount,
+                            { count: String(entryCount), project: projectName }
+                        )
+                    }}
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>{{ $t('Cancel') }}</AlertDialogCancel>
                 <AlertDialogAction
                     class="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     @click="$emit('confirm')">
-                    Delete
+                    {{ $t('Delete') }}
                 </AlertDialogAction>
             </AlertDialogFooter>
         </AlertDialogContent>

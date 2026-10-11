@@ -10,6 +10,7 @@ import TimesheetFooterActions from '@/Components/Timesheet/TimesheetFooterAction
 import RemoveRowDialog from '@/Components/Timesheet/RemoveRowDialog.vue';
 import BreakPlacementModal from '@/Components/Timesheet/BreakPlacementModal.vue';
 import { useTimesheetQuery } from '@/utils/useTimesheetQuery';
+import { trans } from 'laravel-vue-i18n';
 import { useTimesheetGrid } from '@/utils/useTimesheetGrid';
 import { useTimeEntriesMutations } from '@/utils/useTimeEntriesMutations';
 import { useProjectsQuery } from '@/utils/useProjectsQuery';
@@ -135,7 +136,7 @@ function breakPlanEntryLabel(id: string): string {
     if (entry.type === 'break') return 'Break';
     const project = projects.value.find((p) => p.id === entry.project_id);
     const task = tasks.value.find((t) => t.id === entry.task_id);
-    return [project?.name ?? 'No Project', task?.name, entry.description]
+    return [project?.name ?? trans('No Project'), task?.name, entry.description]
         .filter((part): part is string => !!part)
         .join(' · ');
 }
@@ -201,7 +202,7 @@ async function createTag(name: string): Promise<Tag | undefined> {
 </script>
 
 <template>
-    <AppLayout title="Timesheet" data-testid="timesheet_view">
+    <AppLayout :title="$t('Timesheet')" data-testid="timesheet_view">
         <div class="pt-5 lg:pt-8 pb-4 lg:pb-6">
             <TimesheetHeader
                 :week-number="weekNumber"

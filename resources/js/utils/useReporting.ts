@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { type Component } from 'vue';
 import { getCurrentRole, getCurrentUser } from '@/utils/useUser';
@@ -45,14 +46,14 @@ export const useReportingStore = defineStore('reporting', () => {
     const { tags } = useTagsQuery();
 
     const emptyPlaceholder = {
-        user: 'No User',
-        project: 'No Project',
-        task: 'No Task',
-        billable: 'Non-Billable',
-        client: 'No Client',
-        description: 'No Description',
-        tag: 'No Tag',
-        type: 'Work time',
+        user: trans('No User'),
+        project: trans('No Project'),
+        task: trans('No Task'),
+        billable: trans('Non-Billable'),
+        client: trans('No Client'),
+        description: trans('No Description'),
+        tag: trans('No Tag'),
+        type: trans('Work time'),
     } as Record<string, string>;
 
     function getNameForReportingRowEntry(
@@ -87,13 +88,13 @@ export const useReportingStore = defineStore('reporting', () => {
         }
         if (type === 'billable') {
             if (key === '0') {
-                return 'Non-Billable';
+                return trans('Non-Billable');
             } else {
-                return 'Billable';
+                return trans('Billable');
             }
         }
         if (type === 'type') {
-            return key === 'break' ? 'Break' : 'Work time';
+            return key === 'break' ? trans('Break') : trans('Work time');
         }
         if (type === 'day') {
             return formatDate(key, dateFormat);
@@ -114,52 +115,52 @@ export const useReportingStore = defineStore('reporting', () => {
         icon: Component;
     }[] = [
         {
-            label: 'Members',
+            label: trans('Members'),
             value: 'user',
             icon: UserGroupIcon,
         },
         {
-            label: 'Projects',
+            label: trans('Projects'),
             value: 'project',
             icon: FolderIcon,
         },
         {
-            label: 'Tasks',
+            label: trans('Tasks'),
             value: 'task',
             icon: CheckCircleIcon,
         },
         {
-            label: 'Clients',
+            label: trans('Clients'),
             value: 'client',
             icon: UserCircleIcon,
         },
         {
-            label: 'Billable',
+            label: trans('Billable'),
             value: 'billable',
             icon: BillableIcon,
         },
         {
-            label: 'Type',
+            label: trans('Type'),
             value: 'type',
             icon: Coffee,
         },
         {
-            label: 'Description',
+            label: trans('Description'),
             value: 'description',
             icon: DocumentTextIcon,
         },
         {
-            label: 'Tags',
+            label: trans('Tags'),
             value: 'tag',
             icon: DocumentTextIcon,
         },
         {
-            label: 'Date',
+            label: trans('Date'),
             value: 'day',
             icon: CalendarIcon,
         },
         {
-            label: 'Week',
+            label: trans('Week'),
             value: 'week',
             icon: CalendarDaysIcon,
         },

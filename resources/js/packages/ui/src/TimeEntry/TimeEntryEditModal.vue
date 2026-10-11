@@ -167,7 +167,7 @@ const typeProxy = computed({
     <DialogModal closeable :show="show" @close="show = false" @submit="submit">
         <template #title>
             <div class="flex space-x-2">
-                <span> Edit time entry </span>
+                <span> {{ $t('Edit time entry') }} </span>
             </div>
         </template>
 
@@ -179,7 +179,7 @@ const typeProxy = computed({
                             id="description"
                             ref="description"
                             v-model="editableTimeEntry.description"
-                            placeholder="What did you work on?"
+                            :placeholder="$t('What did you work on?')"
                             type="text"
                             class="mt-1 block w-full"
                             @keydown.enter="submit" />
@@ -210,12 +210,12 @@ const typeProxy = computed({
                                     <Coffee
                                         class="h-4 w-4"
                                         :class="isBreak ? 'text-amber-500' : 'text-icon-default'" />
-                                    <span>{{ isBreak ? 'Break' : 'Work time' }}</span>
+                                    <span>{{ isBreak ? $t('Break') : $t('Work time') }}</span>
                                 </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="work">Work time</SelectItem>
-                                <SelectItem value="break">Break</SelectItem>
+                                <SelectItem value="work">{{ $t('Work time') }}</SelectItem>
+                                <SelectItem value="break">{{ $t('Break') }}</SelectItem>
                             </SelectContent>
                         </Select>
                         <TagDropdown
@@ -229,8 +229,12 @@ const typeProxy = computed({
                                     <TagIcon class="h-4 text-icon-default" />
                                     <span>{{
                                         editableTimeEntry.tags.length === 0
-                                            ? 'Tags'
-                                            : `${editableTimeEntry.tags.length} Tag${editableTimeEntry.tags.length > 1 ? 's' : ''}`
+                                            ? $t('Tags')
+                                            : $tChoice(
+                                                  ':count Tag|:count Tags',
+                                                  editableTimeEntry.tags.length,
+                                                  { count: String(editableTimeEntry.tags.length) }
+                                              )
                                     }}</span>
                                 </Button>
                             </template>
@@ -240,20 +244,22 @@ const typeProxy = computed({
                                 <SelectValue class="flex items-center gap-2">
                                     <BillableIcon class="h-4 text-icon-default" />
                                     <span>{{
-                                        editableTimeEntry.billable ? 'Billable' : 'Non-Billable'
+                                        editableTimeEntry.billable
+                                            ? $t('Billable')
+                                            : $t('Non-Billable')
                                     }}</span>
                                 </SelectValue>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="true">Billable</SelectItem>
-                                <SelectItem value="false">Non Billable</SelectItem>
+                                <SelectItem value="true">{{ $t('Billable') }}</SelectItem>
+                                <SelectItem value="false">{{ $t('Non Billable') }}</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 pt-4">
                     <Field class="col-span-2 sm:col-span-3">
-                        <FieldLabel>Duration</FieldLabel>
+                        <FieldLabel>{{ $t('Duration') }}</FieldLabel>
                         <div class="space-y-2 flex flex-col">
                             <DurationHumanInput
                                 v-model:start="localStart"
@@ -263,14 +269,14 @@ const typeProxy = computed({
                                 <InformationCircleIcon
                                     class="w-4 shrink-0 text-text-quaternary"></InformationCircleIcon>
                                 <span class="text-text-secondary text-xs">
-                                    You can type natural language like
+                                    {{ $t('You can type natural language like') }}
                                     <span class="font-semibold"> 2h 30m</span>
                                 </span>
                             </div>
                         </div>
                     </Field>
                     <Field>
-                        <FieldLabel>Start</FieldLabel>
+                        <FieldLabel>{{ $t('Start') }}</FieldLabel>
                         <div class="flex flex-col gap-2">
                             <TimePickerSimple
                                 v-model="localStart"
@@ -282,7 +288,7 @@ const typeProxy = computed({
                         </div>
                     </Field>
                     <Field>
-                        <FieldLabel>End</FieldLabel>
+                        <FieldLabel>{{ $t('End') }}</FieldLabel>
                         <div class="flex flex-col gap-2">
                             <TimePickerSimple v-model="localEnd" class="w-full"></TimePickerSimple>
                             <DatePicker v-model="localEnd" class="w-full" tabindex="1"></DatePicker>
@@ -298,16 +304,18 @@ const typeProxy = computed({
                     class="bg-red-600 hover:bg-red-700 text-white border-red-600 hover:border-red-700"
                     :disabled="deleting || saving"
                     @click="deleteEntry">
-                    {{ deleting ? 'Deleting...' : 'Delete' }}
+                    {{ deleting ? $t('Deleting...') : $t('Delete') }}
                 </SecondaryButton>
                 <div class="flex space-x-3">
-                    <SecondaryButton tabindex="2" @click="show = false"> Cancel</SecondaryButton>
+                    <SecondaryButton tabindex="2" @click="show = false">
+                        {{ $t('Cancel') }}</SecondaryButton
+                    >
                     <PrimaryButton
                         tabindex="2"
                         :class="{ 'opacity-25': saving }"
                         :disabled="saving || deleting"
                         @click="submit">
-                        {{ saving ? 'Updating...' : 'Update Time Entry' }}
+                        {{ saving ? $t('Updating...') : $t('Update Time Entry') }}
                     </PrimaryButton>
                 </div>
             </div>

@@ -43,7 +43,7 @@ const displaysPlaceholder = computed(() => {
             <input
                 data-testid="time_entry_description"
                 :value="liveDataValue"
-                placeholder="Add a description"
+                :placeholder="$t('Add a description')"
                 class="absolute px-0 h-full min-w-0 pl-1.5 @lg:pl-3 pr-1 left-0 top-0 w-full text-sm text-text-primary bg-transparent focus-visible:ring-0 rounded-lg border-0"
                 @blur="onChange"
                 @input="onInput"

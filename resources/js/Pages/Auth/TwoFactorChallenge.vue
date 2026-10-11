@@ -37,7 +37,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Two-factor Confirmation" />
+    <Head :title="$t('Two-factor Confirmation')" />
 
     <AuthenticationCard>
         <template #logo>
@@ -46,19 +46,25 @@ const submit = () => {
 
         <div class="mb-4 text-sm text-text-secondary">
             <template v-if="!recovery">
-                Please confirm access to your account by entering the authentication code provided
-                by your authenticator application.
+                {{
+                    $t(
+                        'Please confirm access to your account by entering the authentication code provided by your authenticator application.'
+                    )
+                }}
             </template>
 
             <template v-else>
-                Please confirm access to your account by entering one of your emergency recovery
-                codes.
+                {{
+                    $t(
+                        'Please confirm access to your account by entering one of your emergency recovery codes.'
+                    )
+                }}
             </template>
         </div>
 
         <form @submit.prevent="submit">
             <Field v-if="!recovery">
-                <FieldLabel for="code">Code</FieldLabel>
+                <FieldLabel for="code">{{ $t('Code') }}</FieldLabel>
                 <TextInput
                     id="code"
                     ref="codeInput"
@@ -72,7 +78,7 @@ const submit = () => {
             </Field>
 
             <Field v-else>
-                <FieldLabel for="recovery_code">Recovery Code</FieldLabel>
+                <FieldLabel for="recovery_code">{{ $t('Recovery Code') }}</FieldLabel>
                 <TextInput
                     id="recovery_code"
                     ref="recoveryCodeInput"
@@ -90,16 +96,16 @@ const submit = () => {
                     type="button"
                     class="text-sm text-text-secondary hover:text-text-primary underline cursor-pointer"
                     @click.prevent="toggleRecovery">
-                    <template v-if="!recovery"> Use a recovery code</template>
+                    <template v-if="!recovery"> {{ $t('Use a recovery code') }}</template>
 
-                    <template v-else> Use an authentication code</template>
+                    <template v-else> {{ $t('Use an authentication code') }}</template>
                 </button>
 
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing">
-                    Log in
+                    {{ $t('Log in') }}
                 </PrimaryButton>
             </div>
         </form>

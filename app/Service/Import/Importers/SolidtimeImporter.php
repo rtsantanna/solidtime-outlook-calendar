@@ -39,19 +39,19 @@ class SolidtimeImporter extends DefaultImporter
             app(ZipImportHelper::class)->extract($temporaryDirectoryZip->path('import.zip'), $temporaryDirectory->path());
 
             if (! file_exists($temporaryDirectory->path('meta.json'))) {
-                throw new ImportException('File "meta.json" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'meta.json']));
             }
             $metaFileContentRaw = file_get_contents($temporaryDirectory->path('meta.json'));
             if ($metaFileContentRaw === false) {
-                throw new ImportException('File "meta.json" can not read');
+                throw new ImportException(__('File ":file" can not read', ['file' => 'meta.json']));
             }
             $metaFileContent = json_decode($metaFileContentRaw);
             if ($metaFileContent === false || ! isset($metaFileContent->version) || ! in_array($metaFileContent->version, self::SUPPORTED_VERSIONS, true)) {
-                throw new ImportException('Invalid version');
+                throw new ImportException(__('Invalid version'));
             }
 
             if (! file_exists($temporaryDirectory->path('clients.csv'))) {
-                throw new ImportException('File "clients.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'clients.csv']));
             }
             $clientsReader = Reader::createFromPath($temporaryDirectory->path('clients.csv'));
             $clientsReader->setHeaderOffset(0);
@@ -60,7 +60,7 @@ class SolidtimeImporter extends DefaultImporter
             $clientsReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('members.csv'))) {
-                throw new ImportException('File "members.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'members.csv']));
             }
             $membersReader = Reader::createFromPath($temporaryDirectory->path('members.csv'));
             $membersReader->setHeaderOffset(0);
@@ -69,7 +69,7 @@ class SolidtimeImporter extends DefaultImporter
             $membersReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('organization_invitations.csv'))) {
-                throw new ImportException('File "organization_invitations.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'organization_invitations.csv']));
             }
             $organizationInvitationsReader = Reader::createFromPath($temporaryDirectory->path('organization_invitations.csv'));
             $organizationInvitationsReader->setHeaderOffset(0);
@@ -78,7 +78,7 @@ class SolidtimeImporter extends DefaultImporter
             $organizationInvitationsReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('project_members.csv'))) {
-                throw new ImportException('File "project_members.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'project_members.csv']));
             }
             $projectMembersReader = Reader::createFromPath($temporaryDirectory->path('project_members.csv'));
             $projectMembersReader->setHeaderOffset(0);
@@ -87,7 +87,7 @@ class SolidtimeImporter extends DefaultImporter
             $projectMembersReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('projects.csv'))) {
-                throw new ImportException('File "projects.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'projects.csv']));
             }
             $projectsReader = Reader::createFromPath($temporaryDirectory->path('projects.csv'));
             $projectsReader->setHeaderOffset(0);
@@ -96,7 +96,7 @@ class SolidtimeImporter extends DefaultImporter
             $projectsReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('tags.csv'))) {
-                throw new ImportException('File "tags.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'tags.csv']));
             }
             $tagsReader = Reader::createFromPath($temporaryDirectory->path('tags.csv'));
             $tagsReader->setHeaderOffset(0);
@@ -105,7 +105,7 @@ class SolidtimeImporter extends DefaultImporter
             $tagsReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('tasks.csv'))) {
-                throw new ImportException('File "tasks.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'tasks.csv']));
             }
             $tasksReader = Reader::createFromPath($temporaryDirectory->path('tasks.csv'));
             $tasksReader->setHeaderOffset(0);
@@ -114,7 +114,7 @@ class SolidtimeImporter extends DefaultImporter
             $tasksReader->setEscape('');
 
             if (! file_exists($temporaryDirectory->path('time_entries.csv'))) {
-                throw new ImportException('File "time_entries.csv" missing in ZIP');
+                throw new ImportException(__('File ":file" missing in ZIP', ['file' => 'time_entries.csv']));
             }
             $timeEntriesReader = Reader::createFromPath($temporaryDirectory->path('time_entries.csv'));
             $timeEntriesReader->setHeaderOffset(0);
@@ -165,7 +165,7 @@ class SolidtimeImporter extends DefaultImporter
                 }
 
                 if (! $this->colorService->isValid($project['color'])) {
-                    throw new ImportException('Invalid color');
+                    throw new ImportException(__('Invalid color'));
                 }
 
                 $this->projectImportHelper->getKey([
@@ -243,18 +243,18 @@ class SolidtimeImporter extends DefaultImporter
                 $timeEntry->client_id = $clientId;
                 $timeEntry->organization_id = $this->organization->id;
                 if (strlen($timeEntryRow['description']) > 5000) {
-                    throw new ImportException('Time entry description is too long');
+                    throw new ImportException(__('Time entry description is too long'));
                 }
                 $timeEntry->description = $timeEntryRow['description'];
                 if (! in_array($timeEntryRow['billable'], ['true', 'false'], true)) {
-                    throw new ImportException('Invalid billable value');
+                    throw new ImportException(__('Invalid billable value'));
                 }
                 $timeEntry->billable = $timeEntryRow['billable'] === 'true';
                 // The type column does not exist in old exports
                 if (($timeEntryRow['type'] ?? '') !== '') {
                     $type = TimeEntryType::tryFrom($timeEntryRow['type']);
                     if ($type === null) {
-                        throw new ImportException('Invalid type value');
+                        throw new ImportException(__('Invalid type value'));
                     }
                     $timeEntry->type = $type;
                 }
@@ -264,10 +264,10 @@ class SolidtimeImporter extends DefaultImporter
                 try {
                     $start = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $timeEntryRow['start'], 'UTC');
                 } catch (InvalidFormatException) {
-                    throw new ImportException('Start date ("'.$timeEntryRow['start'].'") is invalid');
+                    throw new ImportException(__('Start date (":value") is invalid', ['value' => $timeEntryRow['start']]));
                 }
                 if ($start === null) {
-                    throw new ImportException('Start date ("'.$timeEntryRow['start'].'") is invalid');
+                    throw new ImportException(__('Start date (":value") is invalid', ['value' => $timeEntryRow['start']]));
                 }
                 $timeEntry->start = $start->utc();
 
@@ -275,10 +275,10 @@ class SolidtimeImporter extends DefaultImporter
                     try {
                         $end = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $timeEntryRow['end'], 'UTC');
                     } catch (InvalidFormatException) {
-                        throw new ImportException('End date ("'.$timeEntryRow['end'].'") is invalid');
+                        throw new ImportException(__('End date (":value") is invalid', ['value' => $timeEntryRow['end']]));
                     }
                     if ($end === null) {
-                        throw new ImportException('End date ("'.$timeEntryRow['end'].'") is invalid');
+                        throw new ImportException(__('End date (":value") is invalid', ['value' => $timeEntryRow['end']]));
                     }
                     $timeEntry->end = $end->utc();
                 } else {
@@ -289,10 +289,10 @@ class SolidtimeImporter extends DefaultImporter
                     try {
                         $stillActiveEmailSentAt = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $timeEntryRow['still_active_email_sent_at'], 'UTC');
                     } catch (InvalidFormatException) {
-                        throw new ImportException('Still active email timestamp ("'.$timeEntryRow['still_active_email_sent_at'].'") is invalid');
+                        throw new ImportException(__('Still active email timestamp (":value") is invalid', ['value' => $timeEntryRow['still_active_email_sent_at']]));
                     }
                     if ($stillActiveEmailSentAt === null) {
-                        throw new ImportException('Still active email timestamp ("'.$timeEntryRow['still_active_email_sent_at'].'") is invalid');
+                        throw new ImportException(__('Still active email timestamp (":value") is invalid', ['value' => $timeEntryRow['still_active_email_sent_at']]));
                     }
                     $timeEntry->still_active_email_sent_at = $stillActiveEmailSentAt->utc();
                 } else {
@@ -319,7 +319,7 @@ class SolidtimeImporter extends DefaultImporter
             throw $exception;
         } catch (Exception $exception) {
             report($exception);
-            throw new ImportException('Unknown error');
+            throw new ImportException(__('Unknown error'));
         } finally {
             $temporaryDirectory?->delete();
             $temporaryDirectoryZip?->delete();

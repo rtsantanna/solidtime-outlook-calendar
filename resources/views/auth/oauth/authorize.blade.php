@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name') }} - Authorization</title>
+    <title>{{ config('app.name') }} - {{ __('Authorization') }}</title>
     @vite('resources/css/app.css')
     <script>
         // Theme evaluation script - similar to theme.ts
@@ -93,18 +93,16 @@
         class="w-full sm:max-w-md mt-6 px-6 py-4 bg-card-background shadow-md border border-card-border overflow-hidden sm:rounded-lg">
 
         <!-- Introduction -->
-        <p class="text-center pb-4 text-text-primary"><strong class="text-text-primary">{{ $client->name }}</strong> is requesting permission
-            to access your
-            account.</p>
+        <p class="text-center pb-4 text-text-primary">{!! __(':client is requesting permission to access your account.', ['client' => '<strong class="text-text-primary">'.e($client->name).'</strong>']) !!}</p>
 
         <!-- Scope List -->
         @if (count($scopes) > 0)
             <div class="pb-4">
-                <p class="text-text-primary"><strong>This application will be able to:</strong></p>
+                <p class="text-text-primary"><strong>{{ __('This application will be able to:') }}</strong></p>
 
                 <ul class="list-disc pl-5 py-2 text-text-primary">
                     @foreach ($scopes as $scope)
-                        <li>{{ $scope->description }}</li>
+                        <li>{{ __($scope->description) }}</li>
                     @endforeach
                 </ul>
             </div>
@@ -120,7 +118,7 @@
                 <input type="hidden" name="auth_token" value="{{ $authToken }}">
                 <button type="submit"
                         class="w-full text-center items-center px-2 sm:px-3 py-2 bg-accent-300/10 border border-accent-300/20 rounded-md font-semibold text-xs sm:text-sm text-text-primary hover:bg-accent-300/20 active:bg-accent-300/20 focus:outline-none focus:ring-2 focus:ring-accent-300 focus:ring-offset-2 transition ease-in-out duration-150">
-                    Authorize
+                    {{ __('Authorize') }}
                 </button>
             </form>
 
@@ -134,7 +132,7 @@
                 <input type="hidden" name="auth_token" value="{{ $authToken }}">
                 <button
                     class="w-full text-center text-xs sm:text-sm px-2 sm:px-3 py-2 bg-button-secondary-background border border-button-secondary-border hover:bg-button-secondary-background-hover shadow-sm transition text-text-primary rounded-lg font-medium items-center space-x-1.5 focus-visible:border-input-border-active focus:outline-none focus:ring-0 disabled:opacity-25 ease-in-out">
-                    Cancel
+                    {{ __('Cancel') }}
                 </button>
             </form>
         </div>

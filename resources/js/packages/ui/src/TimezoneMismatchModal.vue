@@ -70,37 +70,43 @@ defineExpose({
     <DialogModal closeable :show="show && shouldShow" @close="cancel">
         <template #title>
             <div class="flex justify-center">
-                <span> Timezone mismatch detected </span>
+                <span> {{ $t('Timezone mismatch detected') }} </span>
             </div>
         </template>
         <template #content>
             <div class="flex items-center space-x-4">
                 <div class="col-span-6 sm:col-span-4 flex-1 space-y-2">
                     <p>
-                        The timezone of your device does not match the timezone in your user
-                        settings. <br />
-                        <strong
-                            >We highly recommend that you update your timezone settings to your
-                            current timezone.</strong
-                        >
+                        {{
+                            $t(
+                                'The timezone of your device does not match the timezone in your user settings.'
+                            )
+                        }}
+                        <br />
+                        <strong>{{
+                            $t(
+                                'We highly recommend that you update your timezone settings to your current timezone.'
+                            )
+                        }}</strong>
                     </p>
 
                     <p>
-                        Want to change your timezone setting from
-                        <strong>{{ userTimezone }}</strong> to <strong>{{ timezone }}</strong
+                        {{ $t('Want to change your timezone setting from') }}
+                        <strong>{{ userTimezone }}</strong> {{ $t('to') }}
+                        <strong>{{ timezone }}</strong
                         >.
                     </p>
                 </div>
             </div>
         </template>
         <template #footer>
-            <SecondaryButton @click="cancel"> Cancel</SecondaryButton>
+            <SecondaryButton @click="cancel"> {{ $t('Cancel') }}</SecondaryButton>
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit()">
-                Update timezone
+                {{ $t('Update timezone') }}
             </PrimaryButton>
         </template>
     </DialogModal>

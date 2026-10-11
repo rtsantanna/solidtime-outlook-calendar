@@ -3,6 +3,7 @@ import { router } from '@inertiajs/vue3';
 import { canViewReport } from '@/utils/permissions';
 import { computed } from 'vue';
 import { TabBar, TabBarItem } from '@/packages/ui/src';
+import { trans } from 'laravel-vue-i18n';
 
 const props = defineProps<{
     active: 'reporting' | 'detailed' | 'shared';
@@ -12,13 +13,13 @@ const showSharedReports = computed(() => canViewReport());
 
 const tabs = computed(() => {
     const items = [
-        { value: 'reporting', label: 'Overview', href: route('reporting') },
-        { value: 'detailed', label: 'Detailed', href: route('reporting.detailed') },
+        { value: 'reporting', label: trans('Overview'), href: route('reporting') },
+        { value: 'detailed', label: trans('Detailed'), href: route('reporting.detailed') },
     ];
     if (showSharedReports.value) {
         items.push({
             value: 'shared',
-            label: 'Shared',
+            label: trans('Shared'),
             href: route('reporting.shared'),
         });
     }

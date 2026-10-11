@@ -1,3 +1,4 @@
+import { trans } from 'laravel-vue-i18n';
 import { defineStore } from 'pinia';
 import { api } from '@/packages/api/src';
 import type { UpdateMemberBody } from '@/packages/api/src';
@@ -22,8 +23,8 @@ export const useMembersStore = defineStore('members', () => {
                             member: membershipId,
                         },
                     }),
-                'Member deleted successfully',
-                'Failed to delete member'
+                trans('Member deleted successfully'),
+                trans('Failed to delete member')
             );
             queryClient.invalidateQueries({ queryKey: ['members'] });
         }
@@ -40,8 +41,8 @@ export const useMembersStore = defineStore('members', () => {
                             member: memberId,
                         },
                     }),
-                'Member updated successfully',
-                'Failed to update member'
+                trans('Member updated successfully'),
+                trans('Failed to update member')
             );
             queryClient.invalidateQueries({ queryKey: ['members'] });
         }

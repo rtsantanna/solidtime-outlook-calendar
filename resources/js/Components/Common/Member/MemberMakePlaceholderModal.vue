@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { trans } from 'laravel-vue-i18n';
 import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import DialogModal from '@/packages/ui/src/DialogModal.vue';
 import { ref } from 'vue';
@@ -37,8 +38,8 @@ async function submit() {
     saving.value = true;
     await handleApiRequestNotifications(
         () => turnToPlaceholderMutation.mutateAsync(),
-        'Deactivating the member was successful!',
-        'There was an error deactivating the user.',
+        trans('Deactivating the member was successful!'),
+        trans('There was an error deactivating the user.'),
         () => {
             show.value = false;
             queryClient.invalidateQueries({ queryKey: ['members'] });
@@ -51,26 +52,29 @@ async function submit() {
     <DialogModal closeable :show="show" @close="show = false">
         <template #title>
             <div class="flex space-x-2">
-                <span> Deactivate User </span>
+                <span> {{ $t('Deactivate User') }} </span>
             </div>
         </template>
 
         <template #content>
             <p>
-                Deactivating the user <strong>{{ member.name }} </strong> will remove the user's
-                access to the organization. You will not be billed for inactive users and all time
-                entries will be preserved.
+                {{ $t('Deactivating the user') }} <strong>{{ member.name }} </strong>
+                {{
+                    $t(
+                        "will remove the user's access to the organization. You will not be billed for inactive users and all time entries will be preserved."
+                    )
+                }}
             </p>
         </template>
         <template #footer>
-            <SecondaryButton @click="show = false"> Cancel</SecondaryButton>
+            <SecondaryButton @click="show = false"> {{ $t('Cancel') }}</SecondaryButton>
 
             <PrimaryButton
                 class="ms-3"
                 :class="{ 'opacity-25': saving }"
                 :disabled="saving"
                 @click="submit()">
-                Deactivate
+                {{ $t('Deactivate') }}
             </PrimaryButton>
         </template>
     </DialogModal>

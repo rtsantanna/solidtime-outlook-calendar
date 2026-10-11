@@ -75,7 +75,7 @@ const emit = defineEmits<{
                 <!-- Header row -->
                 <div
                     class="bg-background dark:bg-secondary pl-7 pr-3 py-1 text-xs text-text-tertiary md:sticky md:left-0 md:z-10">
-                    Project
+                    {{ $t('Project') }}
                 </div>
                 <div
                     v-for="day in weekDays"
@@ -89,7 +89,11 @@ const emit = defineEmits<{
                             <DropdownMenuTrigger as-child>
                                 <button
                                     type="button"
-                                    title="A break on this day does not align with your work entries"
+                                    :title="
+                                        $t(
+                                            'A break on this day does not align with your work entries'
+                                        )
+                                    "
                                     class="flex items-center justify-center shrink-0 rounded-full p-0.5 text-amber-500 hover:bg-amber-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                                     <ExclamationTriangleIcon class="w-3.5 h-3.5" />
                                 </button>
@@ -97,12 +101,16 @@ const emit = defineEmits<{
                             <DropdownMenuContent class="min-w-[240px]" align="start">
                                 <div class="px-3 py-2 space-y-1.5">
                                     <p class="text-xs text-text-secondary">
-                                        A break on this day is not directly between work entries.
+                                        {{
+                                            $t(
+                                                'A break on this day is not directly between work entries.'
+                                            )
+                                        }}
                                     </p>
                                     <Link
                                         :href="`/calendar?date=${day}`"
                                         class="inline-flex items-center gap-1 text-sm font-medium text-accent-400 hover:underline">
-                                        Fix in calendar
+                                        {{ $t('Fix in calendar') }}
                                         <ArrowRightIcon class="w-3.5 h-3.5" />
                                     </Link>
                                 </div>
@@ -112,7 +120,7 @@ const emit = defineEmits<{
                 </div>
                 <div
                     class="bg-background dark:bg-secondary pl-3 pr-3 py-1 text-right text-xs text-text-tertiary">
-                    Total
+                    {{ $t('Total') }}
                 </div>
                 <div class="bg-background dark:bg-secondary"></div>
 
@@ -165,7 +173,7 @@ const emit = defineEmits<{
                         <template #trigger>
                             <Button variant="ghost" size="sm" class="text-text-secondary">
                                 <PlusIcon class="h-4 w-4 mr-1 text-icon-default" />
-                                Add row
+                                {{ $t('Add row') }}
                             </Button>
                         </template>
                     </TimeTrackerProjectTaskDropdown>
@@ -174,7 +182,7 @@ const emit = defineEmits<{
                 <!-- Totals row: worked time, with break time annotated below (calendar-style) -->
                 <div
                     class="flex items-center border-t border-default-background-separator bg-background dark:bg-secondary pl-7 pr-3 py-1 text-xs text-text-tertiary md:sticky md:left-0 md:z-10">
-                    Total
+                    {{ $t('Total') }}
                 </div>
                 <div
                     v-for="(total, dayIndex) in dayTotals"
@@ -186,27 +194,31 @@ const emit = defineEmits<{
                             ? 'text-text-primary'
                             : 'text-text-secondary',
                     ]">
-                    <span
-                        >{{ formatDuration(total)
-                        }}<template v-if="total > 0 && (breakDayTotals[dayIndex] ?? 0) > 0">
-                            work</template
-                        ></span
-                    >
+                    <span>{{
+                        total > 0 && (breakDayTotals[dayIndex] ?? 0) > 0
+                            ? $t(':duration work', { duration: formatDuration(total) })
+                            : formatDuration(total)
+                    }}</span>
                     <span
                         v-if="(breakDayTotals[dayIndex] ?? 0) > 0"
                         class="font-normal text-text-tertiary"
-                        >{{ formatDuration(breakDayTotals[dayIndex] ?? 0) }} break</span
+                        >{{
+                            $t(':duration break', {
+                                duration: formatDuration(breakDayTotals[dayIndex] ?? 0),
+                            })
+                        }}</span
                     >
                 </div>
                 <div
                     class="flex flex-col items-end justify-center border-t border-default-background-separator bg-background dark:bg-secondary pl-3 pr-3 py-1 text-xs font-semibold text-text-primary leading-tight">
-                    <span
-                        >{{ weekTotalFormatted
-                        }}<template v-if="breakGrandTotal > 0"> work</template></span
-                    >
-                    <span v-if="breakGrandTotal > 0" class="font-normal text-text-tertiary"
-                        >{{ formatDuration(breakGrandTotal) }} break</span
-                    >
+                    <span>{{
+                        breakGrandTotal > 0
+                            ? $t(':duration work', { duration: weekTotalFormatted })
+                            : weekTotalFormatted
+                    }}</span>
+                    <span v-if="breakGrandTotal > 0" class="font-normal text-text-tertiary">{{
+                        $t(':duration break', { duration: formatDuration(breakGrandTotal) })
+                    }}</span>
                 </div>
                 <div
                     class="border-t border-default-background-separator bg-background dark:bg-secondary"></div>
