@@ -1,63 +1,58 @@
-# solidtime — internationalized, with Brazilian Portuguese (pt-BR)
+# solidtime — Outlook calendar import
 
-> **This is a fork.** It is [solidtime](https://github.com/solidtime-io/solidtime) **v0.21.0** plus interface
-> internationalization and a complete **Brazilian Portuguese** translation. Everything else is upstream solidtime;
-> the original README follows below. Em português: [LEIA-ME.md](LEIA-ME.md).
+> **This is a fork.** It is [solidtime](https://github.com/solidtime-io/solidtime) **v0.21.0** plus an **Outlook
+> calendar import**: each user connects their own Microsoft 365 calendar and turns past meetings into time entries.
+> Everything else is upstream solidtime; the original README follows below. Em português: [LEIA-ME.md](LEIA-ME.md).
 
 ## Why this exists
 
-The solidtime interface is English-only: most of the text lives hardcoded in the Vue templates and in a few PHP
-classes, so there is no way to translate it by dropping in a language file. This fork routes those strings through
-the standard Laravel/Vue translation functions and ships a reviewed pt-BR catalog, so a Brazilian team gets every
-screen, e-mail, report and PDF in Portuguese. English stays the default, and any missing key falls back to English.
+Meetings are a large part of the week for many teams, and typing them in again by hand is exactly what makes people
+stop tracking time. The calendar already has the subject, the start and the end. This fork reads it and turns each
+meeting into a time entry, so recording a week of meetings takes a minute.
 
-## What changes
+It answers the request in [discussion #358](https://github.com/solidtime-io/solidtime/discussions/358) for Microsoft
+365 users. The design is read-only and per user, and it was kept close to what a Google Calendar connection would
+need, so the two can share one shape.
 
-- **Frontend:** [laravel-vue-i18n](https://github.com/xiCO2k/laravel-vue-i18n) (the only new dependency) reads
-  `lang/<code>.json`. The keys are the English source strings. About 830 hardcoded strings in templates, scripts and
-  notifications now go through `$t()` / `trans()` / `$tChoice()`. The language comes from `<html lang>`, and the
-  dayjs month and weekday names follow it.
-- **Backend:** `APP_LOCALE` and `APP_FALLBACK_LOCALE` environment variables. Role names and descriptions, importer
-  errors, report PDFs and spreadsheets, the OAuth consent screen and a few request and controller messages go
-  through `__()`.
-- **pt-BR:** `lang/pt_BR.json` (1,165 keys) and `lang/pt_BR/*.php`. The framework strings come from
-  [laravel-lang](https://github.com/Laravel-Lang/lang); the project's own strings were translated and reviewed by hand.
-- **No database migration**, and no behaviour change when `APP_LOCALE` is not set.
+## What it does
 
-## How to use
+- **Connect Outlook:** each user connects their own calendar from the Time page (Microsoft Entra ID, delegated,
+  read-only, authorization code with PKCE).
+- **Import from calendar:** lists the meetings since the last import, without cancelled, all-day, declined or "free"
+  events. Each meeting comes with a suggested project, task and tags, learned from the user's own past entries.
+- **Import or ignore:** the user picks the meetings to keep. Each one becomes a normal, non-billable time entry.
+  - A meeting is never imported twice.
+  - The organization's "prevent overlapping time entries" rule is respected.
+  - Ignored meetings stop showing up as new.
+- **Off by default:** without `ENTRA_CALENDAR_ENABLED=true` and the Entra app values, nothing shows and the routes
+  answer 404.
 
-Build and deploy exactly as upstream solidtime (`docker/prod`, see the self-hosting guide linked below), and set:
+Setup, security notes and the API: **[OUTLOOK-CALENDAR.md](OUTLOOK-CALENDAR.md)**.
 
-```env
-APP_LOCALE=pt_BR
-APP_FALLBACK_LOCALE=en
-```
+## Changes compared to upstream
 
-The language is per installation, not per user.
-
-## Adding another language
-
-Copy `lang/pt_BR.json` to `lang/<code>.json` and translate the values, keeping the keys (the English text) as they
-are. Then add `lang/<code>/*.php` (framework files from laravel-lang plus the project files `enum.php`, `enums.php`,
-`exceptions.php` and `importer.php`) and set `APP_LOCALE=<code>`.
+- New service, two controllers, two models and two migrations. Three API routes and three web routes.
+- One button and one dialog on the Time page.
+- No change to existing tables or behaviour.
+- **Based on [solidtime-pt-br](https://github.com/rtsantanna/solidtime-pt-br):** the UI strings go through the
+  translation functions, which come from there. That is the only reason this fork depends on it; the feature works in
+  any language. Portuguese strings for the feature are included.
 
 ## Verified
 
-Built and tested on solidtime v0.21.0 with PHP 8.3, the version upstream requires (October 2026): PHP test suite
-1,132/1,132, PHPStan with no errors, Pint, Vitest 204/204, vue-tsc, ESLint with no errors and the production build.
+Built and tested on solidtime v0.21.0 with PHP 8.3 (October 2026): PHP test suite 1,156/1,156 (24 of them for this
+feature, with Microsoft Graph and Entra ID faked), PHPStan with no errors, Pint, Vitest 204/204, vue-tsc, ESLint with
+no errors and the production build.
 
 ## Related
 
-- [solidtime-oidc](https://github.com/rtsantanna/solidtime-oidc): generic OIDC single sign-on for solidtime. Both
-  forks are kept small and rebasable, and they combine without conflicts on v0.21.0.
-- Upstream: the goal is to make this useful to solidtime itself. Feedback from the maintainers on the preferred way
-  to contribute it (as is, or split into smaller pieces) is welcome.
+- [solidtime-oidc](https://github.com/rtsantanna/solidtime-oidc): generic OIDC single sign-on.
+- [solidtime-pt-br](https://github.com/rtsantanna/solidtime-pt-br): internationalization and Brazilian Portuguese.
 
 ## License and credits
 
 GNU AGPL-3.0, the same license as solidtime ([LICENSE.md](LICENSE.md)). All credit for the application goes to the
-[solidtime team](https://github.com/solidtime-io/solidtime). The framework translation strings come from
-[laravel-lang](https://github.com/Laravel-Lang/lang) (MIT).
+[solidtime team](https://github.com/solidtime-io/solidtime).
 
 ---
 

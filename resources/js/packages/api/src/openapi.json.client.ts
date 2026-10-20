@@ -5132,6 +5132,185 @@ Please note that the access token is only shown in this response and cannot be r
             },
         ],
     },
+    // Outlook calendar import (the logged-in user's own meetings)
+    {
+        method: 'get',
+        path: '/v1/organizations/:organization/calendar-events',
+        alias: 'getCalendarEvents',
+        description: `Meetings of the logged-in user's Outlook calendar (cancelled, all-day, declined and "free" are left out).
+Without start/end: from the day of the last import (or 7 days ago) until today, in the user's timezone.`,
+        requestFormat: 'json',
+        parameters: [
+            {
+                name: 'organization',
+                type: 'Path',
+                schema: z.string(),
+            },
+            {
+                name: 'start',
+                type: 'Query',
+                schema: z.string().optional(),
+            },
+            {
+                name: 'end',
+                type: 'Query',
+                schema: z.string().optional(),
+            },
+        ],
+        response: z
+            .object({
+                data: z.array(
+                    z
+                        .object({
+                            event_key: z.string(),
+                            subject: z.string(),
+                            start: z.string(),
+                            end: z.string(),
+                            duration: z.number().int(),
+                            organizer: z.union([z.string(), z.null()]),
+                            is_online_meeting: z.boolean(),
+                            already_imported: z.boolean(),
+                            status: z.union([z.enum(['imported', 'ignored']), z.null()]),
+                            time_entry_id: z.union([z.string(), z.null()]),
+                            suggested_project_id: z.union([z.string(), z.null()]),
+                            suggested_task_id: z.union([z.string(), z.null()]),
+                            suggested_tags: z.array(z.string()),
+                        })
+                        .passthrough()
+                ),
+                meta: z
+                    .object({
+                        start: z.string(),
+                        end: z.string(),
+                        timezone: z.string(),
+                        new_count: z.number().int(),
+                        last_import_at: z.union([z.string(), z.null()]),
+                        account_email: z.union([z.string(), z.null()]),
+                    })
+                    .passthrough(),
+            })
+            .passthrough(),
+        errors: [
+            {
+                status: 400,
+                description: `Outlook not connected, connection expired or Microsoft Graph unavailable`,
+                schema: z.object({ message: z.string(), key: z.string() }).passthrough(),
+            },
+            {
+                status: 403,
+                description: `Authorization error`,
+                schema: z.object({ message: z.string() }).passthrough(),
+            },
+            {
+                status: 422,
+                description: `Validation error`,
+                schema: z
+                    .object({ message: z.string(), errors: z.record(z.array(z.string())) })
+                    .passthrough(),
+            },
+        ],
+    },
+    {
+        method: 'post',
+        path: '/v1/organizations/:organization/calendar-events/import',
+        alias: 'importCalendarEvents',
+        description: `Creates normal work time entries (not billable) for the logged-in member, one per meeting.`,
+        requestFormat: 'json',
+        parameters: [
+            {
+                name: 'body',
+                type: 'Body',
+                schema: z
+                    .object({
+                        items: z
+                            .array(
+                                z
+                                    .object({
+                                        event_key: z.string().max(512),
+                                        description: z.union([z.string(), z.null()]).optional(),
+                                        start: z.string(),
+                                        end: z.string(),
+                                        project_id: z.union([z.string(), z.null()]).optional(),
+                                        task_id: z.union([z.string(), z.null()]).optional(),
+                                        tags: z.array(z.string()).optional(),
+                                    })
+                                    .passthrough()
+                            )
+                            .min(1)
+                            .max(200),
+                    })
+                    .passthrough(),
+            },
+            {
+                name: 'organization',
+                type: 'Path',
+                schema: z.string(),
+            },
+        ],
+        response: z
+            .object({
+                data: z
+                    .object({
+                        imported: z.number().int(),
+                        time_entry_ids: z.array(z.string()),
+                        skipped: z.array(
+                            z.object({ event_key: z.string(), reason: z.string() }).passthrough()
+                        ),
+                    })
+                    .passthrough(),
+            })
+            .passthrough(),
+        errors: [
+            {
+                status: 403,
+                description: `Authorization error`,
+                schema: z.object({ message: z.string() }).passthrough(),
+            },
+            {
+                status: 422,
+                description: `Validation error`,
+                schema: z
+                    .object({ message: z.string(), errors: z.record(z.array(z.string())) })
+                    .passthrough(),
+            },
+        ],
+    },
+    {
+        method: 'post',
+        path: '/v1/organizations/:organization/calendar-events/ignore',
+        alias: 'ignoreCalendarEvents',
+        description: `Marks meetings as ignored, so they no longer count as new.`,
+        requestFormat: 'json',
+        parameters: [
+            {
+                name: 'body',
+                type: 'Body',
+                schema: z
+                    .object({
+                        items: z
+                            .array(z.object({ event_key: z.string().max(512) }).passthrough())
+                            .min(1)
+                            .max(500),
+                    })
+                    .passthrough(),
+            },
+            {
+                name: 'organization',
+                type: 'Path',
+                schema: z.string(),
+            },
+        ],
+        response: z
+            .object({ data: z.object({ ignored: z.number().int() }).passthrough() })
+            .passthrough(),
+        errors: [
+            {
+                status: 403,
+                description: `Authorization error`,
+                schema: z.object({ message: z.string() }).passthrough(),
+            },
+        ],
+    },
 ]);
 
 export const api = new Zodios('/api', endpoints);

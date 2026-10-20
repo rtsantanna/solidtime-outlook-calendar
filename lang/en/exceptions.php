@@ -14,6 +14,9 @@ use App\Exceptions\Api\OnlyOwnerCanChangeOwnership;
 use App\Exceptions\Api\OnlyPlaceholdersCanBeMergedIntoAnotherMember;
 use App\Exceptions\Api\OrganizationHasNoSubscriptionButMultipleMembersException;
 use App\Exceptions\Api\OrganizationNeedsAtLeastOneOwner;
+use App\Exceptions\Api\OutlookNotConnectedApiException;
+use App\Exceptions\Api\OutlookReconnectRequiredApiException;
+use App\Exceptions\Api\OutlookUnavailableApiException;
 use App\Exceptions\Api\OverlappingTimeEntryApiException;
 use App\Exceptions\Api\PdfRendererIsNotConfiguredException;
 use App\Exceptions\Api\PersonalAccessClientIsNotConfiguredException;
@@ -51,6 +54,9 @@ return [
         InvitationForTheEmailAlreadyExistsApiException::KEY => 'The email has already been invited to the organization. Please wait for the user to accept the invitation or resend the invitation email.',
         OverlappingTimeEntryApiException::KEY => 'Overlapping time entries are not allowed.',
         UserResendEmailVerificationNoPendingEmailApiException::KEY => 'Resend email not possible, no pending email.',
+        OutlookNotConnectedApiException::KEY => 'Your Outlook calendar is not connected.',
+        OutlookReconnectRequiredApiException::KEY => 'The Outlook connection expired. Please connect your calendar again.',
+        OutlookUnavailableApiException::KEY => 'Could not read the Outlook calendar. Please try again later.',
     ],
     'unknown_error_in_admin_panel' => 'An unknown error occurred. Please check the logs.',
 ];

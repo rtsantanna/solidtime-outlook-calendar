@@ -1,61 +1,44 @@
-# solidtime em português do Brasil
+# solidtime: importação da agenda do Outlook
 
-Fork do [solidtime](https://github.com/solidtime-io/solidtime) **v0.21.0** com a interface internacionalizada e a
-**tradução completa para o português do Brasil**. O resto é o solidtime original. English: [README.md](README.md).
+Fork do [solidtime](https://github.com/solidtime-io/solidtime) **v0.21.0** com a **importação da agenda do Outlook**:
+cada pessoa conecta a própria agenda do Microsoft 365 e transforma as reuniões que já aconteceram em apontamentos.
+O resto é o solidtime original. English: [README.md](README.md).
 
 ## Por que
 
-A interface do solidtime só existe em inglês: quase todo o texto está fixo nos templates Vue e em algumas classes PHP,
-então não basta colocar um arquivo de idioma. Este fork passa esses textos pelas funções de tradução padrão do
-Laravel e do Vue e traz um catálogo pt-BR revisado. Assim, telas, e-mails, relatórios e PDFs saem em português.
-O inglês continua sendo o padrão, e chave sem tradução cai no inglês.
+Reunião é boa parte da semana de muita equipe, e redigitar tudo à mão é o que faz as pessoas desistirem de apontar
+horas. A agenda já tem o assunto, o início e o fim. Este fork lê a agenda e transforma cada reunião em apontamento,
+e assim uma semana de reuniões se registra em um minuto.
 
-## O que muda
+Ele atende, para quem usa Microsoft 365, o pedido da
+[discussão #358](https://github.com/solidtime-io/solidtime/discussions/358).
 
-- **Front:** [laravel-vue-i18n](https://github.com/xiCO2k/laravel-vue-i18n) (a única dependência nova) lê
-  `lang/<código>.json`, cujas chaves são o texto original em inglês.
-  - Cerca de 830 textos fixos passam por `$t()` / `trans()` / `$tChoice()`.
-  - O idioma vem do `<html lang>`, e os nomes de mês e dia da semana do dayjs acompanham.
-- **Back:** variáveis `APP_LOCALE` e `APP_FALLBACK_LOCALE`. Passam por `__()`:
-  - papéis;
-  - erros do importador;
-  - PDFs e planilhas de relatório;
-  - tela de consentimento OAuth;
-  - algumas mensagens de validação e de controller.
-- **pt-BR:** `lang/pt_BR.json` (1.165 chaves) e `lang/pt_BR/*.php`. Os textos do framework vêm do
-  [laravel-lang](https://github.com/Laravel-Lang/lang); os do projeto foram traduzidos e revisados à mão.
-- **Sem migração de banco.** Sem `APP_LOCALE`, nada muda.
+## O que faz
 
-## Como usar
+- **Conectar Outlook:** pela tela de Apontamentos, cada pessoa conecta a própria agenda (Microsoft Entra ID, delegado,
+  só leitura, authorization code com PKCE).
+- **Importar da agenda:** lista as reuniões desde a última importação, sem canceladas, dia inteiro, recusadas ou
+  "livre". Cada uma vem com projeto, tarefa e tags sugeridos, aprendidos dos apontamentos da própria pessoa.
+- **Importar ou ignorar:** a pessoa escolhe o que fica, e cada reunião vira um apontamento normal, não faturável.
+  - Nenhuma reunião entra duas vezes.
+  - A regra de "impedir apontamentos sobrepostos" da organização é respeitada.
+- **Desligado por padrão:** sem `ENTRA_CALENDAR_ENABLED=true` e os dados do app no Entra, nada aparece e as rotas
+  respondem 404.
 
-Construa e publique como o solidtime original (`docker/prod`) e defina:
+Configuração, segurança e API: **[OUTLOOK-CALENDAR.md](OUTLOOK-CALENDAR.md)** (em inglês).
 
-```env
-APP_LOCALE=pt_BR
-APP_FALLBACK_LOCALE=en
-```
+## Base
 
-O idioma vale para a instalação inteira, não por usuário.
-
-## Outro idioma
-
-1. Copie `lang/pt_BR.json` para `lang/<código>.json` e traduza os valores, mantendo as chaves (o texto em inglês).
-2. Crie `lang/<código>/*.php`: os arquivos do framework vêm do laravel-lang; os do projeto são `enum.php`,
-   `enums.php`, `exceptions.php` e `importer.php`.
-3. Defina `APP_LOCALE=<código>`.
+Fica sobre o [solidtime-pt-br](https://github.com/rtsantanna/solidtime-pt-br), porque os textos da tela usam as funções
+de tradução que vêm de lá. O recurso funciona em qualquer idioma, e os textos dele em português estão incluídos.
 
 ## Verificado
 
-Construído e testado sobre o solidtime v0.21.0 com PHP 8.3, a versão que o original exige (outubro de 2026): suíte PHP
-1.132/1.132, PHPStan sem erros, Pint, Vitest 204/204, vue-tsc, ESLint sem erros e build de produção.
-
-## Relacionados
-
-- [solidtime-oidc](https://github.com/rtsantanna/solidtime-oidc): login único OIDC genérico para o solidtime. Os dois
-  forks são pequenos, rebaseáveis e se combinam sem conflito na v0.21.0.
+Construído e testado sobre o solidtime v0.21.0 com PHP 8.3 (outubro de 2026): suíte PHP 1.156/1.156 (24 testes deste
+recurso, com o Microsoft Graph e o Entra ID simulados), PHPStan sem erros, Pint, Vitest 204/204, vue-tsc, ESLint sem
+erros e build de produção.
 
 ## Licença e créditos
 
 GNU AGPL-3.0, a mesma do solidtime ([LICENSE.md](LICENSE.md)). O crédito do aplicativo é todo da
-[equipe do solidtime](https://github.com/solidtime-io/solidtime). Os textos do framework vêm do
-[laravel-lang](https://github.com/Laravel-Lang/lang) (MIT).
+[equipe do solidtime](https://github.com/solidtime-io/solidtime).

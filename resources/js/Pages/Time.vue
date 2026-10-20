@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import AppLayout from '@/Layouts/AppLayout.vue';
 import TimeTracker from '@/Components/TimeTracker.vue';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
+import OutlookCalendarImportModal from '@/Components/Outlook/OutlookCalendarImportModal.vue';
+import SecondaryButton from '@/packages/ui/src/Buttons/SecondaryButton.vue';
 import { computed, ref, watch } from 'vue';
 import MainContainer from '@/packages/ui/src/MainContainer.vue';
 import { storeToRefs } from 'pinia';
@@ -14,7 +16,7 @@ import type {
     Client,
 } from '@/packages/api/src';
 import { useElementVisibility } from '@vueuse/core';
-import { ClockIcon } from '@heroicons/vue/20/solid';
+import { CalendarDaysIcon, ClockIcon } from '@heroicons/vue/20/solid';
 import LoadingSpinner from '@/packages/ui/src/LoadingSpinner.vue';
 import { useCurrentTimeEntryStore } from '@/utils/useCurrentTimeEntry';
 import { groupSimilarTimeEntriesSetting } from '@/utils/timeEntryGrouping';
@@ -108,12 +110,32 @@ function deleteSelected() {
 function goToCalendarDay(date: string) {
     router.visit(`/calendar?date=${date}`);
 }
+
+// Outlook calendar import (opens by itself when coming back from the connection with ?outlook=connected)
+const outlookCalendarEnabled = computed(
+    () => !!usePage<{ outlook_calendar_enabled?: boolean }>().props.outlook_calendar_enabled
+);
+const showOutlookImport = ref(
+    new URLSearchParams(window.location.search).get('outlook') === 'connected'
+);
 </script>
 
 <template>
     <AppLayout :title="$t('Dashboard')" data-testid="time_view">
         <MainContainer class="pt-5 lg:pt-8 pb-4 lg:pb-6">
             <TimeTracker></TimeTracker>
+            <div v-if="outlookCalendarEnabled" class="flex justify-end pt-3">
+                <SecondaryButton
+                    type="button"
+                    :icon="CalendarDaysIcon"
+                    data-testid="outlook_import_button"
+                    @click="showOutlookImport = true">
+                    {{ $t('Import from calendar') }}
+                </SecondaryButton>
+            </div>
+            <OutlookCalendarImportModal
+                v-if="outlookCalendarEnabled"
+                v-model:show="showOutlookImport"></OutlookCalendarImportModal>
         </MainContainer>
         <TimeEntryMassActionRow
             :selected-time-entries="selectedTimeEntries"

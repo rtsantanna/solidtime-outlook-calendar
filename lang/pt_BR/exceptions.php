@@ -14,6 +14,9 @@ use App\Exceptions\Api\OnlyOwnerCanChangeOwnership;
 use App\Exceptions\Api\OnlyPlaceholdersCanBeMergedIntoAnotherMember;
 use App\Exceptions\Api\OrganizationHasNoSubscriptionButMultipleMembersException;
 use App\Exceptions\Api\OrganizationNeedsAtLeastOneOwner;
+use App\Exceptions\Api\OutlookNotConnectedApiException;
+use App\Exceptions\Api\OutlookReconnectRequiredApiException;
+use App\Exceptions\Api\OutlookUnavailableApiException;
 use App\Exceptions\Api\OverlappingTimeEntryApiException;
 use App\Exceptions\Api\PdfRendererIsNotConfiguredException;
 use App\Exceptions\Api\PersonalAccessClientIsNotConfiguredException;
@@ -51,6 +54,9 @@ return [
         InvitationForTheEmailAlreadyExistsApiException::KEY => 'Este e-mail já foi convidado para a organização. Aguarde o usuário aceitar o convite ou reenvie o e-mail do convite.',
         OverlappingTimeEntryApiException::KEY => 'Apontamentos sobrepostos não são permitidos.',
         UserResendEmailVerificationNoPendingEmailApiException::KEY => 'Não é possível reenviar o e-mail: não há e-mail pendente de verificação.',
+        OutlookNotConnectedApiException::KEY => 'Sua agenda do Outlook não está conectada.',
+        OutlookReconnectRequiredApiException::KEY => 'A conexão com o Outlook expirou. Conecte sua agenda novamente.',
+        OutlookUnavailableApiException::KEY => 'Não foi possível ler a agenda do Outlook. Tente novamente mais tarde.',
     ],
     'unknown_error_in_admin_panel' => 'Ocorreu um erro desconhecido. Verifique os logs.',
 ];

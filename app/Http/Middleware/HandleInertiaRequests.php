@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use App\Service\BillingContract;
+use App\Service\OutlookCalendarService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Nwidart\Modules\Facades\Module;
@@ -52,6 +54,11 @@ class HandleInertiaRequests extends Middleware
             'has_billing_extension' => $hasBilling,
             'has_invoicing_extension' => $hasInvoicing,
             'has_services_extension' => $hasServices,
+            // Outlook calendar import (ENTRA_CALENDAR_ENABLED) and whether the logged-in user has connected it
+            'outlook_calendar_enabled' => fn (): bool => app(OutlookCalendarService::class)->isEnabled(),
+            'outlook_connected' => fn (): bool => $request->user() instanceof User
+                && app(OutlookCalendarService::class)->isEnabled()
+                && app(OutlookCalendarService::class)->isConnected($request->user()),
             'billing' => $currentOrganization !== null ? [
                 'has_subscription' => $billing->hasSubscription($currentOrganization),
                 'has_trial' => $billing->hasTrial($currentOrganization),

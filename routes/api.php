@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\V1\ApiTokenController;
+use App\Http\Controllers\Api\V1\CalendarEventController;
 use App\Http\Controllers\Api\V1\ChartController;
 use App\Http\Controllers\Api\V1\ClientController;
 use App\Http\Controllers\Api\V1\CurrencyController;
@@ -132,6 +133,13 @@ Route::prefix('v1')->name('v1.')->group(static function (): void {
             Route::post('/reports', [ReportController::class, 'store'])->name('store');
             Route::put('/reports/{report}', [ReportController::class, 'update'])->name('update');
             Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('destroy');
+        });
+
+        // Outlook calendar import (the logged-in user's own meetings)
+        Route::name('calendar-events.')->prefix('/organizations/{organization}')->group(static function (): void {
+            Route::get('/calendar-events', [CalendarEventController::class, 'index'])->name('index');
+            Route::post('/calendar-events/import', [CalendarEventController::class, 'import'])->name('import')->middleware('check-organization-blocked');
+            Route::post('/calendar-events/ignore', [CalendarEventController::class, 'ignore'])->name('ignore')->middleware('check-organization-blocked');
         });
 
         // Chart routes

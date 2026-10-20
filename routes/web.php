@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\OrganizationController;
 use App\Http\Controllers\Web\OrganizationInvitationController;
 use App\Http\Controllers\Web\OtherBrowserSessionsController;
+use App\Http\Controllers\Web\OutlookController;
 use App\Http\Controllers\Web\UserController;
 use App\Http\Controllers\Web\UserProfileController;
 use App\Service\PermissionStore;
@@ -106,6 +107,11 @@ Route::middleware([
     Route::get('/user/profile', [UserProfileController::class, 'show'])->name('profile.show');
     Route::delete('/user/other-browser-sessions', [OtherBrowserSessionsController::class, 'destroy'])
         ->name('other-browser-sessions.destroy');
+
+    // Outlook calendar import: each user connects their own calendar (ENTRA_CALENDAR_ENABLED)
+    Route::get('/outlook/connect', [OutlookController::class, 'connect'])->name('outlook.connect');
+    Route::get('/outlook/callback', [OutlookController::class, 'callback'])->name('outlook.callback');
+    Route::post('/outlook/disconnect', [OutlookController::class, 'disconnect'])->name('outlook.disconnect');
 });
 
 Route::get('/team-invitations/{invitation}', [OrganizationInvitationController::class, 'accept'])
