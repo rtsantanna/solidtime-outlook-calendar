@@ -4,6 +4,12 @@
 // outside the running app.
 
 import { vi } from 'vitest';
+import { config } from '@vue/test-utils';
+import { i18nVue } from 'laravel-vue-i18n';
+
+// i18n: components render $t()/$tChoice() as in the app; with no translations loaded the
+// English key itself is shown, so existing text assertions keep working.
+config.global.plugins.push([i18nVue, { lang: 'en', fallbackLang: 'en', resolve: () => ({}) }]);
 
 declare global {
     interface Window {
